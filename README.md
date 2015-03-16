@@ -50,7 +50,7 @@ Open terminal, switch to project directory and type:
 vagrant up
 vagrant ssh
 sudo apt-get update
-sudo apt-get openjdk-7-jdk
+sudo apt-get install openjdk-7-jdk
 cd /vagrant
 cd activator-1.3.2-minimal
 ./activator
