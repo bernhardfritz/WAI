@@ -12,3 +12,17 @@
 .vagrant/machines/default/virtualbox/index_uuid
 
 .vagrant/machines/default/virtualbox/private_key
+
+.idea/.name
+
+*.xml
+
+*.xml
+
+*.xml
+
+.idea/libraries/activator_launch_1_3_2.xml
+
+.idea/libraries/activator_launch_1_3_21.xml
+
+*.iml
