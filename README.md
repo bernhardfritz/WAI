@@ -65,13 +65,15 @@ Open terminal, switch to project directory and type:
 vagrant up
 vagrant ssh
 cd /vagrant/play-java
-activator run
+activator
+run
 ```
+Press Ctrl+D once to restart the server
 ## How to display our webapp?
 Open your favorite browser and go to http://localhost:9000/
 
 ## How to stop play-framework and vagrant?
-To stop play-framework press Ctrl+D
+To stop play-framework press Ctrl+D twice
 
 To stop vagrant ssh type: `exit`
 
