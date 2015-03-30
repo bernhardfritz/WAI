@@ -10,7 +10,12 @@ public class Application extends Controller {
         return ok(index.render("Your new application is ready."));
     }
 
-    public static Result maptest() {
-        return ok(maptest.render());
+    public static Result map() {
+        return ok(map.render());
+    }
+
+    public static Result location(double lat, double lng) {
+        System.out.println("lat: " + lat + " " + "lng: " + lng);
+        return ok(location.render(lat,lng));
     }
 }
