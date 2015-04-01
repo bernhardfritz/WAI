@@ -3,8 +3,10 @@
 # ~~~~
 
 # Home page
-GET        /                                controllers.Application.index()
-GET        /map                             controllers.Application.map()
-GET        /location/:lat/:lng              controllers.Application.location(lat: Double, lng:Double)
+GET         /                          controllers.Application.index()
+GET         /map                       controllers.Application.map()
+GET         /location/:lat/:lng        controllers.Application.location(lat: Double, lng:Double)
+GET         /test                      controllers.Application.test()
+POST        /upload                    controllers.Application.upload()
 # Map static resources from the /public folder to the /assets URL path
-GET        /assets/*file                    controllers.Assets.at(path="/public", file)
+GET         /assets/*file              controllers.Assets.at(path="/public", file)
