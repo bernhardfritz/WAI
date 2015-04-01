@@ -1,5 +1,6 @@
 package controllers;
 
+import com.google.common.io.Files;
 import play.mvc.Controller;
 import play.mvc.Http.MultipartFormData;
 import play.mvc.Http.MultipartFormData.FilePart;
@@ -10,6 +11,7 @@ import views.html.map;
 import views.html.test;
 
 import java.io.File;
+import java.io.IOException;
 
 public class Application extends Controller {
     public static Result index() {
@@ -36,6 +38,13 @@ public class Application extends Controller {
             String fileName = picture.getFilename();
             String contentType = picture.getContentType();
             File file = picture.getFile();
+            byte[] blob;
+            try {
+                blob = Files.toByteArray(file);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            // do something with blob
             return ok("File uploaded");
         } else {
             flash("error", "Missing file");
