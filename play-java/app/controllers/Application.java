@@ -48,8 +48,7 @@ public class Application extends Controller {
             //new Picture(blob).save(); //save blob to db
             return ok(blob).as("image/jpeg"); // display blob
         } else {
-            flash("error", "Missing file");
-            return index();
+            return up();
         }
     }
         public static Result createImage(byte[] byteArray) {
