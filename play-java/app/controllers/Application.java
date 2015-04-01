@@ -1,7 +1,11 @@
 package controllers;
 
 import com.google.common.io.Files;
+<<<<<<< HEAD
 
+=======
+import models.Picture;
+>>>>>>> origin/master
 import play.mvc.Controller;
 import play.mvc.Http.MultipartFormData;
 import play.mvc.Http.MultipartFormData.FilePart;
@@ -46,8 +50,8 @@ public class Application extends Controller {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            // do something with blob
-            return ok("File uploaded");
+            //new Picture(blob).save(); //save blob to db
+            return ok(blob).as("image/jpeg"); // display blob
         } else {
             flash("error", "Missing file");
             return index();
