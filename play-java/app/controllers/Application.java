@@ -1,6 +1,7 @@
 package controllers;
 
 import com.google.common.io.Files;
+
 import play.mvc.Controller;
 import play.mvc.Http.MultipartFormData;
 import play.mvc.Http.MultipartFormData.FilePart;
@@ -8,10 +9,11 @@ import play.mvc.Result;
 import views.html.index;
 import views.html.location;
 import views.html.map;
-import views.html.test;
+import views.html.upload;
 
 import java.io.File;
 import java.io.IOException;
+
 
 public class Application extends Controller {
     public static Result index() {
@@ -27,8 +29,8 @@ public class Application extends Controller {
         return ok(location.render(lat,lng));
     }
 
-    public static Result test() {
-        return ok(test.render());
+    public static Result up() {
+        return ok(upload.render());
     }
 
     public static Result upload() {
@@ -38,7 +40,7 @@ public class Application extends Controller {
             String fileName = picture.getFilename();
             String contentType = picture.getContentType();
             File file = picture.getFile();
-            byte[] blob;
+            byte[] blob=null;
             try {
                 blob = Files.toByteArray(file);
             } catch (IOException e) {
@@ -51,4 +53,7 @@ public class Application extends Controller {
             return index();
         }
     }
+        public static Result createImage(byte[] byteArray) {
+            return ok(byteArray).as("image/jpg");
+        }
 }
