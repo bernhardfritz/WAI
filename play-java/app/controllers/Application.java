@@ -1,11 +1,6 @@
 package controllers;
 
 import com.google.common.io.Files;
-<<<<<<< HEAD
-
-=======
-import models.Picture;
->>>>>>> origin/master
 import play.mvc.Controller;
 import play.mvc.Http.MultipartFormData;
 import play.mvc.Http.MultipartFormData.FilePart;
