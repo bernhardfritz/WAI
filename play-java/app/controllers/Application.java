@@ -35,9 +35,9 @@ public class Application extends Controller {
     public static Result upload() {
         MultipartFormData body = request().body().asMultipartFormData();
         FilePart picture = body.getFile("picture");
-        if (picture != null) {
-            String fileName = picture.getFilename();
-            String contentType = picture.getContentType();
+        if (picture != null && picture.getContentType().contains("image")){
+            //String fileName = picture.getFilename();
+            //String contentType = picture.getContentType();
             File file = picture.getFile();
             byte[] blob=null;
             try {
@@ -48,7 +48,7 @@ public class Application extends Controller {
             //new Picture(blob).save(); //save blob to db
             return ok(blob).as("image/jpeg"); // display blob
         } else {
-            return up();
+            return badRequest("No File or wrong type");
         }
     }
         public static Result createImage(byte[] byteArray) {
