@@ -9,6 +9,7 @@ import views.html.index;
 import views.html.location;
 import views.html.map;
 import views.html.upload;
+import views.html.try1;
 
 import java.io.File;
 import java.io.IOException;
@@ -51,7 +52,12 @@ public class Application extends Controller {
             return badRequest("No File or wrong type");
         }
     }
-        public static Result createImage(byte[] byteArray) {
-            return ok(byteArray).as("image/jpg");
-        }
+
+    public static Result createImage(byte[] byteArray) {
+        return ok(byteArray).as("image/jpg");
+    }
+
+    public static Result try1() {
+        return ok(try1.render());
+    }
 }
