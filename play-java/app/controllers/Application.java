@@ -5,11 +5,7 @@ import play.mvc.Controller;
 import play.mvc.Http.MultipartFormData;
 import play.mvc.Http.MultipartFormData.FilePart;
 import play.mvc.Result;
-import views.html.index;
-import views.html.location;
-import views.html.map;
-import views.html.upload;
-import views.html.try1;
+import views.html.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,10 +23,6 @@ public class Application extends Controller {
     public static Result location(double lat, double lng) {
         System.out.println("lat: " + lat + " " + "lng: " + lng);
         return ok(location.render(lat,lng));
-    }
-
-    public static Result up() {
-        return ok(upload.render());
     }
 
     public static Result upload() {
@@ -53,11 +45,7 @@ public class Application extends Controller {
         }
     }
 
-    public static Result createImage(byte[] byteArray) {
-        return ok(byteArray).as("image/jpg");
-    }
-
-    public static Result try1() {
-        return ok(try1.render());
+    public static Result bootstrap() {
+        return ok(bootstrap.render());
     }
 }

@@ -6,8 +6,8 @@
 GET         /                          controllers.Application.index()
 GET         /map                       controllers.Application.map()
 GET         /location/:lat/:lng        controllers.Application.location(lat: Double, lng:Double)
-GET         /upload                    controllers.Application.up()
-GET         /try1                      controllers.Application.try1()
 POST        /upload                    controllers.Application.upload()
+GET         /bootstrap                 controllers.Application.bootstrap()
+
 # Map static resources from the /public folder to the /assets URL path
 GET         /assets/*file              controllers.Assets.at(path="/public", file)
