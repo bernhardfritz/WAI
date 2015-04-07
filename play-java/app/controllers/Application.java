@@ -1,6 +1,7 @@
 package controllers;
 
 import com.google.common.io.Files;
+import models.Picture;
 import play.mvc.Controller;
 import play.mvc.Http.MultipartFormData;
 import play.mvc.Http.MultipartFormData.FilePart;
@@ -9,6 +10,7 @@ import views.html.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Map;
 
 
 public class Application extends Controller {
@@ -20,13 +22,37 @@ public class Application extends Controller {
         return ok(map.render());
     }
 
-    public static Result location(double lat, double lng) {
-        System.out.println("lat: " + lat + " " + "lng: " + lng);
-        return ok(location.render(lat,lng));
+    public static double getLat() {
+        String session = session().get("lat").toString();
+        double lat = session!=null?Double.parseDouble(session):0.0;
+        return lat;
+    }
+
+    public static double getLng() {
+        String session = session().get("lng").toString();
+        double lng = session!=null?Double.parseDouble(session):0.0;
+        return lng;
+    }
+
+    public static Result getLocation() {
+        return ok(getLocation.render(getLat(),getLng()));
+    }
+
+    public static Result setLocation(double lng, double lat) {
+        session("lat", "" + lat);
+        session("lng",""+lng);
+        return ok();
     }
 
     public static Result upload() {
+        return ok(upload.render());
+    }
+
+    public static Result uploadAction() {
         MultipartFormData body = request().body().asMultipartFormData();
+        Map<String, String[]> asFormUrlEncoded = request().body().asMultipartFormData().asFormUrlEncoded();
+        String[] descriptionParams = asFormUrlEncoded.get("description");
+        String description = descriptionParams!=null?descriptionParams[0]:"N/A";
         FilePart picture = body.getFile("picture");
         if (picture != null && picture.getContentType().contains("image")){
             //String fileName = picture.getFilename();
@@ -38,7 +64,7 @@ public class Application extends Controller {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            //new Picture(blob).save(); //save blob to db
+            //new Picture(blob,getLat(),getLng(),description).save(); //save picture to db TODO: fix
             return ok(blob).as("image/jpeg"); // display blob
         } else {
             return badRequest("No File or wrong type");
@@ -47,5 +73,13 @@ public class Application extends Controller {
 
     public static Result bootstrap() {
         return ok(bootstrap.render());
+    }
+
+    public static Result template() {
+        return ok(template.render("Template",null,null));
+    }
+
+    public static Result blank() {
+        return ok(blank.render("Blank",null,null));
     }
 }

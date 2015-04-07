@@ -1,0 +1,26 @@
+@(title: String)(head: Html)(body: Html)
+<!DOCTYPE html>
+<html>
+  <head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="apple-mobile-web-app-title" content="@title">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"> <!--add 20px padding to the top when using this-->
+    <meta name="mobile-web-app-capable" content="yes"> <!--Chrome for Android standalone app-->
+
+    <title>@title</title>
+
+    <link rel="apple-touch-icon" href="apple-touch-icon-iphone-precomposed.png"> <!--size: 60x60-->
+    <link rel="apple-touch-icon" sizes="76x76" href="touch-icon-ipad-precomposed.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="touch-icon-iphone-retina-precomposed.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="touch-icon-ipad-retina-precomposed.png">
+    <link rel="apple-touch-startup-image" href="/startup-image.png"> <!--size: 640x1136-->
+    <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
+
+    @head
+  </head>
+  <body>
+    @body
+  </body>
+</html>
