@@ -58,7 +58,7 @@
             // Setup the click event listeners
             google.maps.event.addDomListener(controlUI, 'click', function() {
                 if(markers[0] == null) {
-                    alert("You have to select a getLocation first");
+                    alert("You have to select a location first");
                 } else {
                     var lat = markers[0].getPosition().lat();
                     var lng = markers[0].getPosition().lng();

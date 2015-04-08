@@ -96,4 +96,8 @@ public class Application extends Controller {
     public static Result blank() {
         return ok(blank.render("Blank",null,null));
     }
+
+    public static Result game() {
+        return ok(game.render());
+    }
 }
