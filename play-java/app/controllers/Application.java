@@ -74,9 +74,16 @@ public class Application extends Controller {
     public static Result bootstrap() {
         return ok(bootstrap.render());
     }
+    public static Result login() {
+        return ok(login.render());
+    }
 
     public static Result template() {
         return ok(template.render("Template",null,null));
+    }
+
+    public static Result template_wo_navbar() {
+        return ok(template_wo_navbar.render("Template",null,null));
     }
 
     public static Result blank() {

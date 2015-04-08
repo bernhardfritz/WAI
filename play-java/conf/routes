@@ -10,7 +10,9 @@ GET         /getLocation                  controllers.Application.getLocation()
 GET         /upload                       controllers.Application.upload()
 POST        /uploadAction                 controllers.Application.uploadAction()
 GET         /bootstrap                    controllers.Application.bootstrap()
+GET         /login                        controllers.Application.login()
 GET         /template                     controllers.Application.template()
+GET         /template_wo_navbar           controllers.Application.template_wo_navbar()
 GET         /blank                        controllers.Application.blank()
 
 # Map static resources from the /public folder to the /assets URL path
