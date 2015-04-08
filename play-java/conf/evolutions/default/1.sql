@@ -7,6 +7,7 @@ create table picture (
   data                      blob,
   lat                       double,
   lng                       double,
+  title                     varchar(255),
   description               varchar(255))
 ;
 
