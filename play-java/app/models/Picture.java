@@ -3,25 +3,22 @@ package models;
 import play.db.ebean.Model;
 
 import javax.persistence.Entity;
-import javax.sql.rowset.serial.SerialBlob;
-import java.sql.Blob;
-import java.sql.SQLException;
+import javax.persistence.Lob;
 
 @Entity
 public class Picture extends Model {
-    private Blob image;
+    @Lob
+    private byte[] data;
     private double lat;
     private double lng;
+    private String title;
     private String description;
 
-    public Picture(byte[] array,double lat,double lng,String description) {
-        try {
-            this.image = new SerialBlob(array);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public Picture(byte[] data, double lat, double lng, String title, String description) {
+        this.data = data;
         this.lat = lat;
         this.lng = lng;
+        this.title = title;
         this.description = description;
     }
 }

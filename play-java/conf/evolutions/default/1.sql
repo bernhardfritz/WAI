@@ -4,6 +4,7 @@
 # --- !Ups
 
 create table picture (
+  data                      blob,
   lat                       double,
   lng                       double,
   description               varchar(255))

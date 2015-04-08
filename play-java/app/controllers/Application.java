@@ -51,6 +51,8 @@ public class Application extends Controller {
     public static Result uploadAction() {
         MultipartFormData body = request().body().asMultipartFormData();
         Map<String, String[]> asFormUrlEncoded = request().body().asMultipartFormData().asFormUrlEncoded();
+        String[] titleParams = asFormUrlEncoded.get("title");
+        String title = titleParams!=null?titleParams[0]:"N/A";
         String[] descriptionParams = asFormUrlEncoded.get("description");
         String description = descriptionParams!=null?descriptionParams[0]:"N/A";
         FilePart picture = body.getFile("picture");
@@ -58,14 +60,14 @@ public class Application extends Controller {
             //String fileName = picture.getFilename();
             //String contentType = picture.getContentType();
             File file = picture.getFile();
-            byte[] blob=null;
+            byte[] data=null;
             try {
-                blob = Files.toByteArray(file);
+                data = Files.toByteArray(file);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            //new Picture(blob,getLat(),getLng(),description).save(); //save picture to db TODO: fix
-            return ok(blob).as("image/jpeg"); // display blob
+            new Picture(data,getLat(),getLng(),title,description).save(); //save picture to db
+            return ok(data).as("image/jpeg"); // display picture
         } else {
             return badRequest("No File or wrong type");
         }
