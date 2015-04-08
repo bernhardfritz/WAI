@@ -74,8 +74,13 @@ public class Application extends Controller {
     public static Result bootstrap() {
         return ok(bootstrap.render());
     }
+
     public static Result login() {
         return ok(login.render());
+    }
+
+    public static Result register() {
+        return ok(register.render());
     }
 
     public static Result template() {
@@ -83,7 +88,7 @@ public class Application extends Controller {
     }
 
     public static Result template_wo_navbar() {
-        return ok(template_wo_navbar.render("Template",null,null));
+        return ok(template_wo_navbar.render("Template", null, null));
     }
 
     public static Result blank() {
