@@ -14,3 +14,5 @@ libraryDependencies ++= Seq(
 )
 
 libraryDependencies += "com.google.guava" % "guava" % "18.0"
+
+libraryDependencies += "javax.mail" % "mail" % "1.4"

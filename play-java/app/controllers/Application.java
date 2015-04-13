@@ -1,13 +1,13 @@
 package controllers;
 
-import com.google.common.io.Files;
-import models.Picture;
 import play.mvc.Controller;
 import play.mvc.Http.MultipartFormData;
 import play.mvc.Http.MultipartFormData.FilePart;
 import play.mvc.Result;
 import views.html.*;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Map;
@@ -35,7 +35,11 @@ public class Application extends Controller {
     }
 
     public static Result getLocation() {
-        return ok(getLocation.render(getLat(),getLng()));
+        return log("" + getLat() + " " + getLng());
+    }
+
+    public static Result log(String text) {
+        return ok(log.render(text));
     }
 
     public static Result setLocation(double lng, double lat) {
@@ -48,7 +52,7 @@ public class Application extends Controller {
         return ok(upload.render());
     }
 
-    public static Result uploadAction() {
+    public static Result uploadAction() throws IOException {
         MultipartFormData body = request().body().asMultipartFormData();
         Map<String, String[]> asFormUrlEncoded = request().body().asMultipartFormData().asFormUrlEncoded();
         String[] titleParams = asFormUrlEncoded.get("title");
@@ -57,17 +61,13 @@ public class Application extends Controller {
         String description = descriptionParams!=null?descriptionParams[0]:"N/A";
         FilePart picture = body.getFile("picture");
         if (picture != null && picture.getContentType().contains("image")){
-            //String fileName = picture.getFilename();
-            //String contentType = picture.getContentType();
             File file = picture.getFile();
-            byte[] data=null;
-            try {
-                data = Files.toByteArray(file);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            new Picture(data,getLat(),getLng(),title,description).save(); //save picture to db
-            return ok(data).as("image/jpeg"); // display picture
+            //new Picture(Files.toByteArray(f),getLat(),getLng(),title,description).save(); //save picture to db
+            BufferedImage img = ImageIO.read(file);
+            img = PictureManager.getInstance().getScaledImage(img);
+            PictureManager.getInstance().saveToFile(img,1);
+            EmailManager.getInstance().send("bernhard.e.fritz@gmail.com","test","dies ist ein testtext");
+            return redirect("picture/1"); // seite refreshen
         } else {
             return badRequest("No File or wrong type");
         }
@@ -99,5 +99,9 @@ public class Application extends Controller {
 
     public static Result game() {
         return ok(game.render());
+    }
+
+    public static Result picture(int id) {
+        return ok(picture.render(id));
     }
 }
