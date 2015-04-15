@@ -16,7 +16,7 @@ public class PictureManager {
         return SingletonHelper.INSTANCE;
     }
 
-    public BufferedImage getScaledImage(BufferedImage img){
+    public BufferedImage getScaledImage(BufferedImage img) {
 
         int newW = (360 * img.getWidth()) / img.getHeight();
         Image tmp = img.getScaledInstance(newW, 360, Image.SCALE_SMOOTH);

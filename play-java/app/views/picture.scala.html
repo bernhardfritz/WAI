@@ -1,6 +1,8 @@
-@(id: Integer)
+@(id: Long)
 @blank("picture") {
 
 } {
-  <img src="@routes.Assets.at("images/"+id+".jpg")">
+    <center>
+        <img src="@routes.Assets.at("images/"+id+".jpg")">
+    </center>
 }

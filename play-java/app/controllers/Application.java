@@ -1,6 +1,5 @@
 package controllers;
 
-import com.google.common.io.Files;
 import models.Picture;
 import models.User;
 import play.data.Form;
@@ -182,7 +181,29 @@ public class Application extends Controller {
         return ok(game.render());
     }
 
-    public static Result picture(int id) {
+    public static Result gameAction() {
+        return showDistance();
+    }
+
+    public static Result picture(Long id) {
         return ok(picture.render(id));
+    }
+
+    public static double getDistance(Picture picture) {
+        double lat = getLat();
+        double lng = getLng();
+        double R = 6378137; // Earth’s mean radius in meter
+        double dLat = Math.toRadians(lat - picture.getLat());
+        double dLong = Math.toRadians(lng - picture.getLng());
+        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(Math.toRadians(picture.getLat())) * Math.cos(Math.toRadians(lat)) *
+                        Math.sin(dLong / 2) * Math.sin(dLong / 2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        double d = R * c;
+        return d; // returns the distance in m
+    }
+
+    public static Result showDistance() {
+        return log(""+Math.round(getDistance(DBManager.getInstance().getPicture(1L)))/1000.0+" km");
     }
 }
