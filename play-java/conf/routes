@@ -4,6 +4,7 @@
 
 # Home page
 GET         /                             controllers.Application.index()
+
 GET         /map                          controllers.Application.map()
 GET         /setLocation/:lat/:lng        controllers.Application.setLocation(lat: Double, lng:Double)
 GET         /getLocation                  controllers.Application.getLocation()
@@ -11,13 +12,20 @@ GET         /log/:text                    controllers.Application.log(text: Stri
 GET         /upload                       controllers.Application.upload()
 POST        /upload                       controllers.Application.uploadAction()
 GET         /bootstrap                    controllers.Application.bootstrap()
-GET         /login                        controllers.Application.login()
-GET         /register                     controllers.Application.register()
 GET         /template                     controllers.Application.template()
 GET         /template_wo_navbar           controllers.Application.template_wo_navbar()
 GET         /blank                        controllers.Application.blank()
 GET         /game                         controllers.Application.game()
 GET         /picture/:id                  controllers.Application.picture(id: Integer)
+
+# Register
+GET         /register                     controllers.Application.gotoRegister()
+POST        /register                     controllers.Application.register()
+
+# Login / Logout
+GET         /login                        controllers.Application.login()
+POST        /login                        controllers.Application.authenticate()
+GET         /logout                       controllers.Application.logout()
 
 # Map static resources from the /public folder to the /assets URL path
 GET         /assets/*file                 controllers.Assets.at(path="/public", file)

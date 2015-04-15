@@ -1,3 +1,4 @@
+@(form: Form[controllers.Application.Login])
 @template_wo_navbar("login") {
     <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/theme.css")">
 } {
@@ -5,22 +6,30 @@
         <div id="loginModal" class="modal show" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h1 class="text-center">Login</h1>
-                    </div>
-                    <div class="modal-body modal-body-touch">
-                        <div class="form-group">
-                            <input type="text" class="form-control input-lg" placeholder="Email">
+                    @if(form.hasGlobalErrors) {
+                        <p style="color: red; font-weight: bold;">
+                        @form.globalError.message
+                        </p>
+                    }
+
+                    @helper.form(routes.Application.authenticate) {
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h1 class="text-center">Login</h1>
                         </div>
-                        <div class="form-group">
-                            <input type="password" class="form-control input-lg" placeholder="Password">
+                        <div class="modal-body modal-body-touch">
+                            <div class="form-group">
+                                <input type="text" name="username" class="form-control input-lg" placeholder="Username">
+                            </div>
+                            <div class="form-group">
+                                <input type="password" name="password" class="form-control input-lg" placeholder="Password">
+                            </div>
+                            <div class="form-group">
+                                <button class="btn btn-success btn-lg btn-block">Sign In</button>
+                                <!--<span class="pull-right"><a href="#">Register</a></span><span><a href="#">Need help?</a></span>-->
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <button class="btn btn-success btn-lg btn-block">Sign In</button>
-                            <!--<span class="pull-right"><a href="#">Register</a></span><span><a href="#">Need help?</a></span>-->
-                        </div>
-                    </div>
+                    }
                 </div>
             </div>
         </div>

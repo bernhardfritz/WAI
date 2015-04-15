@@ -1,9 +1,14 @@
 package controllers;
 
+import com.google.common.io.Files;
+import models.Picture;
+import models.User;
+import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Http.MultipartFormData;
 import play.mvc.Http.MultipartFormData.FilePart;
 import play.mvc.Result;
+import play.mvc.Security;
 import views.html.*;
 
 import javax.imageio.ImageIO;
@@ -14,6 +19,39 @@ import java.util.Map;
 
 
 public class Application extends Controller {
+
+    public static class Login {
+        public String username;
+        public String password;
+
+        public String validate() {
+            if (User.authenticate(username, password) == null) {
+                return "Invalid user or password!";
+            }
+            return null;
+        }
+    }
+
+    public static class Register {
+        public String name;
+        public String email;
+        public String password;
+        public String passwordConfirm;
+
+        public String validate() {
+            if (name.isEmpty() || email.isEmpty() || password.isEmpty() ||
+                    !password.equals(passwordConfirm)) {
+                return "Invalid name, email address or password!";
+            }
+            for (User u : DBManager.getInstance().getAllUsers()) {
+                if (u.getName().equals(name) || u.getEmail().equals(email)) {
+                    return "Invalid name, email address or password!";
+                }
+            }
+            return null;
+        }
+    }
+
     public static Result index() {
         return ok(index.render("Your new application is ready."));
     }
@@ -62,12 +100,20 @@ public class Application extends Controller {
         FilePart picture = body.getFile("picture");
         if (picture != null && picture.getContentType().contains("image")){
             File file = picture.getFile();
-            //new Picture(Files.toByteArray(f),getLat(),getLng(),title,description).save(); //save picture to db
+
+            // save picture to db
+            Picture pic = new Picture(getLat(),getLng(),title,description);
+            DBManager.getInstance().savePicture(pic);
+            String path = "public/images/" + pic.getId() + ".jpg";
+            pic.setPath(path);
+            DBManager.getInstance().savePicture(pic);
+
+            // save picture to "public/images/pictureID.jpg"
             BufferedImage img = ImageIO.read(file);
             img = PictureManager.getInstance().getScaledImage(img);
-            PictureManager.getInstance().saveToFile(img,1);
-            EmailManager.getInstance().send("bernhard.e.fritz@gmail.com","test","dies ist ein testtext");
-            return redirect("picture/1"); // seite refreshen
+            PictureManager.getInstance().saveToFile(img, pic.getId().intValue());
+            //EmailManager.getInstance().send("bernhard.e.fritz@gmail.com","test","dies ist ein testtext");
+            return redirect("picture/" + pic.getId()); // seite refreshen
         } else {
             return badRequest("No File or wrong type");
         }
@@ -78,11 +124,45 @@ public class Application extends Controller {
     }
 
     public static Result login() {
-        return ok(login.render());
+        DBManager.getInstance();
+        Form<Login> loginForm = Form.form(Login.class);
+        return ok(login.render(loginForm));
+    }
+
+    public static Result authenticate() {
+        Form<Login> loginForm = Form.form(Login.class).bindFromRequest();
+        if (loginForm.hasErrors()) {
+            return badRequest(login.render(loginForm));
+        }
+        else {
+            session().clear();
+            session("username", loginForm.get().username);
+            return redirect(routes.Application.game());
+        }
+    }
+
+    @Security.Authenticated(Secured.class)
+    public static Result logout() {
+        session().clear();
+        return redirect(routes.Application.login());
+    }
+
+    public static Result gotoRegister() {
+        Form<Register> registerForm = Form.form(Register.class);
+        return ok(register.render(registerForm));
     }
 
     public static Result register() {
-        return ok(register.render());
+        Form<Register> registerForm = Form.form(Register.class).bindFromRequest();
+        if (registerForm.hasErrors()) {
+            return badRequest(register.render(registerForm));
+        }
+        else {
+            DBManager.getInstance().registerUser(new User(registerForm.get().name, registerForm.get().email, registerForm.get().password));
+            session().clear();
+            session("username", registerForm.get().name);
+            return redirect(routes.Application.game());
+        }
     }
 
     public static Result template() {
@@ -97,6 +177,7 @@ public class Application extends Controller {
         return ok(blank.render("Blank",null,null));
     }
 
+    @Security.Authenticated(Secured.class)
     public static Result game() {
         return ok(game.render());
     }
