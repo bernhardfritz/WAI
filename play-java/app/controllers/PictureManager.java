@@ -46,27 +46,31 @@ public class PictureManager {
     }
 
     public static BufferedImage createThumbnail(BufferedImage img, int size) { //creates a thumbnail of a picture by cutting off, the longer sides and then skaling the picture
-        BufferedImage dest=img;
+        if (img.getWidth() < 100 || img.getHeight() < 100) {
+            return img;
+        } else {
+
+            BufferedImage dest = img;
+
+            if ((img.getWidth() / img.getHeight()) > 1) {
+                int tmp = img.getWidth() - img.getHeight();
+                dest = img.getSubimage((tmp / 2), 0, img.getWidth() - tmp, img.getHeight());
+
+            }
+            if ((img.getWidth() / img.getHeight()) < 1) {
+                int tmp = img.getHeight() - img.getWidth();
+                dest = img.getSubimage(0, (tmp / 2), img.getWidth(), img.getHeight() - tmp);
+            }
+
+            Image tmp = dest.getScaledInstance(size, size, Image.SCALE_SMOOTH);
+            BufferedImage dimg = new BufferedImage(size, size, BufferedImage.TYPE_INT_RGB);
 
 
-        if ((img.getWidth()/ img.getHeight())>0){
-            int tmp=img.getWidth()-img.getHeight();
-            dest = img.getSubimage((tmp/2), 0, img.getWidth()-tmp, img.getHeight());
+            Graphics2D g2d = dimg.createGraphics();
+            g2d.drawImage(tmp, 0, 0, null);
+            g2d.dispose();
 
+            return dimg;
         }
-        if ((img.getWidth()/ img.getHeight())<0){
-            int tmp=img.getHeight()-img.getWidth();
-            dest = img.getSubimage(0, (tmp/2), img.getWidth(), img.getHeight()-tmp);
-        }
-
-        Image tmp = dest.getScaledInstance(size, size, Image.SCALE_SMOOTH);
-        BufferedImage dimg = new BufferedImage(size, size, BufferedImage.TYPE_INT_RGB);
-
-
-        Graphics2D g2d = dimg.createGraphics();
-        g2d.drawImage(tmp, 0, 0, null);
-        g2d.dispose();
-
-        return dimg;
     }
 }
