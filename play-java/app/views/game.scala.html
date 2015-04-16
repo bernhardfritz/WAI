@@ -88,7 +88,6 @@
     <script type="text/javascript">
         var openPhotoSwipe = function() {
             var pswpElement = document.querySelectorAll('.pswp')[0];
-
             // build items array
             var items = [
             {
@@ -97,7 +96,6 @@
                 h: 480
             }
             ];
-
             // define options (if needed)
             var options = {
                 // history & focus options are disabled on CodePen
@@ -106,7 +104,6 @@
                 showAnimationDuration: 0,
                 hideAnimationDuration: 0
             };
-
             var gallery = new PhotoSwipe( pswpElement, PhotoSwipeUI_Default, items, options);
             gallery.init();
         };
