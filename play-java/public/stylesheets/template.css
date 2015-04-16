@@ -22,3 +22,8 @@
 #container {
     padding-top: 75px;
 }
+
+.img {
+    overflow:auto;
+    -webkit-overflow-scrolling:touch;
+}

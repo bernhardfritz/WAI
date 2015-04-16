@@ -1,5 +1,6 @@
 package controllers;
 
+import com.google.common.io.Files;
 import models.Picture;
 import models.User;
 import play.data.Form;
@@ -185,8 +186,8 @@ public class Application extends Controller {
         return showDistance();
     }
 
-    public static Result picture(Long id) {
-        return ok(picture.render(id));
+    public static Result picture(Long id) throws IOException {
+        return ok(Files.toByteArray(new File(DBManager.getInstance().getPicture(id).getPath()))).as("image/jpg");
     }
 
     public static double getDistance(Picture picture) {
