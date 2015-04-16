@@ -204,6 +204,6 @@ public class Application extends Controller {
     }
 
     public static Result showDistance() {
-        return log(""+Math.round(getDistance(DBManager.getInstance().getPicture(1L)))/1000.0+" km");
+        return log(""+Math.round(getDistance(DBManager.getInstance().getPicture(13L)))/1000.0+" km");
     }
 }
