@@ -1,0 +1,9 @@
+@template("Play") {
+
+} {
+    <div class="text-center">
+        <a href="@routes.Application.index()"><img src="@routes.Assets.at("images/logo.png")"></a><br/><br/>
+        <a href="@routes.Application.new_game_menu()" class="btn btn-lg btn-success">Start a new game</a><br/><br/>
+        <a href="@routes.Application.practise()" type="button" class="btn btn-lg btn-success">Practise</a>
+    </div>
+}

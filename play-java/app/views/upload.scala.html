@@ -1,6 +1,9 @@
 @template("Upload") {
 
 } {
+    <div class="text-center">
+        <a href="@routes.Application.index()"><img src="@routes.Assets.at("images/logo.png")"></a><br/><br/>
+    </div>
     @helper.form(action = routes.Application.uploadAction(), 'enctype -> "multipart/form-data") {
         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
             <div class="panel panel-default">

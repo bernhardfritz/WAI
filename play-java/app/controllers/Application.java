@@ -52,8 +52,17 @@ public class Application extends Controller {
         }
     }
 
+    //@Security.Authenticated(Secured.class)
     public static Result index() {
-        return ok(index.render("Your new application is ready."));
+        return ok(index.render());
+    }
+
+    public static Result play_menu() {
+        return ok(play_menu.render());
+    }
+
+    public static Result new_game_menu() {
+        return ok(new_game_menu.render());
     }
 
     public static Result map() {
@@ -137,7 +146,7 @@ public class Application extends Controller {
         else {
             session().clear();
             session("username", loginForm.get().username);
-            return redirect(routes.Application.game());
+            return redirect(routes.Application.index());
         }
     }
 
@@ -161,7 +170,7 @@ public class Application extends Controller {
             DBManager.getInstance().registerUser(new User(registerForm.get().name, registerForm.get().email, registerForm.get().password));
             session().clear();
             session("username", registerForm.get().name);
-            return redirect(routes.Application.game());
+            return redirect(routes.Application.index());
         }
     }
 
@@ -177,12 +186,11 @@ public class Application extends Controller {
         return ok(blank.render("Blank",null,null));
     }
 
-    @Security.Authenticated(Secured.class)
-    public static Result game() {
-        return ok(game.render());
+    public static Result practise() {
+        return ok(practise.render());
     }
 
-    public static Result gameAction() {
+    public static Result practiseAction() {
         return showDistance();
     }
 
