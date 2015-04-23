@@ -76,6 +76,10 @@ public class Picture extends Model {
         this.lng = lng;
     }
 
+    public LatLng getLatLng() {
+        return new LatLng(lat,lng);
+    }
+
     public String getTitle() {
         return title;
     }

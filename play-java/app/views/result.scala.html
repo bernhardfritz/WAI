@@ -1,13 +1,12 @@
-@(picture: Picture)
+@(picture: Picture)(distance: Double)
 @template("Result") {
 
 } {
     <div class="jumbotron">
-        <div class="text-center">
+        <img src="@routes.Application.picture(picture.getId)" class="col-lg-3 img-responsive img-circle pull-right">
         <h1>@picture.getTitle</h1>
-        <img src="@routes.Application.picture(picture.getId)" class="img-circle">
-        </div>
-        <p>@picture.getDescription</p>
-        <iframe src="@routes.Application.result_map()" width="100%" height="360px" frameborder="0"></iframe>
+        <p class="col-lg-8">@picture.getDescription</p>
+        <iframe src="@routes.Application.result_map(picture.getId())" width="100%" height="360px" frameborder="0"></iframe>
+        <p>You were off by @distance km.</p>
     </div>
 }

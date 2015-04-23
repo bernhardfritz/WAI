@@ -17,6 +17,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -72,17 +73,17 @@ public class Application extends Controller {
         return ok(map.render());
     }
 
-    public static Result result() {
-        return ok(result.render(DBManager.getInstance().getPicture(13L)));
+    public static Result result(long id) {
+        Picture picture = DBManager.getInstance().getPicture(id);
+
+        return ok(result.render(picture,prettifyDistance(getDistance(picture))));
     }
 
-    public static Result result_map() {
-        List<LatLng> latlngs = new ArrayList<LatLng>();
-        DBManager dbman = DBManager.getInstance();
-        for(int i=1; i<=3; i++) {
-            Picture picture = dbman.getPicture(0L+i);
-            latlngs.add(new LatLng(picture.getLat(),picture.getLng()));
-        }
+    public static Result result_map(long id) {
+        Picture picture = DBManager.getInstance().getPicture(id);
+        List<LatLng> latlngs = new ArrayList<>();
+        latlngs.add(picture.getLatLng());
+        latlngs.add(new LatLng(getLat(),getLng()));
         return ok(result_map.render(latlngs));
     }
 
@@ -204,11 +205,13 @@ public class Application extends Controller {
     }
 
     public static Result practise() {
-        return ok(practise.render());
+        long id = 1;
+        id+=Math.random()*13;
+        return ok(practise.render(id));
     }
 
-    public static Result practiseAction() {
-        return showDistance();
+    public static Result practiseAction(Long id) {
+        return result(id);
     }
 
     public static Result picture(Long id) throws IOException {
@@ -231,7 +234,10 @@ public class Application extends Controller {
         return d; // returns the distance in m
     }
 
+    public static Double prettifyDistance(double distance) {
+        return Math.round(distance)/1000.0;
+    }
     public static Result showDistance() {
-        return log(""+Math.round(getDistance(DBManager.getInstance().getPicture(13L)))/1000.0+" km");
+        return log(""+prettifyDistance(getDistance(DBManager.getInstance().getPicture(13L)))+" km");
     }
 }
