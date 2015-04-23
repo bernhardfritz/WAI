@@ -1,6 +1,7 @@
 package controllers;
 
 import com.google.common.io.Files;
+import models.LatLng;
 import models.Picture;
 import models.User;
 import play.data.Form;
@@ -15,6 +16,8 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 
@@ -69,6 +72,20 @@ public class Application extends Controller {
         return ok(map.render());
     }
 
+    public static Result result() {
+        return ok(result.render(DBManager.getInstance().getPicture(13L)));
+    }
+
+    public static Result result_map() {
+        List<LatLng> latlngs = new ArrayList<LatLng>();
+        DBManager dbman = DBManager.getInstance();
+        for(int i=1; i<=3; i++) {
+            Picture picture = dbman.getPicture(0L+i);
+            latlngs.add(new LatLng(picture.getLat(),picture.getLng()));
+        }
+        return ok(result_map.render(latlngs));
+    }
+
     public static double getLat() {
         String session = session().get("lat").toString();
         double lat = session!=null?Double.parseDouble(session):0.0;
@@ -89,7 +106,7 @@ public class Application extends Controller {
         return ok(log.render(text));
     }
 
-    public static Result setLocation(double lng, double lat) {
+    public static Result setLocation(double lat, double lng) {
         session("lat", "" + lat);
         session("lng",""+lng);
         return ok();
@@ -199,13 +216,15 @@ public class Application extends Controller {
     }
 
     public static double getDistance(Picture picture) {
-        double lat = getLat();
-        double lng = getLng();
         double R = 6378137; // Earth’s mean radius in meter
-        double dLat = Math.toRadians(lat - picture.getLat());
-        double dLong = Math.toRadians(lng - picture.getLng());
+        double lat1 = Math.toRadians(picture.getLat());
+        double lng1 = Math.toRadians(picture.getLng());
+        double lat2 = Math.toRadians(getLat());
+        double lng2 = Math.toRadians(getLng());
+        double dLat = lat2-lat1;
+        double dLong = lng2-lng1;
         double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-                Math.cos(Math.toRadians(picture.getLat())) * Math.cos(Math.toRadians(lat)) *
+                Math.cos(lat1) * Math.cos(lat2) *
                         Math.sin(dLong / 2) * Math.sin(dLong / 2);
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         double d = R * c;
