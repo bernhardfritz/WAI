@@ -65,6 +65,11 @@ public class Application extends Controller {
         return ok(play_menu.render());
     }
 
+    public static Result game(Long id) {
+        return result(id);
+    }
+
+
     public static Result new_game_menu() {
         return ok(new_game_menu.render());
     }
@@ -76,7 +81,7 @@ public class Application extends Controller {
     public static Result result(long id) {
         Picture picture = DBManager.getInstance().getPicture(id);
 
-        return ok(result.render(picture,prettifyDistance(getDistance(picture))));
+        return ok(result.render(picture, prettifyDistance(getDistance(picture))));
     }
 
     public static Result result_map(long id) {
@@ -193,7 +198,7 @@ public class Application extends Controller {
     }
 
     public static Result template() {
-        return ok(template.render("Template",null,null));
+        return ok(template.render("Template", null, null));
     }
 
     public static Result template_wo_navbar() {
@@ -204,18 +209,36 @@ public class Application extends Controller {
         return ok(blank.render("Blank",null,null));
     }
 
+
     public static Result practise() {
         long id = 1;
         id+=Math.random()*13;
         return ok(practise.render(id));
     }
 
+    public static Result game() {
+        long id = 1;
+        id+=Math.random()*13;
+        return ok(game.render(id));
+    }
+
     public static Result practiseAction(Long id) {
+        return result(id);
+    }
+
+    public static Result gameAction(Long id) {
         return result(id);
     }
 
     public static Result picture(Long id) throws IOException {
         return ok(Files.toByteArray(new File(DBManager.getInstance().getPicture(id).getPath()))).as("image/jpg");
+    }
+
+    public static Result thumbnail(Long id) throws IOException {
+        String path=DBManager.getInstance().getPicture(id).getPath();
+        String front=path.substring(0,path.length()-4);
+        String newPath = front+"t.jpg";
+        return ok(Files.toByteArray(new File(newPath))).as("image/jpg");
     }
 
     public static double getDistance(Picture picture) {
