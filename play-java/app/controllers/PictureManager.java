@@ -37,13 +37,22 @@ public class PictureManager {
 
     public void saveToFile(BufferedImage img, int id) {
         try {
-            ImageIO.write(img,"jpg",new File("public/images/"+id+".jpg"));
+            ImageIO.write(img, "jpg", new File("public/images/" + id + ".jpg"));
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
     }
+
+    public void saveAsThumbnail(BufferedImage img, int id) {
+        try {
+            ImageIO.write(img, "jpg", new File("public/images/" + id + "t.jpg"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
 
     public static BufferedImage createThumbnail(BufferedImage img, int size) { //creates a thumbnail of a picture by cutting off, the longer sides and then skaling the picture
         if (img.getWidth() < size || img.getHeight() < size) {

@@ -144,6 +144,9 @@ public class Application extends Controller {
             BufferedImage img = ImageIO.read(file);
             img = PictureManager.getInstance().getScaledImage(img);
             PictureManager.getInstance().saveToFile(img, pic.getId().intValue());
+            img=PictureManager.getInstance().createThumbnail(img,100);
+            PictureManager.getInstance().saveAsThumbnail(img, pic.getId().intValue());
+
             //EmailManager.getInstance().send("bernhard.e.fritz@gmail.com","test","dies ist ein testtext");
             return redirect("picture/" + pic.getId()); // seite refreshen
         } else {
