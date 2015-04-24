@@ -8,7 +8,7 @@
                 </div>
 
     <form action="@routes.Application.practiseAction(id)" method="post">
-        <button type="submit" class="btn btn-default btn-block">Submit</button>
+        <button type="submit" class="btn btn-default btn-block"><center><font color="black"><text id="countdown" ></text></font></center></button>
     </form>
 
     <center>
@@ -72,7 +72,7 @@
     var count=60;
     var c= document.getElementById("countdown");
     setInterval(function () {
-    c.innerHTML="  " +count+" seconds left";
+    c.innerHTML="Submit (" +count+")";
     count = count - 1;
     if (count <= 0) {
     count=0;
