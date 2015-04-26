@@ -22,10 +22,12 @@ GET         /blank                        controllers.Application.blank()
 GET         /practise                     controllers.Application.practise()
 POST        /practiseAction/:id           controllers.Application.practiseAction(id: Long)
 GET         /picture/:id                  controllers.Application.picture(id: Long)
-GET         /thumbnail/:id                  controllers.Application.thumbnail(id: Long)
+GET         /thumbnail/:id                controllers.Application.thumbnail(id: Long)
 GET         /showDistance                 controllers.Application.showDistance()
 GET         /game                         controllers.Application.game()
 POST        /gameAction/:id               controllers.Application.gameAction(id: Long)
+GET         /send_email                   controllers.Application.send_email()
+GET         /search_friend                controllers.Application.search_friend()
 
 # Register
 GET         /register                     controllers.Application.gotoRegister()

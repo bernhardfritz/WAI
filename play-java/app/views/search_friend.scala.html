@@ -1,0 +1,42 @@
+@template("search a friend") {
+
+} {
+  <div class="bs-docs-section">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="page-header">
+          <h2 id="forms">Search Friend</h2>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="well bs-component">
+          <form class="form-horizontal">
+            <fieldset>
+              <legend>Search</legend>
+                <div class="input-group">
+                  <input type="text" name="suchbegriff" class="form-control" placeholder="Search for..." value="Name"> </input>
+                    <span class="input-group-btn">
+                      <button class="btn btn-default" type="submit">Go!</button>
+                    </span>
+                </div>
+                <br />
+                 <div class="list-group">
+                  <a href="" class="list-group-item">Marcus</a>
+                   <a href="" class="list-group-item">Stefan</a>
+                 </div>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <div class="bs-component">
+        <ul class="pager">
+          <li class="previous disabled"><a href="@routes.Application.new_game_menu()">&larr; back</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+}

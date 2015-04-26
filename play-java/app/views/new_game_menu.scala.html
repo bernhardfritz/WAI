@@ -3,7 +3,20 @@
 } {
     <div class="text-center">
         <a href="@routes.Application.play_menu()"><img src="@routes.Assets.at("images/logo.png")"></a><br/><br/>
-        <a href="#" class="btn btn-lg btn-success">Invite a friend</a><br/><br/>
+
+        <div class="btn-group">
+            <button type="button" class="btn btn-lg btn-success dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                Invite a friend <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+                <li><a href="@routes.Application.search_friend()">Search from friendlist</a></li>
+                <li class="divider"></li>
+                <li><a href="@routes.Application.send_email()">Send an email to a new friend</a></li>
+            </ul>
+        </div>
+        <br>
+        <br>
+
         <a href="#" type="button" class="btn btn-lg btn-success">Random</a>
     </div>
 }

@@ -78,6 +78,14 @@ public class Application extends Controller {
         return ok(map.render());
     }
 
+    public static Result send_email() {
+        return ok(send_email.render());
+    }
+
+    public static Result search_friend() {
+        return ok(search_friend.render());
+    }
+
     public static Result result(long id) {
         Picture picture = DBManager.getInstance().getPicture(id);
 

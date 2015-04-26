@@ -17,7 +17,7 @@ public class EmailManager {
     private EmailManager() {
         this.from= "whereamiplay@gmail.com";
         final String username = "whereamiplay@gmail.com";
-        final String password = "bermarthiphi";
+        final String password = "bermarthiphiz";
 
         String host = "smtp.gmail.com";
 
