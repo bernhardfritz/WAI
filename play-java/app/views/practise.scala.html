@@ -1,5 +1,5 @@
-@(id: Long)(height: Integer)(width: Integer)
-@template("Game") {
+@(id: Long)(width: Integer)(height: Integer)
+@template_with_navbar("Game") {
 
 } {
     <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
@@ -38,15 +38,14 @@
         <button type="submit" class="btn btn-default btn-block">Submit</button>
       </form>
     </div>
-
     <!-- Root element of PhotoSwipe. Must have class pswp. -->
     <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
-        <!-- Background of PhotoSwipe.
+            <!-- Background of PhotoSwipe.
         It's a separate element as animating opacity is faster than rgba(). -->
         <div class="pswp__bg"></div>
             <!-- Slides wrapper with overflow:hidden. -->
         <div class="pswp__scroll-wrap">
-            <!-- Container that holds slides.
+                <!-- Container that holds slides.
             PhotoSwipe keeps only 3 of them in the DOM to save memory.
             Don't modify these 3 pswp__item elements, data is added later on. -->
             <div class="pswp__container">
@@ -54,16 +53,16 @@
                 <div class="pswp__item"></div>
                 <div class="pswp__item"></div>
             </div>
-            <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+                <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
             <div class="pswp__ui pswp__ui--hidden">
                 <div class="pswp__top-bar">
-                    <!--  Controls are self-explanatory. Order can be changed. -->
+                        <!--  Controls are self-explanatory. Order can be changed. -->
                     <div class="pswp__counter"></div>
                     <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
                     <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
                     <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
-                    <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
-                    <!-- element will get class pswp__preloader--active when preloader is running -->
+                        <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                        <!-- element will get class pswp__preloader--active when preloader is running -->
                     <div class="pswp__preloader">
                         <div class="pswp__preloader__icn">
                             <div class="pswp__preloader__cut">
@@ -88,26 +87,26 @@
 
     <script type="text/javascript">
         var openPhotoSwipe = function() {
-            var pswpElement = document.querySelectorAll('.pswp')[0];
-            // build items array
-            var items = [
-            {
-                src: '@routes.Application.picture(id)',
-                w: @width,
-                h: @height
-            }
-            ];
-            // define options (if needed)
-            var options = {
-                // history & focus options are disabled on CodePen
-                history: false,
-                focus: false,
-                showAnimationDuration: 0,
-                hideAnimationDuration: 0
-            };
-            var gallery = new PhotoSwipe( pswpElement, PhotoSwipeUI_Default, items, options);
-            gallery.init();
-        };
-        document.getElementById('picture').onclick = openPhotoSwipe;
+    var pswpElement = document.querySelectorAll('.pswp')[0];
+    // build items array
+    var items = [
+    {
+    src: '@routes.Application.picture(id)',
+    w: @width,
+    h: @height
+    }
+    ];
+    // define options (if needed)
+    var options = {
+    // history & focus options are disabled on CodePen
+    history: false,
+    focus: false,
+    showAnimationDuration: 0,
+    hideAnimationDuration: 0
+    };
+    var gallery = new PhotoSwipe( pswpElement, PhotoSwipeUI_Default, items, options);
+    gallery.init();
+    };
+    document.getElementById('picture').onclick = openPhotoSwipe;
     </script>
 }

@@ -1,4 +1,4 @@
-@(id: Long)
+@(id: Long)(width: Integer)(height: Integer)
 @blank("Map") {
     
     <script src="@routes.Assets.at("javascripts/jquery-1.11.2.min.js")" type="text/javascript"></script>
@@ -19,8 +19,8 @@
     var items = [
     {
     src: '@routes.Application.picture(id)',
-    w: 640,
-    h: 480
+    w: @width,
+    h: @height
     }
     ];
     // define options (if needed)
@@ -64,7 +64,8 @@
             controlUI.style.borderRadius = '3px';
             controlUI.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
             controlUI.style.cursor = 'pointer';
-            controlUI.style.marginBottom = '22px';
+            controlUI.style.marginTop = '5px';
+            controlUI.style.marginRight = '5px';
             controlUI.style.textAlign = 'center';
             controlUI.title = 'Click to enlarge';
             controlDiv.appendChild(controlUI);
@@ -75,10 +76,10 @@
             controlText.style.fontFamily = 'Roboto,Arial,sans-serif';
             controlText.style.fontSize = '5px';
             controlText.style.lineHeight = '5px';
-            controlText.style.paddingLeft = '5px';
-            controlText.style.paddingRight = '5px';
             controlText.innerHTML =  '<img src="@routes.Application.thumbnail(id)" id="picture">';
             controlUI.appendChild(controlText);
+
+            map.controls[google.maps.ControlPosition.TOP_RIGHT].push(controlUI);
 
             // Setup the click event listeners
             google.maps.event.addDomListener(controlUI, 'click', function() {
@@ -87,20 +88,27 @@
         }
 
         function initialize() {
-            var center = new google.maps.LatLng(41.850033, -87.6500523);
+            var center = new google.maps.LatLng(0, 0);
             var mapOptions = {
-                zoom:12,
+                zoom:1,
                 center:center,
+                panControl:false,
+                zoomControl:true,
+                mapTypeControl:false,
+                scaleControl:false,
+                streetViewControl:false,
+                overviewMapControl:false,
+                rotateControl:false,
                 mapTypeId:google.maps.MapTypeId.ROADMAP,
                 styles:[{"featureType":"poi","stylers":[{"visibility":"off"}]}]
             };
             map = new google.maps.Map(document.getElementById ( 'map-canvas' ), mapOptions ) ;
-            if (navigator.geolocation) {
+            /*if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(function (position) {
                     var geolocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
                     map.setCenter(geolocation);
                 });
-            }
+            }*/
 
             // This event listener will call addMarker() when the map is clicked.
             google.maps.event.addListener(map,'click',function(event) {
@@ -112,7 +120,7 @@
             var lng = markers[0].getPosition().lng();
             $.get("/setLocation/"+lat+"/"+lng);
             //window.getLocation.href = "/setLocation/"+lat+"/"+lng;
-            fixMarker(markers[0 ].getPosition())
+            //fixMarker(markers[0 ].getPosition())
             }
             });
 

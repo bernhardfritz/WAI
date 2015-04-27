@@ -1,0 +1,8 @@
+@(title: String)(head: Html)(body: Html)
+@template(title) {
+    @head
+} {
+    @template_navbar(title) {
+        @body
+    }
+}

@@ -23,7 +23,7 @@ GET         /search_friend                controllers.Application.search_friend(
 GET         /send_email                   controllers.Application.send_email()
 GET         /setLocation/:lat/:lng        controllers.Application.setLocation(lat: Double, lng: Double)
 GET         /template                     controllers.Application.template()
-GET         /template_wo_navbar           controllers.Application.template_wo_navbar()
+GET         /template_wo_navbar           controllers.Application.template_with_navbar()
 GET         /thumbnail/:id                controllers.Application.thumbnail(id: Long)
 GET         /upload                       controllers.Application.upload()
 POST        /upload                       controllers.Application.uploadAction()

@@ -148,7 +148,8 @@ public class Application extends Controller {
     }
 
     public static Result map(long id) {
-        return ok(map.render(id));
+        Picture p = dbManager.getPicture(id);
+        return ok(map.render(id,p.getWidth(),p.getHeight()));
     }
 
     public static Result new_game_menu() {
@@ -167,7 +168,7 @@ public class Application extends Controller {
         long id = 1;
         id+=Math.random()*dbManager.getPictureCount();
         Picture p = dbManager.getPicture(id);
-        return ok(practise.render(id, p.getHeight(), p.getWidth()));
+        return ok(practise.render(id, p.getWidth(), p.getHeight()));
     }
 
     public static Result practiseAction(Long id) {
@@ -202,6 +203,8 @@ public class Application extends Controller {
         List<LatLng> latlngs = new ArrayList<>();
         latlngs.add(picture.getLatLng());
         latlngs.add(new LatLng(getLat(),getLng()));
+        session().remove("lat");
+        session().remove("lng");
         return ok(result_map.render(latlngs));
     }
 
@@ -223,8 +226,8 @@ public class Application extends Controller {
         return ok(template.render("Template", null, null));
     }
 
-    public static Result template_wo_navbar() {
-        return ok(template_wo_navbar.render("Template", null, null));
+    public static Result template_with_navbar() {
+        return ok(template_with_navbar.render("Template with navbar", null, null));
     }
 
     public static Result thumbnail(Long id) throws IOException {
@@ -248,7 +251,7 @@ public class Application extends Controller {
             BufferedImage img = ImageIO.read(file);
 
             // save picture to db
-            Picture pic = new Picture(getLat(),getLng(),title,description, img.getHeight(), img.getWidth(), dbManager.getUser(session().get("username")));
+            Picture pic = new Picture(getLat(),getLng(),title,description, img.getWidth(), img.getHeight(), dbManager.getUser(session().get("username")));
             dbManager.savePicture(pic);
 
             // save picture to "public/images/pictures/pictureID.jpg"
