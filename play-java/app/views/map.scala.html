@@ -53,7 +53,7 @@
             new google.maps.Point(12, 35));
         }
 
-        function SetLocationControl(controlDiv, map) {
+        function PictureControl(controlDiv, map) {
             if (@id==0){
                 return;
             }
@@ -125,10 +125,10 @@
             });
 
             // Create the DIV to hold the control and
-            // call the SetLocationControl() constructor passing
+            // call the PictureControl() constructor passing
             // in this DIV.
-            var setLocationControlDiv = document.createElement('div');
-            var setLocationControl = new SetLocationControl(setLocationControlDiv, map);
+            var pictureControlDiv = document.createElement('div');
+            var pictureControl = new PictureControl(pictureControlDiv, map);
 
             setLocationControlDiv.index = 1;
             map.controls[google.maps.ControlPosition.BOTTOM_LEFT].push(setLocationControlDiv);
