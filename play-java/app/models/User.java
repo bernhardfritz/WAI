@@ -21,10 +21,13 @@ public class User extends Model {
 
     private String password;
 
+    private boolean active;
+
     public User(String name, String email, String password) {
         this.name = name;
         this.email = email;
         this.password = HashManager.getInstance().codeString(password);
+        active = false;
     }
 
     public static Finder<Long, User> find = new Finder<Long, User>(Long.class, User.class);
@@ -55,6 +58,14 @@ public class User extends Model {
 
     public void setPassword(String password) {
         this.password = HashManager.getInstance().codeString(password);
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     public static User authenticate(String username, String password) {

@@ -23,6 +23,7 @@ import java.util.Map;
 
 
 public class Application extends Controller {
+    private static DBManager dbManager = DBManager.getInstance();
 
     public static class Login {
         public String username;
@@ -47,7 +48,7 @@ public class Application extends Controller {
                     !password.equals(passwordConfirm)) {
                 return "Invalid name, email address or password!";
             }
-            for (User u : DBManager.getInstance().getAllUsers()) {
+            for (User u : dbManager.getAllUsers()) {
                 if (u.getName().equals(name) || u.getEmail().equals(email)) {
                     return "Invalid name, email address or password!";
                 }
@@ -87,13 +88,13 @@ public class Application extends Controller {
     }
 
     public static Result result(long id) {
-        Picture picture = DBManager.getInstance().getPicture(id);
+        Picture picture = dbManager.getPicture(id);
 
         return ok(result.render(picture, prettifyDistance(getDistance(picture))));
     }
 
     public static Result result_map(long id) {
-        Picture picture = DBManager.getInstance().getPicture(id);
+        Picture picture = dbManager.getPicture(id);
         List<LatLng> latlngs = new ArrayList<>();
         latlngs.add(picture.getLatLng());
         latlngs.add(new LatLng(getLat(),getLng()));
@@ -140,16 +141,13 @@ public class Application extends Controller {
         FilePart picture = body.getFile("picture");
         if (picture != null && picture.getContentType().contains("image")){
             File file = picture.getFile();
+            BufferedImage img = ImageIO.read(file);
 
             // save picture to db
-            Picture pic = new Picture(getLat(),getLng(),title,description);
-            DBManager.getInstance().savePicture(pic);
-            String path = "public/images/" + pic.getId() + ".jpg";
-            pic.setPath(path);
-            DBManager.getInstance().savePicture(pic);
+            Picture pic = new Picture(getLat(),getLng(),title,description, img.getHeight(), img.getWidth(), dbManager.getUser(session().get("username")));
+            dbManager.savePicture(pic);
 
-            // save picture to "public/images/pictureID.jpg"
-            BufferedImage img = ImageIO.read(file);
+            // save picture to "public/images/pictures/pictureID.jpg"
             img = PictureManager.getInstance().getScaledImage(img);
             PictureManager.getInstance().saveToFile(img, pic.getId().intValue());
             img=PictureManager.getInstance().createThumbnail(img,100);
@@ -167,7 +165,6 @@ public class Application extends Controller {
     }
 
     public static Result login() {
-        DBManager.getInstance();
         Form<Login> loginForm = Form.form(Login.class);
         return ok(login.render(loginForm));
     }
@@ -201,7 +198,7 @@ public class Application extends Controller {
             return badRequest(register.render(registerForm));
         }
         else {
-            DBManager.getInstance().registerUser(new User(registerForm.get().name, registerForm.get().email, registerForm.get().password));
+            dbManager.registerUser(new User(registerForm.get().name, registerForm.get().email, registerForm.get().password));
             session().clear();
             session("username", registerForm.get().name);
             return redirect(routes.Application.index());
@@ -223,13 +220,14 @@ public class Application extends Controller {
 
     public static Result practise() {
         long id = 1;
-        id+=Math.random()*13;
-        return ok(practise.render(id));
+        id+=Math.random()*dbManager.getPictureCount();
+        Picture p = dbManager.getPicture(id);
+        return ok(practise.render(id, p.getHeight(), p.getWidth()));
     }
 
     public static Result game() {
         long id = 1;
-        id+=Math.random()*13;
+        id+=Math.random()*dbManager.getPictureCount();
         return ok(game.render(id));
     }
 
@@ -242,14 +240,11 @@ public class Application extends Controller {
     }
 
     public static Result picture(Long id) throws IOException {
-        return ok(Files.toByteArray(new File(DBManager.getInstance().getPicture(id).getPath()))).as("image/jpg");
+        return ok(Files.toByteArray(new File("public/images/pictures/" + id + ".jpg"))).as("image/jpg");
     }
 
     public static Result thumbnail(Long id) throws IOException {
-        String path=DBManager.getInstance().getPicture(id).getPath();
-        String front=path.substring(0,path.length()-4);
-        String newPath = front+"t.jpg";
-        return ok(Files.toByteArray(new File(newPath))).as("image/jpg");
+        return ok(Files.toByteArray(new File("public/images/thumbnails/" + id + ".jpg"))).as("image/jpg");
     }
 
     public static double getDistance(Picture picture) {
@@ -270,8 +265,5 @@ public class Application extends Controller {
 
     public static Double prettifyDistance(double distance) {
         return Math.round(distance)/1000.0;
-    }
-    public static Result showDistance() {
-        return log(""+prettifyDistance(getDistance(DBManager.getInstance().getPicture(13L)))+" km");
     }
 }

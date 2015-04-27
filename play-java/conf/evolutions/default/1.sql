@@ -5,20 +5,23 @@
 
 create table picture (
   id                        integer primary key AUTOINCREMENT,
-  path                      varchar(255),
   lat                       double,
   lng                       double,
   title                     varchar(255),
   description               varchar(255),
+  height                    integer,
+  width                     integer,
   accepted                  integer(1),
-  updload_date              timestamp)
+  updload_date              timestamp,
+  create_user_id            integer)
 ;
 
 create table user (
   id                        integer primary key AUTOINCREMENT,
   name                      varchar(255),
   email                     varchar(255),
-  password                  varchar(255))
+  password                  varchar(255),
+  active                    integer(1))
 ;
 
 

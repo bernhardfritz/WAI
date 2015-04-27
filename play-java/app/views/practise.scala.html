@@ -1,4 +1,4 @@
-@(id: Long)
+@(id: Long)(height: Integer)(width: Integer)
 @template("Game") {
 
 } {
@@ -93,8 +93,8 @@
             var items = [
             {
                 src: '@routes.Application.picture(id)',
-                w: 640,
-                h: 480
+                w: @width,
+                h: @height
             }
             ];
             // define options (if needed)

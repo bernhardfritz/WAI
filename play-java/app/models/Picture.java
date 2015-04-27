@@ -19,8 +19,6 @@ public class Picture extends Model {
     @Id
     private Long id;
 
-    private String path;
-
     private double lat;
 
     private double lng;
@@ -29,17 +27,29 @@ public class Picture extends Model {
 
     private String description;
 
+    private int height;
+
+    private int width;
+
     private boolean accepted;
 
     private LocalDateTime updloadDate;
 
-    public Picture(double lat, double lng, String title, String description) {
+    // Nur die createUserID wird in der DB gespeichert, weil Sqlite keine ALTER TABLE Stmts. für die ManyToOne Beziehung unterstützt
+    private Long createUserID;
+    private User createUser;
+
+    public Picture(double lat, double lng, String title, String description, int height, int width,  User createUser) {
         this.lat = lat;
         this.lng = lng;
         this.title = title;
         this.description = description;
+        this.height = height;
+        this.width = width;
         this.accepted = false;
         this.updloadDate = LocalDateTime.now();
+        this.createUser = createUser;
+        this.createUserID = createUser.getId();
     }
 
     public static Finder<Long, Picture> find = new Finder<Long, Picture>(Long.class, Picture.class);
@@ -50,14 +60,6 @@ public class Picture extends Model {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
     }
 
     public double getLat() {
@@ -96,6 +98,22 @@ public class Picture extends Model {
         this.description = description;
     }
 
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
     public boolean isAccepted() {
         return accepted;
     }
@@ -110,5 +128,21 @@ public class Picture extends Model {
 
     public void setUpdloadDate(LocalDateTime updloadDate) {
         this.updloadDate = updloadDate;
+    }
+
+    public Long getCreateUserID() {
+        return createUserID;
+    }
+
+    public void setCreateUserID(Long createUserID) {
+        this.createUserID = createUserID;
+    }
+
+    public User getCreateUser() {
+        return createUser;
+    }
+
+    public void setCreateUser(User createUser) {
+        this.createUser = createUser;
     }
 }
