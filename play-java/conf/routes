@@ -7,7 +7,7 @@ GET         /                             controllers.Application.index()
 
 GET         /play_menu                    controllers.Application.play_menu()
 GET         /new_game_menu                controllers.Application.new_game_menu()
-GET         /map                          controllers.Application.map()
+GET         /map/:id                      controllers.Application.map(id: Long)
 GET         /result/:id                   controllers.Application.result(id: Long)
 GET         /result_map/:id               controllers.Application.result_map(id: Long)
 GET         /setLocation/:lat/:lng        controllers.Application.setLocation(lat: Double, lng: Double)

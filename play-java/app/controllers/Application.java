@@ -75,8 +75,8 @@ public class Application extends Controller {
         return ok(new_game_menu.render());
     }
 
-    public static Result map() {
-        return ok(map.render());
+    public static Result map(long id) {
+        return ok(map.render(id));
     }
 
     public static Result send_email() {

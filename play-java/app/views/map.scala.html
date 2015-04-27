@@ -1,3 +1,4 @@
+@(id: Long)
 @blank("Map") {
     
     <script src="@routes.Assets.at("javascripts/jquery-1.11.2.min.js")" type="text/javascript"></script>
@@ -12,6 +13,27 @@
 
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
     <script>
+    var openPhotoSwipe = function() {
+    var pswpElement = document.querySelectorAll('.pswp')[0];
+    // build items array
+    var items = [
+    {
+    src: '@routes.Application.picture(id)',
+    w: 640,
+    h: 480
+    }
+    ];
+    // define options (if needed)
+    var options = {
+    // history & focus options are disabled on CodePen
+    history: false,
+    focus: false,
+    showAnimationDuration: 0,
+    hideAnimationDuration: 0
+    };
+    var gallery = new PhotoSwipe( pswpElement, PhotoSwipeUI_Default, items, options);
+    gallery.init();
+    };
         // In the following example, markers appear when the user clicks on the map.
         // The markers are stored in an array.
         // The user can then click an option to hide, show or delete the markers.
@@ -32,7 +54,9 @@
         }
 
         function SetLocationControl(controlDiv, map) {
-
+            if (@id==0){
+                return;
+            }
             // Set CSS for the control border
             var controlUI = document.createElement('div');
             controlUI.style.backgroundColor = '#fff';
@@ -42,31 +66,23 @@
             controlUI.style.cursor = 'pointer';
             controlUI.style.marginBottom = '22px';
             controlUI.style.textAlign = 'center';
-            controlUI.title = 'Click to set location';
+            controlUI.title = 'Click to enlarge';
             controlDiv.appendChild(controlUI);
 
             // Set CSS for the control interior
             var controlText = document.createElement('div');
             controlText.style.color = 'rgb(25,25,25)';
             controlText.style.fontFamily = 'Roboto,Arial,sans-serif';
-            controlText.style.fontSize = '16px';
-            controlText.style.lineHeight = '38px';
+            controlText.style.fontSize = '5px';
+            controlText.style.lineHeight = '5px';
             controlText.style.paddingLeft = '5px';
             controlText.style.paddingRight = '5px';
-            controlText.innerHTML = 'Set location';
+            controlText.innerHTML =  '<img src="@routes.Application.thumbnail(id)" id="picture">';
             controlUI.appendChild(controlText);
 
             // Setup the click event listeners
             google.maps.event.addDomListener(controlUI, 'click', function() {
-                if(markers[0] == null) {
-                    alert("You have to select a location first");
-                } else {
-                    var lat = markers[0].getPosition().lat();
-                    var lng = markers[0].getPosition().lng();
-                    $.get("/setLocation/"+lat+"/"+lng);
-                    //window.getLocation.href = "/setLocation/"+lat+"/"+lng;
-                    fixMarker(markers[0 ].getPosition())
-                }
+            openPhotoSwipe();
             });
         }
 
@@ -89,6 +105,15 @@
             // This event listener will call addMarker() when the map is clicked.
             google.maps.event.addListener(map,'click',function(event) {
                 addMarker(event.latLng);
+            if(markers[0] == null) {
+            alert("You have to select a location first");
+            } else {
+            var lat = markers[0].getPosition().lat();
+            var lng = markers[0].getPosition().lng();
+            $.get("/setLocation/"+lat+"/"+lng);
+            //window.getLocation.href = "/setLocation/"+lat+"/"+lng;
+            fixMarker(markers[0 ].getPosition())
+            }
             });
 
             // Create the DIV to hold the control and
@@ -162,5 +187,53 @@
         <input onclick="deleteMarkers();" type=button value="Delete Markers">
     </div>
     -->
+    <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+            <!-- Background of PhotoSwipe.
+        It's a separate element as animating opacity is faster than rgba(). -->
+        <div class="pswp__bg"></div>
+            <!-- Slides wrapper with overflow:hidden. -->
+        <div class="pswp__scroll-wrap">
+                <!-- Container that holds slides.
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+            <div class="pswp__container">
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+            </div>
+                <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+            <div class="pswp__ui pswp__ui--hidden">
+                <div class="pswp__top-bar">
+                        <!--  Controls are self-explanatory. Order can be changed. -->
+                    <div class="pswp__counter"></div>
+                    <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                    <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                    <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                        <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                        <!-- element will get class pswp__preloader--active when preloader is running -->
+                    <div class="pswp__preloader">
+                        <div class="pswp__preloader__icn">
+                            <div class="pswp__preloader__cut">
+                                <div class="pswp__preloader__donut"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                    <div class="pswp__share-tooltip"></div>
+                </div>
+                <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+                </button>
+                <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+                </button>
+                <div class="pswp__caption">
+                    <div class="pswp__caption__center"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div id="map-canvas"></div>
+
+
 }
