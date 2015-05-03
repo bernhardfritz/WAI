@@ -14,10 +14,10 @@ public class EmailManager {
     private String from;
     private Session session;
 
-    private EmailManager() {
+    public EmailManager() {
         this.from= "whereamiplay@gmail.com";
         final String username = "whereamiplay@gmail.com";
-        final String password = "bermarthiphiz";
+        final String password = "bermarthiphi";
 
         String host = "smtp.gmail.com";
 

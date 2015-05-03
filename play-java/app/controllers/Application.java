@@ -4,6 +4,7 @@ import com.google.common.io.Files;
 import models.LatLng;
 import models.Picture;
 import models.User;
+import play.data.DynamicForm;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Http.MultipartFormData;
@@ -149,7 +150,7 @@ public class Application extends Controller {
 
     public static Result map(long id) {
         Picture p = dbManager.getPicture(id);
-        return ok(map.render(id,p.getWidth(),p.getHeight()));
+        return ok(map.render(id, p.getWidth(), p.getHeight()));
     }
 
     public static Result new_game_menu() {
@@ -213,6 +214,17 @@ public class Application extends Controller {
     }
 
     public static Result send_email() {
+        return ok(send_email.render());
+    }
+
+    public static Result send_email_action() {
+
+        DynamicForm dynamicForm = Form.form().bindFromRequest();
+        String email = dynamicForm.get("email");
+        String text = dynamicForm.get("text");
+        String name = dynamicForm.get("name");
+        EmailManager emailManager = new EmailManager();
+        emailManager.send(email,"Where Am I Invitation (From " + name + ")",text);
         return ok(send_email.render());
     }
 
