@@ -2,7 +2,9 @@
 @template("Game") {
 } {
     <script type="text/javascript">
-        var pixel=screen.height-75;
+    var height= window.innerHeight || document.body.clientHeight;
+    var pixel=height-50;
+
     document.write ('<iframe src="@routes.Application.map(id)" width="100%" height="'+pixel+'px" frameborder="0"></iframe>');
 
 
