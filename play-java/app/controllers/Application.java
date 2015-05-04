@@ -227,8 +227,12 @@ public class Application extends Controller {
         String text = dynamicForm.get("text");
         String name = dynamicForm.get("name");
         EmailManager emailManager = new EmailManager();
-        emailManager.send(email,"Where Am I Invitation (From " + name + ")",text);
-        return ok(send_email.render());
+        boolean sentornot = emailManager.send(email,"Where Am I Invitation (From " + name + ")",text);
+        return redirect(routes.Application.send_email_done(sentornot, email));
+    }
+
+    public static Result send_email_done(boolean sentornot, String email) {
+        return ok(send_email_done.render(sentornot, email));
     }
 
     public static Result setLocation(double lat, double lng) {

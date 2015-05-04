@@ -22,6 +22,8 @@ GET         /result_map/:id               controllers.Application.result_map(id:
 GET         /search_friend                controllers.Application.search_friend()
 GET         /send_email                   controllers.Application.send_email()
 POST        /send_email                   controllers.Application.send_email_action()
+GET         /send_email_done              controllers.Application.send_email_done(sentornot: Boolean, toemail: String)
+
 GET         /setLocation/:lat/:lng        controllers.Application.setLocation(lat: Double, lng: Double)
 GET         /template                     controllers.Application.template()
 GET         /template_wo_navbar           controllers.Application.template_with_navbar()

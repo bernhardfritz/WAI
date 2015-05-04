@@ -43,7 +43,7 @@ public class EmailManager {
         return SingletonHelper.INSTANCE;
     }
 
-    public void send(String to, String headline, String text) {
+    public boolean send(String to, String headline, String text) {
         try {
             Message message = new MimeMessage(this.session);
             message.setFrom(new InternetAddress(this.from));
@@ -52,8 +52,9 @@ public class EmailManager {
             message.setText(text);
             Transport.send(message);
             System.out.println("sent");
+            return true;
         } catch (MessagingException e) {
-            throw new RuntimeException(e);
+            return false;
         }
     }
 }
