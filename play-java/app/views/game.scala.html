@@ -2,12 +2,9 @@
 @template("Game") {
 } {
     <script type="text/javascript">
-    if (screen.height < 568) {
-    document.write ('<iframe src="@routes.Application.map(id)" width="100%" height="360px" frameborder="0"></iframe>')
-    }
-    else {
-    document.write ('<iframe src="@routes.Application.map(id)" width="100%" height="410px" frameborder="0"></iframe>')
-    }
+        var pixel=screen.height-75;
+    document.write ('<iframe src="@routes.Application.map(id)" width="100%" height="'+pixel+'px" frameborder="0"></iframe>');
+
 
     </script>
 
@@ -19,11 +16,10 @@
         var count=60;
         setInterval(function() {
             $("#countdown").html("Submit (" +count+")");
-            count = count - 1;
             if (count <= 0) {
-                count=0;
                 window.location.replace("@routes.Application.result(id)");
             }
+    count = count - 1;
         },1000);
     </script>
 }
