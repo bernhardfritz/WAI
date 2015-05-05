@@ -16,7 +16,8 @@
                 </div>
                 <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
                     <div class="panel-body">
-                        <input type="file" class="filestyle" name="picture">
+                        <input type="file" id="file_id" class="filestyle" name="picture">
+                        <text id="text_id" >Choose a picture with a maximum of 10MB!</text>
                     </div>
                 </div>
             </div>
@@ -48,10 +49,25 @@
                         <br />
                         <textarea class="form-control" rows="3" placeholder="Description" name="description"></textarea>
                         <br />
-                        <button type="submit" class="btn btn-default">Submit</button>
+                        <button type="submit" id="submit_id" class="btn btn-default">Submit</button>
                     </div>
                 </div>
             </div>
         </div>
+
+        <script type="text/javascript">
+        $('#file_id').bind('change', function()
+        {
+            if(this.files[0].size>10000000) { //10MB
+            alert ("File size too big!") ;
+            file_id.replaceWith( file_id =file_id.clone( true ) );
+            }
+            var ext = $('#file_id').val().split('.').pop().toLowerCase();
+            if($.inArray(ext, ['gif','png','jpg','jpeg']) == -1) {
+            alert("Wrong file type!");
+            file_id.replaceWith( file_id =file_id.clone( true ) );
+        }
+        });
+        </script>
     }
 }
