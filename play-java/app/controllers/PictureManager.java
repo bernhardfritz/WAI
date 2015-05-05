@@ -37,7 +37,7 @@ public class PictureManager {
 
     public void saveToFile(BufferedImage img, int id) {
         try {
-            ImageIO.write(img, "jpg", new File("public/images/pictures" + id + ".jpg"));
+            ImageIO.write(img, "jpg", new File("public/images/pictures/" + id + ".jpg"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -45,7 +45,7 @@ public class PictureManager {
 
     public void saveAsThumbnail(BufferedImage img, int id) {
         try {
-            ImageIO.write(img, "jpg", new File("public/images/thumbnail" + id + ".jpg"));
+            ImageIO.write(img, "jpg", new File("public/images/thumbnails/" + id + ".jpg"));
         } catch (IOException e) {
             e.printStackTrace();
         }
