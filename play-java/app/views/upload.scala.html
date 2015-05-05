@@ -49,7 +49,11 @@
                         <br />
                         <textarea class="form-control" rows="3" placeholder="Description" name="description"></textarea>
                         <br />
-                        <button type="submit" id="submit_id" class="btn btn-default">Submit</button>
+                        <form action="javascript:alert( 'success!' );">
+                                <input type="submit" id="submit_id" class="btn btn-default">
+                               <p><font id="error_id" color="red"></font></p>
+                        </form>
+                        <span></span>
                     </div>
                 </div>
             </div>
@@ -58,21 +62,34 @@
         <script type="text/javascript">
         $('#file_id').bind('change', function()
         {
-        $("#text_id").html('<span style="color:#00aa00"> File ready to upload! </span>');
 
             if(this.files[0].size>10000000) { //10MB
-                $("#text_id").html('<span style="color:#FF0000"> File size too big! </span>');
+                $( "#text_id" ).html('<span style="color:#FF0000"> Size too big! </span>').show().fadeOut( 4000 );
                 $('#file_id').val('');
-
-
-            }
+            }else{
         var ext = $('#file_id').val().split('.').pop().toLowerCase();
             if($.inArray(ext, ['gif','png','jpg','jpeg']) == -1) {
-                $("#text_id").html('<span style="color:#FF0000"> Wrong file type! </span>');
-                $('#file_id').val('');
-
+            $( "#text_id" ).html('<span style="color:#FF0000"> Wrong file type! </span>').show().fadeOut( 4000 );
+            $ ( '#file_id' ).val ( '' ) ;
+            }else{
+            $("#text_id").html('<span style="color:#00aa00"> File ready to upload! </span>');
+            }
         }
         });
         </script>
+
+
+        <script>
+        $( "#submit_id").click(function( event ) {
+        if ( $( "#file_id" ).val() != "") {
+        $( "span" ).text( "Uploading..." ).show();
+        return;
+        }
+
+        $( "#error_id" ).text("You have to select a photo first!" ).show().fadeOut( 3000 );
+        event.preventDefault();
+        });
+        </script>
+
     }
 }

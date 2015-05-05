@@ -283,7 +283,7 @@ public class Application extends Controller {
             //return redirect("picture/" + pic.getId()); // seite refreshen
             return index();
         } else {
-            return badRequest("No File or wrong type");
+            return upload();
         }
     }
 }
