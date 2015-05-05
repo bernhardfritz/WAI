@@ -31,7 +31,7 @@
                 </div>
                 <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
                     <div class="panel-body">
-                        <iframe src="@routes.Application.map(0)" width="100%" height="360px" frameborder="0"></iframe>
+                        <iframe src="@routes.Application.map(0)" id="map_id" width="100%" height="360px" frameborder="0"></iframe>
                     </div>
                 </div>
             </div>
@@ -45,13 +45,16 @@
                 </div>
                 <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
                     <div class="panel-body">
-                        <input type="text" class="form-control" placeholder="Title" name="title">
+                        <input type="text" id="text1" class="form-control" placeholder="Title" name="title">
                         <br />
-                        <textarea class="form-control" rows="3" placeholder="Description" name="description"></textarea>
+                        <textarea class="form-control" id="text2" rows="3" placeholder="Description" name="description"></textarea>
                         <br />
                         <form action="javascript:alert( 'success!' );">
                                 <input type="submit" id="submit_id" class="btn btn-default">
-                               <p><font id="error_id" color="red"></font></p>
+                               <p><font id="error_id1" color="red"></font></p>
+                                <p><font id="error_id2" color="red"></font></p>
+                                <p><font id="error_id3" color="red"></font></p>
+                                <p><font id="error_id4" color="red"></font></p>
                         </form>
                         <span></span>
                     </div>
@@ -81,13 +84,33 @@
 
         <script>
         $( "#submit_id").click(function( event ) {
-        if ( $( "#file_id" ).val() != "") {
+
+        var lng = window.frames[0].window.lng;
+        var lat = window.frames[0].window.lat;
+
+        if ( $( "#file_id" ).val() != "" && $( "#text1" ).val() !=""&& $( "#text2" ).val() !=""&&lat !==undefined && lng!==undefined) {
         $( "span" ).text( "Uploading..." ).show();
         return;
+
+        }else {
+        if ( $ ( "#file_id" ).val ( ) == "" ) {
+        $ ( "#error_id1" ).text ( "Photo is missing!" ).show ( ).fadeOut ( 3000 ) ;
+
+        }
+        if ( $ ( "#text1" ).val ( ) == "" ) {
+        $ ( "#error_id2" ).text ( "Title is missing!" ).show ( ).fadeOut ( 3000 ) ;
         }
 
-        $( "#error_id" ).text("You have to select a photo first!" ).show().fadeOut( 3000 );
-        event.preventDefault();
+        if ( $ ( "#text2" ).val ( ) == "" ) {
+        $ ( "#error_id3" ).text ( "Description is missing!" ).show ( ).fadeOut ( 3000 ) ;
+        }
+
+        if (lat ===undefined && lng===undefined) {
+        $ ( "#error_id4" ).text ( "Location missing!" ).show ( ).fadeOut ( 3000 ) ;
+        }
+
+        event.preventDefault ( ) ;
+        }
         });
         </script>
 
