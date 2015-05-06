@@ -91,32 +91,41 @@ public class Application extends Controller {
         return result(id);
     }
 
-    public static double getDistance(Picture picture) {
-        double R = 6378137; // Earth’s mean radius in meter
-        double lat1 = Math.toRadians(picture.getLat());
-        double lng1 = Math.toRadians(picture.getLng());
-        double lat2 = Math.toRadians(getLat());
-        double lng2 = Math.toRadians(getLng());
-        double dLat = lat2-lat1;
-        double dLong = lng2-lng1;
-        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-                Math.cos(lat1) * Math.cos(lat2) *
-                        Math.sin(dLong / 2) * Math.sin(dLong / 2);
-        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        double d = R * c;
-        return d; // returns the distance in m
+    public static Double getDistance(Picture picture) {
+        if (getLat() != null && getLng() != null) {
+            double R = 6378137; // Earth’s mean radius in meter
+            double lat1 = Math.toRadians(picture.getLat());
+            double lng1 = Math.toRadians(picture.getLng());
+            double lat2 = Math.toRadians(getLat());
+            double lng2 = Math.toRadians(getLng());
+            double dLat = lat2 - lat1;
+            double dLong = lng2 - lng1;
+            double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                    Math.cos(lat1) * Math.cos(lat2) *
+                            Math.sin(dLong / 2) * Math.sin(dLong / 2);
+            double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            double d = R * c;
+            return d; // returns the distance in m
+        }
+        return null;
     }
 
-    public static double getLat() {
-        String session = session().get("lat").toString();
-        double lat = session!=null?Double.parseDouble(session):0.0;
-        return lat;
+    public static Double getLat() {
+        if(session().get("lat") != null) {
+            String session = session().get("lat").toString();
+            double lat = session != null ? Double.parseDouble(session) : 0.0;
+            return lat;
+        }
+        return null;
     }
 
-    public static double getLng() {
-        String session = session().get("lng").toString();
-        double lng = session!=null?Double.parseDouble(session):0.0;
-        return lng;
+    public static Double getLng() {
+        if (session().get("lng") != null) {
+            String session = session().get("lng").toString();
+            double lng = session != null ? Double.parseDouble(session) : 0.0;
+            return lng;
+        }
+        return null;
     }
 
     public static Result getLocation() {
@@ -198,17 +207,22 @@ public class Application extends Controller {
 
     public static Result result(long id) {
         Picture picture = dbManager.getPicture(id);
-
-        return ok(result.render(picture, prettifyDistance(getDistance(picture))));
+        if (getDistance(picture)!=null) {
+            return ok(result.render(picture, prettifyDistance(getDistance(picture))));
+        }
+        return ok(result.render(picture,null));
     }
 
     public static Result result_map(long id) {
         Picture picture = dbManager.getPicture(id);
         List<LatLng> latlngs = new ArrayList<>();
         latlngs.add(picture.getLatLng());
-        latlngs.add(new LatLng(getLat(),getLng()));
-        session().remove("lat");
-        session().remove("lng");
+        if (getLat() != null && getLng() != null) {
+            latlngs.add(new LatLng(getLat(), getLng()));
+            session().remove("lat");
+            session().remove("lng");
+            return ok(result_map.render(latlngs));
+        }
         return ok(result_map.render(latlngs));
     }
 

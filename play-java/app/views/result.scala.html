@@ -7,6 +7,10 @@
         <h1>@picture.getTitle</h1>
         <p class="col-lg-8">@picture.getDescription</p>
         <iframe src="@routes.Application.result_map(picture.getId())" width="100%" height="360px" frameborder="0"></iframe>
-        <p>You were off by @distance km.</p>
+        <text id="text_id">No location set</text>
     </div>
+
+    <script type="text/javascript">
+    $ ( '#text_id' ).html (  "You were off by "+ @distance);
+    </script>
 }
