@@ -169,6 +169,8 @@ public class Application extends Controller {
         return ok(new_game_menu.render());
     }
 
+    public static Result no_javascript() {return ok(no_javascript.render());}
+
     public static Result picture(Long id) throws IOException {
         return ok(Files.toByteArray(new File("public/images/pictures/" + id + ".jpg"))).as("image/jpg");
     }

@@ -1,6 +1,7 @@
 @template_with_navbar("Upload") {
 
 } {
+
     <div class="text-center">
         <a href="@routes.Application.index()"><img src="@routes.Assets.at("images/logo.png")"></a><br/><br/>
     </div>
@@ -50,10 +51,9 @@
                         <textarea class="form-control" id="text2" rows="3" placeholder="Description" name="description"></textarea>
                         <br />
                         <form action="javascript:alert( 'success!' );">
-                                <input type="submit" id="submit_id" class="btn btn-default">
+                                <button type="submit" id="submit_id" class="btn btn-primary">Send</button>
                                 <p><font id="error_id1" color="red"></font></p>
                                 <p><font id="error_id2" color="red"></font></p>
-                                <p><font id="error_id3" color="red"></font></p>
                                 <p><font id="error_id4" color="red"></font></p>
                         </form>
                         <span></span>
@@ -88,7 +88,7 @@
         var lng = window.frames[0].window.lng;
         var lat = window.frames[0].window.lat;
 
-        if ( $( "#file_id" ).val() != "" && $( "#text1" ).val() !=""&& $( "#text2" ).val() !=""&&lat !==undefined && lng!==undefined) {
+        if ( $( "#file_id" ).val() != "" && $( "#text1" ).val() !=""&& lat !==undefined && lng!==undefined) {
         $( "span" ).text( "Uploading..." ).show();
         return;
 
@@ -101,9 +101,6 @@
         $ ( "#error_id2" ).text ( "Title is missing!" ).show ( ).fadeOut ( 3000 ) ;
         }
 
-        if ( $ ( "#text2" ).val ( ) == "" ) {
-        $ ( "#error_id3" ).text ( "Description is missing!" ).show ( ).fadeOut ( 3000 ) ;
-        }
 
         if (lat ===undefined && lng===undefined) {
         $ ( "#error_id4" ).text ( "Location missing!" ).show ( ).fadeOut ( 3000 ) ;

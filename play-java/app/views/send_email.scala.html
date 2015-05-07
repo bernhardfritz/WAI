@@ -19,7 +19,7 @@
               <div class="form-group">
                 <label for="inputEmail" class="col-lg-2 control-label">Send to (email adress)</label>
                 <div class="col-lg-10">
-                  <input type="text" class="form-control" id="inputEmail" placeholder="Email" name="email">
+                  <input type="text" class="form-control" id="email" placeholder="Email" name="email">
                 </div>
               </div>
               <div class="form-group">
@@ -43,12 +43,17 @@ yours WAI Team
                   Specify your name
                 </label>
                 <div class="col-lg-10">
-                  <input type="text" class="form-control" id="inputEmail" placeholder="Name" name="name">
+                  <input type="text" class="form-control" id="name" placeholder="Name" name="name">
                 </div>
               </div>
               <div class="form-group">
                 <div class="col-lg-10 col-lg-offset-2">
-                  <button type="submit" class="btn btn-primary">Send</button>
+                    <form action="javascript:alert( 'success!' );">
+                        <button type="submit" id="submit_id" class="btn btn-primary">Send</button>
+                        <p><font id="error_id1" color="red"></font></p>
+                        <p><font id="error_id2" color="red"></font></p>
+                        <p><font id="error_id3" color="red"></font></p>
+                    </form>
                 </div>
               </div>
             </fieldset>
@@ -64,4 +69,34 @@ yours WAI Team
       </div>
     </div>
   </div>
+
+
+    <script>
+    $( "#submit_id").click(function( event ) {
+
+
+    if ( $( "#email" ).val() != "" && $( "#name" ).val() !=""&& $( "#textArea" ).val() !="") {
+    $( "span" ).text( "Sending..." ).show();
+    return;
+
+    }else {
+    if ( $ ( "#email" ).val ( ) == "" ) {
+    $ ( "#error_id1" ).text ( "Email address missing!" ).show ( ).fadeOut ( 5000 ) ;
+
+    }
+    if ( $ ( "#name" ).val ( ) == "" ) {
+    $ ( "#error_id2" ).text ( "Name missing!" ).show ( ).fadeOut ( 5000 ) ;
+    }
+
+    if ( $ ( "#textArea" ).val ( ) == "" ) {
+    $ ( "#error_id3" ).text ( "Message missing!" ).show().fadeOut(5000);
+    }
+
+
+    event.preventDefault ( ) ;
+    }
+    });
+    </script>
+
+
 }

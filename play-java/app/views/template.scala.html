@@ -47,6 +47,9 @@
     <script src="@routes.Assets.at("javascripts/photoswipe-ui-default.min.js")" type="text/javascript"></script>
 
     @head
+      <noscript>
+          <meta http-equiv="refresh" content="0; url= @routes.Application.no_javascript()"/>
+      </noscript>
   </head>
   <body>
     @body
