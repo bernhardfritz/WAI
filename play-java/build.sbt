@@ -16,3 +16,5 @@ libraryDependencies ++= Seq(
 libraryDependencies += "com.google.guava" % "guava" % "18.0"
 
 libraryDependencies += "javax.mail" % "mail" % "1.4"
+
+libraryDependencies += "net.coobird" % "thumbnailator" % "[0.4, 0.5)"

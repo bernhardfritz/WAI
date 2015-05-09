@@ -77,6 +77,15 @@ public class Application extends Controller {
         return ok(bootstrap.render());
     }
 
+    public static Result gallery() {
+        List<Picture> pictures = new ArrayList<Picture>();
+        for(int i=1; i<=dbManager.getPictureCount(); i++) {
+            pictures.add(dbManager.getPicture(0L+i));
+        }
+        System.out.println(dbManager.getPictureCount());
+        return ok(gallery.render(pictures));
+    }
+
     public static Result game(Long id) {
         return result(id);
     }

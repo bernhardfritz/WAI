@@ -7,6 +7,7 @@ GET         /                             controllers.Application.index()
 
 GET         /blank                        controllers.Application.blank()
 GET         /bootstrap                    controllers.Application.bootstrap()
+GET         /gallery                      controllers.Application.gallery()
 GET         /game                         controllers.Application.game()
 POST        /gameAction/:id               controllers.Application.gameAction(id: Long)
 GET         /getLocation                  controllers.Application.getLocation()
