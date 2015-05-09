@@ -1,5 +1,5 @@
 # TODOs
-Wenn ein Task abgeschlossen ist einfach in /planning/README.md ein [x] setzen.
+Wenn ein Task abgeschlossen ist, einfach in WAI/planning/README.md ein [x] setzen.
 
 ## Bernhard
 - [ ] Admin Oberfläche
