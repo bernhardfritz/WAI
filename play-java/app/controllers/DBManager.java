@@ -58,6 +58,7 @@ public class DBManager {
         }
     }
 
+
     /* =========================== User functions =========================== */
 
     /**
@@ -102,6 +103,11 @@ public class DBManager {
      */
     public List<User> getAllUsers() {
         return User.find.where().ieq("active", "1").findList();
+    }
+
+    public void changeUserPassword(User user, String password) {
+        user.setPassword(password);
+        user.save();
     }
 
 
