@@ -1,3 +1,6 @@
+# TODOs
+Wenn ein Task abgeschlossen ist einfach in /planning/README.md ein [x] setzen.
+
 ## Bernhard
 - [ ] Admin Oberfläche
   - [ ] Erstellen einer Admin Oberfläche die nur durch den User admin aufgerufen werden kann. In dieser Oberfläche soll es für einen Admin ohne großen Aufwand möglich sein upgeloadete Bilder zu verifizieren und freizuschalten.
