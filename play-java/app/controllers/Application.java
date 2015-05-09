@@ -82,7 +82,6 @@ public class Application extends Controller {
         for(int i=1; i<=dbManager.getPictureCount(); i++) {
             pictures.add(dbManager.getPicture(0L+i));
         }
-        System.out.println(dbManager.getPictureCount());
         return ok(gallery.render(pictures));
     }
 
