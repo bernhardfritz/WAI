@@ -58,6 +58,8 @@ public class DBManager {
         }
     }
 
+    /* =========================== User functions =========================== */
+
     /**
      * Register new user to the DB.
      * @param user
@@ -102,6 +104,9 @@ public class DBManager {
         return User.find.where().ieq("active", "1").findList();
     }
 
+
+    /* =========================== Picture functions =========================== */
+
     /**
      * Save a picture to the DB.
      * @param picture
@@ -129,5 +134,30 @@ public class DBManager {
      */
     public int getPictureCount() {
         return Picture.find.where().ieq("accepted", "1").findList().size();
+    }
+
+    /**
+     * Get all pictures from the DB.
+     * @return All pictures from the DB.
+     */
+    public List<Picture> getAllPictures() {
+        return Picture.find.all();
+    }
+
+    /**
+     * Get all accepted pictures from the DB.
+     * @return All accepted pictures from the DB.
+     */
+    public List<Picture> getActivePictures() {
+        return Picture.find.where().ieq("accepted", "1").findList();
+    }
+
+    /**
+     * Accept the given picture and save the changes to the DB.
+     * @param picture
+     */
+    public void acceptPicture(Picture picture) {
+        picture.setAccepted(true);
+        savePicture(picture);
     }
 }
