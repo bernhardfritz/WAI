@@ -158,7 +158,7 @@ public class Application extends Controller {
     }
 
     public static Result map(long id) {
-        if (id==0L){
+        if (id == 0L) {
             return ok(map.render(0L,0,0));
         }
         Picture p = dbManager.getPicture(id);
@@ -252,8 +252,8 @@ public class Application extends Controller {
     }
 
     public static Result setLocation(double lat, double lng) {
-        session("lat", "" + lat);
-        session("lng",""+lng);
+        session("lat", String.valueOf(lat));
+        session("lng",String.valueOf(lng));
         return ok();
     }
 
