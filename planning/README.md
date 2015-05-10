@@ -25,13 +25,13 @@ Wenn ein Task abgeschlossen ist, einfach in WAI/planning/README.md ein [x] setze
 - [ ] Einbauen einer Möglichkeit zum Ändern des Passworts von der Weboberfläche. ("Forgot password?" bei Login und "Change password" im Sidebar Menü).
 
 ## Philipp
-- [ ] Bilder der Sehenswürdigkeiten unskaliert überschreiben.
-- [ ] Entfernen der Skalierungsfunktion beim Upload von Bildern. Bilder sind aufgrund des PictureViewers nun responsive und es nicht mehr nötig sie zu skalieren.
-- [ ] Ändern der maximalen Dateigröße beim Upload von Bildern auf 5MB.
-- [ ] Umbau des PictureManagers mithilfe von Thumbnailinator um die Qualität unserer Thumbnails zu verbessern. Diese Bibliothek ist in das Projekt eingebunden und kann bereits verwendet werden. Info dazu hier: https://code.google.com/p/thumbnailator/
-- [ ] Report Seite
-  - [ ] Hinzufügen eines Report Buttons der auf eine report Seite verweist. Dabei solltest du die PictureID als Parameter verwenden. PictureID ist auf result bereits verfügbar und somit  kann bereits beim Laden der Seite der report Button mit dem richtigen Link belegt werden.
-  - [ ] Von der Report Seite aus kann man falsch gesetzte Locations von bereits freigegebenen Sehenswürdigkeiten direkt dem Administrator melden. Dabei soll es auch möglich sein eine Begründung anzugeben. Die Daten dieses Formulars sollen dann mithilfe einer Post-Request in Java griffbereit sein. Test mit System.out.println
+- [x] Bilder der Sehenswürdigkeiten unskaliert überschreiben.
+- [x] Entfernen der Skalierungsfunktion beim Upload von Bildern. Bilder sind aufgrund des PictureViewers nun responsive und es nicht mehr nötig sie zu skalieren.
+- [x] Ändern der maximalen Dateigröße beim Upload von Bildern auf 5MB.
+- [x] Umbau des PictureManagers mithilfe von Thumbnailinator um die Qualität unserer Thumbnails zu verbessern. Diese Bibliothek ist in das Projekt eingebunden und kann bereits verwendet werden. Info dazu hier: https://code.google.com/p/thumbnailator/
+- [x] Report Seite
+  - [x] Hinzufügen eines Report Buttons der auf eine report Seite verweist. Dabei solltest du die PictureID als Parameter verwenden. PictureID ist auf result bereits verfügbar und somit  kann bereits beim Laden der Seite der report Button mit dem richtigen Link belegt werden.
+  - [x] Von der Report Seite aus kann man falsch gesetzte Locations von bereits freigegebenen Sehenswürdigkeiten direkt dem Administrator melden. Dabei soll es auch möglich sein eine Begründung anzugeben. Die Daten dieses Formulars sollen dann mithilfe einer Post-Request in Java griffbereit sein. Test mit System.out.println
 
 ## Mario
 - [ ] Erstellen der Datenbanklogik für das Erstellen eines Spiels (Game.java). Dabei sollen 3 Runden (Round.java) beim Erstellen des Spiels mit einem zufälligen Bild angelegt werden. Das Spiel beinhaltet die konkurierenden Spieler (User.java), sowie die jeweiligen Runden (Round.java). Es soll zu jeder Zeit ersichtlich sein welche Runde schon gespielt bzw. ob das Spiel bereits fertig ist.
