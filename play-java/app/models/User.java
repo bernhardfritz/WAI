@@ -71,4 +71,16 @@ public class User extends Model {
     public static User authenticate(String username, String password) {
         return DBManager.getInstance().getUser(username, password);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        User that = (User) o;
+        return (this.id.equals(that.id) && this.name.equals(that.name) && this.email.equals(that.email)
+                && this.password.equals(that.password));
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode() * name.hashCode() * email.hashCode() * password.hashCode();
+    }
 }

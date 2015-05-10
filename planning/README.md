@@ -41,7 +41,7 @@ Wenn ein Task abgeschlossen ist, einfach in WAI/planning/README.md ein [x] setze
 - [x] Erstellen einer Funktion im DBManager.java die alle akzeptierten Bilder als List<Picture> zurückgibt.
 - [x] Erstellen einer Funktion im DBManager.java die es ermöglicht ein bestimmtes Bild zu akzeptieren.
 - [x] Erstellen einer Relation Freund (Friend.java), die zwei User (User.java) miteinander verknüpft.
-- [ ] Erstellen einer Funktion die alle Freunde eines gewissen Users als Liste zurückgibt.
+- [x] Erstellen einer Funktion die alle Freunde eines gewissen Users als Liste zurückgibt.
 - [ ] Überlade alle deine Funktionen die Listen zurückgeben mit 2 Parametern die es erlauben die Anzahl der zurückzugebenden Elemente zu limitieren (start, end).
 - [x] Einbauen der Funktionalität zum ändern eines Passworts.
 - [ ] Überleg dir bereits wie wir Punkte und Statistiken in dein Datenbankmodell einfügen können. Es möglich sein zu beliebigen Zeitpunkten neue Achivements hinzuzufügen.

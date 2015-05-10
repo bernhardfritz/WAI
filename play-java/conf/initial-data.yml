@@ -8,6 +8,30 @@ users:
         password:   secret
         active:     true
 
+    - !!models.User
+        email:      mario@test.at
+        name:       mario
+        password:   password
+        active:     true
+
+    - !!models.User
+        email:      bernhard@test.at
+        name:       bernhard
+        password:   password
+        active:     true
+
+    - !!models.User
+        email:      thibault@test.at
+        name:       thibault
+        password:   password
+        active:     true
+
+    - !!models.User
+        email:      philipp@test.at
+        name:       philipp
+        password:   password
+        active:     true
+
 # Pictures
 
 pictures:

@@ -1,6 +1,6 @@
 package controllers;
 
-import com.avaje.ebean.Ebean;
+import models.Friend;
 import models.Picture;
 import models.User;
 import org.joda.time.LocalDateTime;
@@ -9,8 +9,6 @@ import play.libs.Yaml;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,14 +32,18 @@ public class DBManager {
 
         // init user table
         if (User.find.all().isEmpty()) {
-            registerUser((User) all.get("users").get(0));
+            List<Object> users = all.get("users");
+
+            for (Object o : users) {
+                registerUser((User) o);
+            }
         }
 
         // init picture table
         if (Picture.find.all().isEmpty()) {
             List<Object> pictures = all.get("pictures");
 
-            for (int i = 1; i <= 13; i++) {
+            for (int i = 1; i <= pictures.size(); i++) {
                 try {
                     BufferedImage img = ImageIO.read(new File("public/images/pictures/" + i + ".jpg"));
                     Picture pic = (Picture) pictures.get(i-1);
@@ -59,55 +61,43 @@ public class DBManager {
     }
 
 
-    /* =========================== User functions =========================== */
+    /* =========================== Friends functions =========================== */
 
     /**
-     * Register new user to the DB.
+     * Save new friendship to the DB.
+     * @param user1
+     * @param user2
+     */
+    public void saveFriend(User user1, User user2) {
+        List<User> savedFriends = getFriends(user1);
+        if (!user1.equals(user2) && !savedFriends.contains(user2)) {
+            new Friend(user1, user2).save();
+        }
+    }
+
+    /**
+     * Get all saved friends for a user.
      * @param user
+     * @return All saved friends for a user.
      */
-    public void registerUser(User user) {
-        user.save();
-    }
+    public List<User> getFriends(User user) {
+        List<User> friends = new ArrayList<User>();
 
-    /**
-     * Authenticate user with username and password.
-     * @param username
-     * @param password
-     * @return The respective user or NULL if the authentication failed.
-     */
-    public User getUser(String username, String password) {
-        return User.find.where().ieq("name", username).ieq("password", HashManager.getInstance().codeString(password)).ieq("active", "1").findUnique();
-    }
+        if (user != null) {
+            for (Friend f : Friend.find.where().ieq("user1id", user.getId().toString()).findList()) {
+                if (!friends.contains(f.getUser2ID())) {
+                    friends.add(getUser(f.getUser2ID()));
+                }
+            }
 
-    /**
-     * Get user from id.
-     * @param id
-     * @return The respective user or NULL if there is no active user with that id.
-     */
-    public User getUser(Long id) {
-        return User.find.where().ieq("id", id.toString()).ieq("active", "1").findUnique();
-    }
+            for (Friend f : Friend.find.where().ieq("user2id", user.getId().toString()).findList()) {
+                if (!friends.contains(f.getUser1ID())) {
+                    friends.add(getUser(f.getUser1ID()));
+                }
+            }
+        }
 
-    /**
-     * Get user from username.
-     * @param username
-     * @return The respective user or NULL if there is no active user with that username.
-     */
-    public User getUser(String username) {
-        return User.find.where().ieq("name", username).ieq("active", "1").findUnique();
-    }
-
-    /**
-     * Get a list of all registered and active users.
-     * @return A list of all registered and active users.
-     */
-    public List<User> getAllUsers() {
-        return User.find.where().ieq("active", "1").findList();
-    }
-
-    public void changeUserPassword(User user, String password) {
-        user.setPassword(password);
-        user.save();
+        return friends;
     }
 
 
@@ -165,5 +155,57 @@ public class DBManager {
     public void acceptPicture(Picture picture) {
         picture.setAccepted(true);
         savePicture(picture);
+    }
+
+
+    /* =========================== User functions =========================== */
+
+    /**
+     * Register new user to the DB.
+     * @param user
+     */
+    public void registerUser(User user) {
+        user.save();
+    }
+
+    /**
+     * Authenticate user with username and password.
+     * @param username
+     * @param password
+     * @return The respective user or NULL if the authentication failed.
+     */
+    public User getUser(String username, String password) {
+        return User.find.where().ieq("name", username).ieq("password", HashManager.getInstance().codeString(password)).ieq("active", "1").findUnique();
+    }
+
+    /**
+     * Get user from id.
+     * @param id
+     * @return The respective user or NULL if there is no active user with that id.
+     */
+    public User getUser(Long id) {
+        return User.find.where().ieq("id", id.toString()).ieq("active", "1").findUnique();
+    }
+
+    /**
+     * Get user from username.
+     * @param username
+     * @return The respective user or NULL if there is no active user with that username.
+     */
+    public User getUser(String username) {
+        return User.find.where().ieq("name", username).ieq("active", "1").findUnique();
+    }
+
+    /**
+     * Get a list of all registered and active users.
+     * @return A list of all registered and active users.
+     */
+    public List<User> getAllUsers() {
+        return User.find.where().ieq("active", "1").findList();
+    }
+
+    public void changeUserPassword(User user, String password) {
+        user.setPassword(password);
+        user.save();
     }
 }

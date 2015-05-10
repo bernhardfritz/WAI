@@ -3,6 +3,12 @@
 
 # --- !Ups
 
+create table friend (
+  id                        integer primary key AUTOINCREMENT,
+  user1id                   integer,
+  user2id                   integer)
+;
+
 create table picture (
   id                        integer primary key AUTOINCREMENT,
   lat                       double,
@@ -30,6 +36,8 @@ create table user (
 # --- !Downs
 
 PRAGMA foreign_keys = OFF;
+
+drop table friend;
 
 drop table picture;
 
