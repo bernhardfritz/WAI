@@ -197,10 +197,11 @@ public class Application extends Controller {
     }
 
     public static Result practise() {
-        long id = 1;
+        return game();
+        /*long id = 1;
         id+=Math.random()*dbManager.getPictureCount();
         Picture p = dbManager.getPicture(id);
-        return ok(practise.render(id, p.getWidth(), p.getHeight()));
+        return ok(practise.render(id, p.getWidth(), p.getHeight()));*/
     }
 
     public static Result practiseAction(Long id) {
