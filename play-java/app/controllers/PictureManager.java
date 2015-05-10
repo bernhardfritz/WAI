@@ -61,12 +61,12 @@ public class PictureManager {
 
             BufferedImage dest = img;
 
-            if ((img.getWidth() / img.getHeight()) > 1) {
+            if ((img.getWidth() - img.getHeight()) > 0) {
                 int tmp = img.getWidth() - img.getHeight();
                 dest = img.getSubimage((tmp / 2), 0, img.getWidth() - tmp, img.getHeight());
 
             }
-            if ((img.getWidth() / img.getHeight()) < 1) {
+            if ((img.getWidth() - img.getHeight()) < 0) {
                 int tmp = img.getHeight() - img.getWidth();
                 dest = img.getSubimage(0, (tmp / 2), img.getWidth(), img.getHeight() - tmp);
             }
