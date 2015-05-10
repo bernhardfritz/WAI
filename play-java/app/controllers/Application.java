@@ -208,7 +208,7 @@ public class Application extends Controller {
     }
 
     public static Double prettifyDistance(double distance) {
-        return Double.valueOf(String.format("%.1f",distance/1000));
+        return Double.parseDouble(String.format("%.1f",distance/1000.0));
     }
 
     public static Result register() {

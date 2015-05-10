@@ -10,7 +10,7 @@ Wenn ein Task abgeschlossen ist, einfach in WAI/planning/README.md ein [x] setze
 - [ ] Erstellen einer Oberfläche zur Übersicht offener Spiele.
 - [ ] Verbinden der Game Oberfläche mit der aktuellen aus der Datenbank abgefragten Spielrunde des jeweiligen Users.
 - [ ] Einbauen eines Benachrichtigungssystems, das es ermöglicht dem Spieler mitzuteilen, dass ein anderer Spieler ihn zu einem Spiel herausgefordert hat, oder dass ein Spiel abgeschlossen wurde oder eine neue Runde beginnt.
-- [ ] Nach einer abgeschlossenen Runde soll ersichtlich sein wo der Gegner seine Markierung gesetzt hat. Die Marker sollen unterschiedliche Farben aufweisen um einfacher feststellen zu können wer was getippt hat und wo das Ziel gewesen wäre.
+- [x] Nach einer abgeschlossenen Runde soll ersichtlich sein wo der Gegner seine Markierung gesetzt hat. Die Marker sollen unterschiedliche Farben aufweisen um einfacher feststellen zu können wer was getippt hat und wo das Ziel gewesen wäre.
 - [ ] Erstellen einer Oberfläche zur Übersicht aller upgeloadeten Bilder eines Users. Hier soll auch ersichtlich sein ob das Bild bereits durch einen Admin akzeptiert worden ist oder nicht.
 - [ ] Erstellen einer Oberfläche zur Übersicht von Statistiken/Achivements.
 
@@ -45,3 +45,4 @@ Wenn ein Task abgeschlossen ist, einfach in WAI/planning/README.md ein [x] setze
 - [ ] Überlade alle deine Funktionen die Listen zurückgeben mit 2 Parametern die es erlauben die Anzahl der zurückzugebenden Elemente zu limitieren (start, end).
 - [x] Einbauen der Funktionalität zum ändern eines Passworts.
 - [ ] Überleg dir bereits wie wir Punkte und Statistiken in dein Datenbankmodell einfügen können. Es möglich sein zu beliebigen Zeitpunkten neue Achivements hinzuzufügen.
+- [ ] Einbauen einer Tabelle Report. Das Report Objekt beinhaltet ein bestehendes Bild oder die id eines bestehenden Bilds, neue Lat/Lng-Werte, Erstellungsdatum, User Objekt oder username des Nutzers der den Report verfasst, und ein boolean ob der Report behandelt wurde oder nicht.
