@@ -66,7 +66,7 @@
         $('#file_id').bind('change', function()
         {
 
-            if(this.files[0].size>10000000) { //10MB
+            if(this.files[0].size>5000000) { //5MB
                 $( "#text_id" ).html('<span style="color:#FF0000"> Size too big! </span>').show().fadeOut( 4000 );
                 $('#file_id').val('');
             }else{

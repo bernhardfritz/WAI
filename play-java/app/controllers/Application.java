@@ -298,7 +298,7 @@ public class Application extends Controller {
             dbManager.savePicture(pic);
 
             // save picture to "public/images/pictures/pictureID.jpg"
-            img = PictureManager.getInstance().getScaledImage(img);
+            //img = PictureManager.getInstance().getScaledImage(img);
             PictureManager.getInstance().saveToFile(img, pic.getId().intValue());
             img=PictureManager.getInstance().createThumbnail(img,100);
             PictureManager.getInstance().saveAsThumbnail(img, pic.getId().intValue());

@@ -82,4 +82,5 @@ public class PictureManager {
             return dimg;
         }
     }
+
 }
