@@ -9,6 +9,14 @@ create table friend (
   user2id                   integer)
 ;
 
+create table game (
+  id                        integer primary key AUTOINCREMENT,
+  user1id                   integer,
+  user2id                   integer,
+  winner_id                 integer,
+  finished                  integer(1))
+;
+
 create table picture (
   id                        integer primary key AUTOINCREMENT,
   lat                       double,
@@ -20,6 +28,16 @@ create table picture (
   accepted                  integer(1),
   updload_date              timestamp,
   create_user_id            integer)
+;
+
+create table round (
+  id                        integer primary key AUTOINCREMENT,
+  game_id                   integer,
+  picture_id                integer,
+  user1distance             double,
+  user2distance             double,
+  winner_id                 integer,
+  finished                  integer(1))
 ;
 
 create table user (
@@ -39,7 +57,11 @@ PRAGMA foreign_keys = OFF;
 
 drop table friend;
 
+drop table game;
+
 drop table picture;
+
+drop table round;
 
 drop table user;
 

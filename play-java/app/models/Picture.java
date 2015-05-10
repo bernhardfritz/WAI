@@ -58,10 +58,6 @@ public class Picture extends Model {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public double getLat() {
         return lat;
     }
@@ -144,5 +140,17 @@ public class Picture extends Model {
 
     public void setCreateUser(User createUser) {
         this.createUser = createUser;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        Picture that = (Picture) o;
+        return (this.id.equals(that.id) && this.lat == that.lat && this.lng == that.lng
+                && this.title.equals(that.title) && this.description.equals(that.description));
+    }
+
+    @Override
+    public int hashCode() {
+        return (int) (id.hashCode() * lat * lng * title.hashCode() * description.hashCode());
     }
 }
