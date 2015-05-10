@@ -1,30 +1,12 @@
 
-.DS_Store
-
-.vagrant/machines/default/virtualbox/synced_folders
-
 .vagrant/machines/default/virtualbox/action_provision
 
-.vagrant/machines/default/virtualbox/action_set_name
-
 .vagrant/machines/default/virtualbox/id
+
+.vagrant/machines/default/virtualbox/action_set_name
 
 .vagrant/machines/default/virtualbox/index_uuid
 
 .vagrant/machines/default/virtualbox/private_key
 
-.idea/.name
-
-*.xml
-
-*.xml
-
-*.xml
-
-.idea/libraries/activator_launch_1_3_2.xml
-
-.idea/libraries/activator_launch_1_3_21.xml
-
-*.iml
-
-planning/.~lock.userstories.ods#
+.vagrant/machines/default/virtualbox/synced_folders

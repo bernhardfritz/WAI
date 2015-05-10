@@ -30,6 +30,20 @@ create table picture (
   create_user_id            integer)
 ;
 
+create table report (
+  id                        integer primary key AUTOINCREMENT,
+  old_id                    integer,
+  lat                       double,
+  lng                       double,
+  title                     varchar(255),
+  description               varchar(255),
+  optional                  varchar(255),
+  height                    integer,
+  width                     integer,
+  updload_date              timestamp,
+  create_user_id            integer)
+;
+
 create table round (
   id                        integer primary key AUTOINCREMENT,
   game_id                   integer,
@@ -60,6 +74,8 @@ drop table friend;
 drop table game;
 
 drop table picture;
+
+drop table report;
 
 drop table round;
 

@@ -3,6 +3,7 @@ package controllers;
 import com.google.common.io.Files;
 import models.LatLng;
 import models.Picture;
+import models.Report;
 import models.User;
 import play.data.DynamicForm;
 import play.data.Form;
@@ -222,6 +223,34 @@ public class Application extends Controller {
             return redirect(routes.Application.index());
         }
     }
+
+    public static Result report(Long id) {
+        Picture picture = dbManager.getPicture(id);
+        double lat=picture.getLat();
+        double lng=picture.getLng();
+        session("lat", String.valueOf(lat));
+        session("lng",String.valueOf(lng));
+        return ok(report.render(picture));
+    }
+
+    public static Result reportAction() {
+        DynamicForm dynamicForm = Form.form().bindFromRequest();
+        String title = dynamicForm.get("titleArea");
+        String description = dynamicForm.get("descriptionArea");
+        String optional = dynamicForm.get("optionalArea");
+        Double lat=Double.parseDouble(dynamicForm.get("latArea"));
+        Double lng=Double.parseDouble(dynamicForm.get("lngArea"));
+        String username=dynamicForm.get("user");
+        User user = dbManager.getUser(username);
+        Long oldID=Long.parseLong(dynamicForm.get("old_id"));
+        Integer width=Integer.parseInt(dynamicForm.get("p_width"));
+        Integer height=Integer.parseInt(dynamicForm.get("p_height"));
+        Report report=new Report(lat,lng,title,description,optional,height,width,user,oldID); //Do Something with thr Object
+        return redirect(routes.Application.index());
+    }
+
+
+
 
     public static Result result(long id) {
         Picture picture = dbManager.getPicture(id);
