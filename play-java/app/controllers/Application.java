@@ -228,8 +228,8 @@ public class Application extends Controller {
         Picture picture = dbManager.getPicture(id);
         double lat=picture.getLat();
         double lng=picture.getLng();
-        session("lat", String.valueOf(lat));
-        session("lng",String.valueOf(lng));
+       session("lat", String.valueOf(lat));
+       session("lng",String.valueOf(lng));
         return ok(report.render(picture));
     }
 

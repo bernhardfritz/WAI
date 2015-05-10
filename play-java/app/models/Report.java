@@ -52,7 +52,7 @@ public class Report  extends Model{
             this.oldID=oldID;
         }
 
-        public static Finder<Long, Picture> find = new Finder<Long, Picture>(Long.class, Picture.class);
+        public static Finder<Long, Report> find = new Finder<Long, Report>(Long.class, Report.class);
 
         public Long getId() {
             return id;
