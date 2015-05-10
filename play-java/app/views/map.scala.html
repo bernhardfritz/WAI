@@ -79,7 +79,7 @@
             controlText.style.fontFamily = 'Roboto,Arial,sans-serif';
             controlText.style.fontSize = '5px';
             controlText.style.lineHeight = '5px';
-            controlText.innerHTML =  '<div style="position:relative;display:inline;"><img src="@routes.Application.thumbnail(id)" id="picture"><img src="@routes.Assets.at("images/magnifying-glass.png")" style="position:absolute;top:-50;left:0;"></div>';
+            controlText.innerHTML =  '<div style="position:relative;display:inline;"><img src="@routes.Application.thumbnail(id)" width="100px" height="100px" id="picture"><img src="@routes.Assets.at("images/magnifying-glass.png")" style="position:absolute;top:-50;left:0;"></div>';
             controlUI.appendChild(controlText);
 
             map.controls[google.maps.ControlPosition.TOP_RIGHT].push(controlUI);

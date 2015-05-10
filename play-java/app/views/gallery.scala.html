@@ -33,7 +33,7 @@
                 @for(picture<-pictures) {
                     @if(picture!=null) {
                         <a href="@routes.Application.picture(picture.getId())" title="@picture.getTitle()" data-gallery="">
-                            <img src="@routes.Application.thumbnail(picture.getId())">
+                            <img src="@routes.Application.thumbnail(picture.getId())" width="100" height="100">
                         </a>
                     }
                 }

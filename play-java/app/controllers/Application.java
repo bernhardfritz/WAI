@@ -335,7 +335,7 @@ public class Application extends Controller {
             // save picture to "public/images/pictures/pictureID.jpg"
             //img = PictureManager.getInstance().getScaledImage(img);
             PictureManager.getInstance().saveToFile(img, pic.getId().intValue());
-            img=PictureManager.getInstance().createThumbnail(img,100);
+            img=PictureManager.getInstance().createThumbnail(img,256);
             PictureManager.getInstance().saveAsThumbnail(img, pic.getId().intValue());
 
             //EmailManager.getInstance().send("bernhard.e.fritz@gmail.com","test","dies ist ein testtext");
