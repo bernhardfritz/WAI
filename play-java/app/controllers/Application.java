@@ -207,8 +207,8 @@ public class Application extends Controller {
         return result(id);
     }
 
-    public static Double prettifyDistance(double distance) {
-        return Double.parseDouble(String.format("%.1f",distance/1000.0));
+    public static String prettifyDistance(double distance) {
+        return String.format("%.1f",distance/1000.0);
     }
 
     public static Result register() {
@@ -249,15 +249,12 @@ public class Application extends Controller {
         return redirect(routes.Application.index());
     }
 
-
-
-
     public static Result result(long id) {
         Picture picture = dbManager.getPicture(id);
         if (getDistance(picture)!=null) {
-            return ok(result.render(picture, prettifyDistance(getDistance(picture))));
+            return ok(result.render(picture, "You were off by "+prettifyDistance(getDistance(picture))));
         }
-        return ok(result.render(picture,null));
+        return ok(result.render(picture,"You didn't place a marker."));
     }
 
     public static Result result_map(long id) {
