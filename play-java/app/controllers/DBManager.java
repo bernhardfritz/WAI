@@ -1,8 +1,7 @@
 package controllers;
 
-import models.Friend;
-import models.Picture;
-import models.User;
+import com.avaje.ebean.Expr;
+import models.*;
 import org.joda.time.LocalDateTime;
 import play.libs.Yaml;
 
@@ -98,6 +97,38 @@ public class DBManager {
         }
 
         return friends;
+    }
+
+
+    /* =========================== Game functions =========================== */
+
+    /**
+     * Create a new game and save it to the DB.
+     * @param user1
+     * @param user2
+     */
+    public void createGame(User user1, User user2) {
+        Game game = new Game(user1, user2);
+        game.save();
+
+        List<Picture> pictures = new ArrayList<Picture>();
+        for (int i = 0; i < 3; i++) {
+            Picture picture = null;
+            do {
+                long id = 1;
+                id += Math.random() * getPictureCount();
+                picture = getPicture(id);
+            } while (pictures.contains(picture));
+            pictures.add(picture);
+
+            new Round(game, picture).save();
+        }
+    }
+
+    public List<Game> getUnfinishedGames(User user) {
+        List<Game> games = new ArrayList<Game>();
+        return Game.find.where().ieq("finished", "0").or(Expr.ieq("user1id", user.getId().toString()),
+                Expr.ieq("user2id", user.getId().toString())).findList();
     }
 
 

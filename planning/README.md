@@ -35,7 +35,7 @@ Wenn ein Task abgeschlossen ist, einfach in WAI/planning/README.md ein [x] setze
 
 ## Mario
 - [ ] Erstellen der Datenbanklogik für das Erstellen eines Spiels (Game.java). Dabei sollen 3 Runden (Round.java) beim Erstellen des Spiels mit einem zufälligen Bild angelegt werden. Das Spiel beinhaltet die konkurierenden Spieler (User.java), sowie die jeweiligen Runden (Round.java). Es soll zu jeder Zeit ersichtlich sein welche Runde schon gespielt bzw. ob das Spiel bereits fertig ist.
-- [ ] Erstellen einer Funktion die offene Spiele eines Users in einer List<Game> zurückgibt.
+- [x] Erstellen einer Funktion die offene Spiele eines Users in einer List<Game> zurückgibt.
 - [x] Falls möglich, Zählvariable der Bilder bei 0 statt 1 beginnen zu lassen um unnötige Nullpointer exceptions zu vermeiden. --> Leider nicht möglich, weil Datenbank IDs bei 1 starten.
 - [x] Erstellen einer Funktion im DBManager.java die alle Bilder als List<Picture> zurückgibt.
 - [x] Erstellen einer Funktion im DBManager.java die alle akzeptierten Bilder als List<Picture> zurückgibt.
