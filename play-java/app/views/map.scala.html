@@ -1,4 +1,4 @@
-@(id: Long)(width: Integer)(height: Integer)
+@(id: Long)(width: Integer)(height: Integer)(latlng: LatLng)
 @blank("Map") {
     
     <script src="@routes.Assets.at("javascripts/jquery-1.11.2.min.js")" type="text/javascript"></script>
@@ -88,12 +88,13 @@
             google.maps.event.addDomListener(controlUI, 'click', function() {
             openPhotoSwipe();
             });
+            openPhotoSwipe();
         }
 
         function initialize() {
             var center = new google.maps.LatLng(0, 0);
             var mapOptions = {
-                zoom:1,
+                zoom:3,
                 center:center,
                 panControl:false,
                 zoomControl:true,
@@ -112,6 +113,16 @@
                     map.setCenter(geolocation);
                 });
             }*/
+
+            @if(latlng!=null) {
+                var latlngbounds = new google.maps.LatLngBounds();
+                jslat = @latlng.getLat();
+                jslng = @latlng.getLng();
+                jslatlng = new google.maps.LatLng(jslat,jslng);
+                addMarker(jslatlng);
+                latlngbounds.extend(jslatlng);
+                map.fitBounds(latlngbounds);
+            }
 
             // This event listener will call addMarker() when the map is clicked.
             google.maps.event.addListener(map,'click',function(event) {

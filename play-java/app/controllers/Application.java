@@ -136,6 +136,14 @@ public class Application extends Controller {
         return null;
     }
 
+    public static LatLng getLatLng() {
+        LatLng latlng = null;
+        Double lat = getLat();
+        Double lng = getLng();
+        if(lat==null || lng==null) return null;
+        return new LatLng(lat,lng);
+    }
+
     public static Result getLocation() {
         return log("" + getLat() + " " + getLng());
     }
@@ -167,10 +175,10 @@ public class Application extends Controller {
 
     public static Result map(long id) {
         if (id == 0L) {
-            return ok(map.render(0L,0,0));
+            return ok(map.render(0L,0,0,getLatLng()));
         }
         Picture p = dbManager.getPicture(id);
-        return ok(map.render(id, p.getWidth(), p.getHeight()));
+        return ok(map.render(id, p.getWidth(), p.getHeight(),getLatLng()));
     }
 
     public static Result new_game_menu() {
@@ -199,7 +207,7 @@ public class Application extends Controller {
     }
 
     public static Double prettifyDistance(double distance) {
-        return Math.round(distance)/1000.0;
+        return Double.valueOf(String.format("%.1f",distance/1000));
     }
 
     public static Result register() {
