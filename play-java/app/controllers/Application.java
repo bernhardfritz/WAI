@@ -19,6 +19,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -184,7 +185,7 @@ public class Application extends Controller {
             return ok(map.render(0L,0,0,getLatLng()));
         }
         Picture p = dbManager.getPicture(id);
-        return ok(map.render(id, p.getWidth(), p.getHeight(),getLatLng()));
+        return ok(map.render(id, p.getWidth(), p.getHeight(), getLatLng()));
     }
 
     public static Result new_game_menu() {
@@ -214,7 +215,7 @@ public class Application extends Controller {
     }
 
     public static String prettifyDistance(double distance) {
-        return String.format("%.1f",distance/1000.0);
+        return String.format("%.1f", distance / 1000.0);
     }
 
     public static Result register() {
@@ -261,7 +262,7 @@ public class Application extends Controller {
         if (getDistance(picture)!=null) {
             return ok(result.render(picture, "You were off by "+prettifyDistance(getDistance(picture))+" km"));
         }
-        return ok(result.render(picture,"You didn't place a marker."));
+        return ok(result.render(picture, "You didn't place a marker."));
     }
 
     public static Result result_map(long id) {
@@ -277,8 +278,14 @@ public class Application extends Controller {
         return ok(result_map.render(latlngs));
     }
 
-    public static Result search_friend() {
-        return ok(search_friend.render());
+    public static Result search_user() {
+        DBManager dbman = DBManager.getInstance();
+        return ok(search_user.render("", dbman.getAllUsers()));
+    }
+
+    public static Result search_user(String str) {
+        DBManager dbman = DBManager.getInstance();
+        return ok(search_user.render("", dbman.findUser(str)));
     }
 
     public static Result send_email() {
@@ -305,6 +312,15 @@ public class Application extends Controller {
         session("lng",String.valueOf(lng));
         return ok();
     }
+
+    public static Result setUser(String str) {
+        StringBuilder strbuild = new StringBuilder();
+        for (User user:dbManager.findUser(str)){
+            strbuild.append(user.getName()).append(" ");
+        }
+        return ok(strbuild.toString());
+    }
+
 
     public static Result template() {
         return ok(template.render("Template", null, null));

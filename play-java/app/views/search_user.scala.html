@@ -1,5 +1,5 @@
+@(suchbegriff: String, userlist: List[User])
 @template_with_navbar("search a friend") {
-
 } {
   <div class="bs-docs-section">
     <div class="row">
@@ -16,27 +16,47 @@
             <fieldset>
               <legend>Search</legend>
                 <div class="input-group">
-                  <input type="text" name="suchbegriff" class="form-control" placeholder="Search for..." value="Name"> </input>
+                  <input type="text" name="suchbegriff" class="form-control" placeholder="Search for..." id="input"> </input>
                     <span class="input-group-btn">
                       <button class="btn btn-default" type="submit">Go!</button>
                     </span>
                 </div>
                 <br />
-                 <div class="list-group">
-                  <a href="" class="list-group-item">Marcus</a>
-                   <a href="" class="list-group-item">Stefan</a>
-                 </div>
             </fieldset>
           </form>
+          <div class="list-group" id="listdiv">
+          @for(user<-userlist) {
+            <a href="#" class="list-group-item"> @user.getName()</a>
+          }
+          </div>
         </div>
       </div>
     </div>
     <div class="col-lg-4">
       <div class="bs-component">
         <ul class="pager">
-          <li class="previous disabled"><a href="@routes.Application.new_game_menu()">&larr; back</a></li>
+          <a href="@routes.Application.new_game_menu()">&larr; back</a>
         </ul>
       </div>
     </div>
   </div>
+
+  <script>
+    $('#input').keyup(function(){
+     $.get( "/setUser/"+$('#input').val(), function( data ) {
+      var arr = data.split(" ");
+      var i;
+      var longstr = "";
+      for(i=0; i<arr.length-1;i++){
+        longstr+='<a href="#" class="list-group-item">';
+        longstr+=arr[i];
+        longstr+="<a>";
+      }
+      if (arr.length==1){
+       $("#listdiv").html(" ");
+      }
+      $("#listdiv").html(longstr);
+});
+  });
+  </script>
 }
