@@ -45,6 +45,11 @@ public class Application extends Controller {
         public String passwordConfirm;
 
         public String validate() {
+            name = name.trim();
+            email = email.trim();
+            password = password.trim();
+            passwordConfirm = passwordConfirm.trim();
+
             if (name.isEmpty() || email.isEmpty() || password.isEmpty() ||
                     !password.equals(passwordConfirm)) {
                 return "Invalid name, email address or password!";
