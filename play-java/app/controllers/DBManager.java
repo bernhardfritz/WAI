@@ -186,11 +186,7 @@ public class DBManager {
      * @return The respective picture or NULL, if there is no accepted picture with that id.
      */
     public Picture getPicture(Long id) {
-        Picture p = Picture.find.where().ieq("id", id.toString()).ieq("accepted", "1").findUnique();
-        if (p != null) {
-            p.setCreateUser(getUser(p.getCreateUserID()));
-        }
-        return p;
+        return addConnections(Picture.find.where().ieq("id", id.toString()).ieq("accepted", "1").findUnique());
     }
 
     /**
@@ -206,7 +202,12 @@ public class DBManager {
      * @return All pictures from the DB.
      */
     public List<Picture> getAllPictures() {
-        return Picture.find.all();
+        List<Picture> pictures = Picture.find.all();
+        for (Picture p : pictures) {
+            p = addConnections(p);
+        }
+
+        return pictures;
     }
 
     /**
@@ -214,7 +215,12 @@ public class DBManager {
      * @return All accepted pictures from the DB.
      */
     public List<Picture> getActivePictures() {
-        return Picture.find.where().ieq("accepted", "1").findList();
+        List<Picture> pictures = Picture.find.where().ieq("accepted", "1").findList();
+        for (Picture p : pictures) {
+            p = addConnections(p);
+        }
+
+        return pictures;
     }
 
     /**
@@ -224,6 +230,21 @@ public class DBManager {
     public void acceptPicture(Picture picture) {
         picture.setAccepted(true);
         savePicture(picture);
+    }
+
+    /**
+     * Add missing object connections to a picture.
+     * @param picture
+     * @return The picture with full object connectivity.
+     */
+    private Picture addConnections(Picture picture) {
+        if (picture != null) {
+            if (picture.getCreateUserID() != null) {
+                picture.setCreateUser(getUser(picture.getCreateUserID()));
+            }
+        }
+
+        return picture;
     }
 
 
@@ -242,7 +263,12 @@ public class DBManager {
      * @return All reports from the DB.
      */
     public List<Report> getAllReports() {
-        return Report.find.all();
+        List<Report> reports = Report.find.all();
+        for (Report r : reports) {
+            r = addConnections(r);
+        }
+
+        return reports;
     }
 
     /**
@@ -250,7 +276,12 @@ public class DBManager {
      * @return All unhandled reports.
      */
     public List<Report> getUnhandledReports() {
-        return Report.find.where().ieq("handled", "0").findList();
+        List<Report> reports =  Report.find.where().ieq("handled", "0").findList();
+        for (Report r : reports) {
+            r = addConnections(r);
+        }
+
+        return reports;
     }
 
     /**
@@ -278,9 +309,16 @@ public class DBManager {
         report.save();
     }
 
+    /**
+     * Add missing object connections to a report.
+     * @param report
+     * @return The report with full object connectivity.
+     */
     private Report addConnections(Report report) {
         if (report != null) {
-            report.setCreateUser(getUser(report.getCreateUserID()));
+            if (report.getCreateUserID() != null) {
+                report.setCreateUser(getUser(report.getCreateUserID()));
+            }
         }
 
         return report;
@@ -359,8 +397,10 @@ public class DBManager {
     }
 
     public void changeUserPassword(User user, String password) {
-        user.setPassword(password);
-        user.save();
+        if (user != null) {
+            user.setPassword(password);
+            user.save();
+        }
     }
 
     /**
@@ -369,7 +409,7 @@ public class DBManager {
      * @return A list of all users with username like "%searchString%".
      */
     public List<User> findUser(String searchString) {
-        String name = "%" + searchString.toLowerCase() + "%";
+        String name = searchString.toLowerCase() + "%";
         return User.find.where().like("name", name).findList();
     }
 }

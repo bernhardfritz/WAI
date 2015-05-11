@@ -1,10 +1,7 @@
 package controllers;
 
 import com.google.common.io.Files;
-import models.LatLng;
-import models.Picture;
-import models.Report;
-import models.User;
+import models.*;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.mvc.Controller;
@@ -198,6 +195,7 @@ public class Application extends Controller {
         return ok(Files.toByteArray(new File("public/images/pictures/" + id + ".jpg"))).as("image/jpg");
     }
 
+    @Security.Authenticated(Secured.class)
     public static Result play_menu() {
         return ok(play_menu.render(dbManager.getUnfinishedGames(dbManager.getUser(session().get("username")))));
     }
