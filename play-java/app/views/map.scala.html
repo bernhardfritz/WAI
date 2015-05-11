@@ -13,30 +13,8 @@
 
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
     <script>
-
         var lat;
         var lng;
-    var openPhotoSwipe = function() {
-    var pswpElement = document.querySelectorAll('.pswp')[0];
-    // build items array
-    var items = [
-    {
-    src: '@routes.Application.picture(id)',
-    w: @width,
-    h: @height
-    }
-    ];
-    // define options (if needed)
-    var options = {
-    // history & focus options are disabled on CodePen
-    history: false,
-    focus: false,
-    showAnimationDuration: 0,
-    hideAnimationDuration: 0
-    };
-    var gallery = new PhotoSwipe( pswpElement, PhotoSwipeUI_Default, items, options);
-    gallery.init();
-    };
         // In the following example, markers appear when the user clicks on the map.
         // The markers are stored in an array.
         // The user can then click an option to hide, show or delete the markers.
@@ -79,16 +57,15 @@
             controlText.style.fontFamily = 'Roboto,Arial,sans-serif';
             controlText.style.fontSize = '5px';
             controlText.style.lineHeight = '5px';
-            controlText.innerHTML =  '<div style="position:relative;display:inline;"><img src="@routes.Application.thumbnail(id)" width="100px" height="100px" id="picture"><img src="@routes.Assets.at("images/magnifying-glass.png")" style="position:absolute;top:-50;left:0;"></div>';
+            controlText.innerHTML =  '<div style="position:relative;display:inline;"><div id="links"><a href="@routes.Application.picture(id)" title="" data-gallery=""><img src="@routes.Application.thumbnail(id)" width="100" height="100"></a><img src="@routes.Assets.at("images/magnifying-glass.png")" style="position:absolute;top:-50;left:0;"></div></div>';
             controlUI.appendChild(controlText);
 
             map.controls[google.maps.ControlPosition.TOP_RIGHT].push(controlUI);
 
             // Setup the click event listeners
             google.maps.event.addDomListener(controlUI, 'click', function() {
-            openPhotoSwipe();
+                blueimp.Gallery($('#links a'), $('#blueimp-gallery').data());
             });
-            openPhotoSwipe();
         }
 
         function initialize() {
@@ -200,6 +177,10 @@
 
         google.maps.event.addDomListener (window, 'load', initialize);
 
+            setTimeout( function(){
+            blueimp.Gallery($('#links a'), $('#blueimp-gallery').data());
+            }
+            , 1000 );
     </script>
 } {
     <!--
@@ -209,53 +190,40 @@
         <input onclick="deleteMarkers();" type=button value="Delete Markers">
     </div>
     -->
-    <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
-            <!-- Background of PhotoSwipe.
-        It's a separate element as animating opacity is faster than rgba(). -->
-        <div class="pswp__bg"></div>
-            <!-- Slides wrapper with overflow:hidden. -->
-        <div class="pswp__scroll-wrap">
-                <!-- Container that holds slides.
-            PhotoSwipe keeps only 3 of them in the DOM to save memory.
-            Don't modify these 3 pswp__item elements, data is added later on. -->
-            <div class="pswp__container">
-                <div class="pswp__item"></div>
-                <div class="pswp__item"></div>
-                <div class="pswp__item"></div>
-            </div>
-                <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
-            <div class="pswp__ui pswp__ui--hidden">
-                <div class="pswp__top-bar">
-                        <!--  Controls are self-explanatory. Order can be changed. -->
-                    <div class="pswp__counter"></div>
-                    <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
-                    <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
-                    <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
-                        <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
-                        <!-- element will get class pswp__preloader--active when preloader is running -->
-                    <div class="pswp__preloader">
-                        <div class="pswp__preloader__icn">
-                            <div class="pswp__preloader__cut">
-                                <div class="pswp__preloader__donut"></div>
-                            </div>
-                        </div>
+    <!-- The Bootstrap Image Gallery lightbox, should be a child element of the document body -->
+    <div id="blueimp-gallery" class="blueimp-gallery">
+            <!-- The container for the modal slides -->
+        <div class="slides"></div>
+            <!-- Controls for the borderless lightbox -->
+        <h3 class="title"></h3>
+        <a class="prev">‹</a>
+        <a class="next">›</a>
+        <a class="close">×</a>
+        <a class="play-pause"></a>
+        <ol class="indicator"></ol>
+            <!-- The modal dialog, which will be used to wrap the lightbox content -->
+        <div class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title"></h4>
                     </div>
-                </div>
-                <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
-                    <div class="pswp__share-tooltip"></div>
-                </div>
-                <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
-                </button>
-                <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
-                </button>
-                <div class="pswp__caption">
-                    <div class="pswp__caption__center"></div>
+                    <div class="modal-body next"></div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default pull-left prev">
+                            <i class="glyphicon glyphicon-chevron-left"></i>
+                            Previous
+                        </button>
+                        <button type="button" class="btn btn-primary next">
+                            Next
+                            <i class="glyphicon glyphicon-chevron-right"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
     <div id="map-canvas"></div>
-
-
 }

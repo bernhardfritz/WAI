@@ -71,9 +71,9 @@
     }
 
     function initialize() {
-        var center = new google.maps.LatLng(41.850033, -87.6500523);
+        var center = new google.maps.LatLng(@latlngs.head.getLat(), @latlngs.head.getLng());
         var mapOptions = {
-            zoom:12,
+            zoom:16,
             center:center,
             panControl:false,
             zoomControl:true,
@@ -102,7 +102,7 @@
             addMarker(jslatlng);
             latlngbounds.extend(jslatlng);
         }
-        map.fitBounds(latlngbounds);
+        if(count>1) map.fitBounds(latlngbounds);
         var lineCoordinates = [from,to];
         var lineSymbol = {
             path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW

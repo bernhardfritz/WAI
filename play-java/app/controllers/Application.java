@@ -259,7 +259,7 @@ public class Application extends Controller {
     public static Result result(long id) {
         Picture picture = dbManager.getPicture(id);
         if (getDistance(picture)!=null) {
-            return ok(result.render(picture, "You were off by "+prettifyDistance(getDistance(picture))));
+            return ok(result.render(picture, "You were off by "+prettifyDistance(getDistance(picture))+" km"));
         }
         return ok(result.render(picture,"You didn't place a marker."));
     }
