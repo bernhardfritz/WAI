@@ -239,4 +239,14 @@ public class DBManager {
         user.setPassword(password);
         user.save();
     }
+
+    /**
+     * Get a list of all users with username like "%searchString%".
+     * @param searchString
+     * @return A list of all users with username like "%searchString%".
+     */
+    public List<User> findUser(String searchString) {
+        String name = "%" + searchString.toLowerCase() + "%";
+        return User.find.where().like("name", name).findList();
+    }
 }
