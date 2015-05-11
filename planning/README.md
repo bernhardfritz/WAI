@@ -45,4 +45,4 @@ Wenn ein Task abgeschlossen ist, einfach in WAI/planning/README.md ein [x] setze
 - [ ] Überlade alle deine Funktionen die Listen zurückgeben mit 2 Parametern die es erlauben die Anzahl der zurückzugebenden Elemente zu limitieren (start, end).
 - [x] Einbauen der Funktionalität zum ändern eines Passworts.
 - [ ] Überleg dir bereits wie wir Punkte und Statistiken in dein Datenbankmodell einfügen können. Es möglich sein zu beliebigen Zeitpunkten neue Achivements hinzuzufügen.
-- [ ] Einbauen einer Tabelle Report. Das Report Objekt beinhaltet ein bestehendes Bild oder die id eines bestehenden Bilds, neue Lat/Lng-Werte, Erstellungsdatum, User Objekt oder username des Nutzers der den Report verfasst, und ein boolean ob der Report behandelt wurde oder nicht.
+- [x] Einbauen einer Tabelle Report. Das Report Objekt beinhaltet ein bestehendes Bild oder die id eines bestehenden Bilds, neue Lat/Lng-Werte, Erstellungsdatum, User Objekt oder username des Nutzers der den Report verfasst, und ein boolean ob der Report behandelt wurde oder nicht.

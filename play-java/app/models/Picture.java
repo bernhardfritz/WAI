@@ -140,6 +140,7 @@ public class Picture extends Model {
 
     public void setCreateUser(User createUser) {
         this.createUser = createUser;
+        setCreateUserID(createUser.getId());
     }
 
     @Override

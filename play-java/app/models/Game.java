@@ -52,6 +52,7 @@ public class Game extends Model {
 
     public void setUser1(User user1) {
         this.user1 = user1;
+        setUser1ID(user1.getId());
     }
 
     public Long getUser2ID() {
@@ -68,6 +69,7 @@ public class Game extends Model {
 
     public void setUser2(User user2) {
         this.user2 = user2;
+        setUser2ID(user2.getId());
     }
 
     public Long getWinnerID() {
@@ -84,6 +86,7 @@ public class Game extends Model {
 
     public void setWinner(User winner) {
         this.winner = winner;
+        setWinnerID(winner.getId());
     }
 
     public boolean isFinished() {
