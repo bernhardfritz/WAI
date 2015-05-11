@@ -198,7 +198,7 @@ public class Application extends Controller {
     }
 
     public static Result play_menu() {
-        return ok(play_menu.render());
+        return ok(play_menu.render(dbManager.getUnfinishedGames(dbManager.getUser(session().get("username")))));
     }
 
     public static Result practise() {

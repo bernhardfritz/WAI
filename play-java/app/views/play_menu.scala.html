@@ -1,3 +1,4 @@
+@(list:List[Game])
 @template_with_navbar("Play") {
 
 } {
@@ -5,5 +6,8 @@
         <a href="@routes.Application.index()"><img src="@routes.Assets.at("images/logo.png")"></a><br/><br/>
         <a href="@routes.Application.new_game_menu()" class="btn btn-lg btn-success">Start a new game</a><br/><br/>
         <a href="@routes.Application.practise()" type="button" class="btn btn-lg btn-success">Practise</a><br/>
+        @for(game<-list){
+            @game.getUser2.getName;
+        }
     </div>
 }
