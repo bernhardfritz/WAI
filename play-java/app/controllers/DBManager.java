@@ -141,8 +141,17 @@ public class DBManager {
      * @return All unfinished games of a user.
      */
     public List<Game> getUnfinishedGames(User user) {
-        return Game.find.where().ieq("finished", "0").or(Expr.ieq("user1id", user.getId().toString()),
+        List<Game> games = Game.find.where().ieq("finished", "0").or(Expr.ieq("user1id", user.getId().toString()),
                 Expr.ieq("user2id", user.getId().toString())).ieq("current_user_id", user.getId().toString()).findList();
+
+        for (Game g : games) {
+            g.setUser1(getUser(g.getUser1ID()));
+            g.setUser2(getUser(g.getUser2ID()));
+            g.setWinner(getUser(g.getWinnerID()));
+            g.setCurrentUserUser(getUser(g.getCurrentUserID()));
+        }
+
+        return games;
     }
 
     public void gameAction(Game game, User user, double distance) {
