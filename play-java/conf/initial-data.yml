@@ -147,3 +147,11 @@ games:
     - !!models.Game
         user1ID:    5
         user2ID:    3
+
+    - !!models.Game
+        user1ID:    5
+        user2ID:    4
+
+    - !!models.Game
+        user1ID:    5
+        user2ID:    2
