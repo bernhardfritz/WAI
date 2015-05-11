@@ -147,8 +147,12 @@ public class DBManager {
         for (Game g : games) {
             g.setUser1(getUser(g.getUser1ID()));
             g.setUser2(getUser(g.getUser2ID()));
-            g.setWinner(getUser(g.getWinnerID()));
-            g.setCurrentUserUser(getUser(g.getCurrentUserID()));
+            if (g.getWinner() != null) {
+                g.setWinner(getUser(g.getWinnerID()));
+            }
+            if (g.getCurrentUser() != null) {
+                g.setCurrentUserUser(getUser(g.getCurrentUserID()));
+            }
         }
 
         return games;
