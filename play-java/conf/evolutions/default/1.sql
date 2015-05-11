@@ -14,7 +14,9 @@ create table game (
   user1id                   integer,
   user2id                   integer,
   winner_id                 integer,
-  finished                  integer(1))
+  finished                  integer(1),
+  round                     integer,
+  current_user_id           integer)
 ;
 
 create table picture (

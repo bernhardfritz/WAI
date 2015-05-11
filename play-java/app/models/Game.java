@@ -22,6 +22,11 @@ public class Game extends Model {
 
     private boolean finished;
 
+    private int round;
+
+    private Long currentUserID;
+    private User currentUser;
+
     public Game(User user1, User user2) {
         this.user1ID = user1.getId();
         this.user1 = user1;
@@ -30,6 +35,9 @@ public class Game extends Model {
         this.winnerID = null;
         this.winner = null;
         this.finished = false;
+        this.round = 1;
+        this.currentUserID = user1.getId();
+        this.currentUser = user1;
     }
 
     public static Finder<Long, Game> find = new Finder<Long, Game>(Long.class, Game.class);
@@ -95,5 +103,33 @@ public class Game extends Model {
 
     public void setFinished(boolean finished) {
         this.finished = finished;
+    }
+
+    public int getRound() {
+        return round;
+    }
+
+    public void incrementRound() {
+        round++;
+        if (round > 3) {
+            setFinished(true);
+        }
+    }
+
+    public Long getCurrentUserID() {
+        return currentUserID;
+    }
+
+    public void setCurrentUserID(Long currentUserID) {
+        this.currentUserID = currentUserID;
+    }
+
+    public User getCurrentUser() {
+        return currentUser;
+    }
+
+    public void setCurrentUserUser(User currentUser) {
+        this.currentUser = currentUser;
+        setCurrentUserID(currentUser.getId());
     }
 }

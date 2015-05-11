@@ -61,81 +61,89 @@ pictures:
         accepted:         true
 
     - !!models.Picture
-            lat:              41.89020210802678
-            lng:              12.492313385009766
-            title:            Colosseum
-            description:      The Colosseum is the largest amphitheatre in the world and is located in the centre of the city of Rome/Italy.
-            createUserID:     1
-            accepted:         true
+        lat:              41.89020210802678
+        lng:              12.492313385009766
+        title:            Colosseum
+        description:      The Colosseum is the largest amphitheatre in the world and is located in the centre of the city of Rome/Italy.
+        createUserID:     1
+        accepted:         true
 
     - !!models.Picture
-            lat:              -22.952011341775687
-            lng:              -43.210596442222595
-            title:            Cristo Redentor
-            description:      Cristo Redentor is a 30m high statue of Jesus Christ in Reo de Janiero/Brazil.
-            createUserID:     1
-            accepted:         true
+        lat:              -22.952011341775687
+        lng:              -43.210596442222595
+        title:            Cristo Redentor
+        description:      Cristo Redentor is a 30m high statue of Jesus Christ in Reo de Janiero/Brazil.
+        createUserID:     1
+        accepted:         true
 
     - !!models.Picture
-            lat:              55.7525014854839
-            lng:              37.62309908866882
-            title:            St. Basil's Cathedral
-            description:      The Cathedral is a church in Red Square in Moscow/Russia and now used as a museum.
-            createUserID:     1
-            accepted:         true
+        lat:              55.7525014854839
+        lng:              37.62309908866882
+        title:            St. Basil's Cathedral
+        description:      The Cathedral is a church in Red Square in Moscow/Russia and now used as a museum.
+        createUserID:     1
+        accepted:         true
 
     - !!models.Picture
-            lat:              43.08277473065676
-            lng:              -79.0739893913269
-            title:            Niagara Falls
-            description:      The Niagara Falls,  the collective name for three waterfalls, form the highest flow rate of any waterfall in the world and straddle the international border between Canada and the USA.
-            createUserID:     1
-            accepted:         true
+        lat:              43.08277473065676
+        lng:              -79.0739893913269
+        title:            Niagara Falls
+        description:      The Niagara Falls,  the collective name for three waterfalls, form the highest flow rate of any waterfall in the world and straddle the international border between Canada and the USA.
+        createUserID:     1
+        accepted:         true
 
     - !!models.Picture
-            lat:              29.975828999267698
-            lng:              31.130383014678955
-            title:            Pyramid of Khafre
-            description:      The Pyramid of Khafre is the second-largest of the Egyptian Pyramids of Gizah.
-            createUserID:     1
-            accepted:         true
+        lat:              29.975828999267698
+        lng:              31.130383014678955
+        title:            Pyramid of Khafre
+        description:      The Pyramid of Khafre is the second-largest of the Egyptian Pyramids of Gizah.
+        createUserID:     1
+        accepted:         true
 
     - !!models.Picture
-            lat:              48.860578691434604
-            lng:              2.3375773429870605
-            title:            Louvre Museum
-            description:      The Louvre Museum, located in Paris/France, is one of the world's largest museums and is famous for Leonardo da Vinci's Mona Lisa.
-            createUserID:     1
-            accepted:         true
+        lat:              48.860578691434604
+        lng:              2.3375773429870605
+        title:            Louvre Museum
+        description:      The Louvre Museum, located in Paris/France, is one of the world's largest museums and is famous for Leonardo da Vinci's Mona Lisa.
+        createUserID:     1
+        accepted:         true
 
     - !!models.Picture
-            lat:              25.197145904278177
-            lng:              55.2742338180542
-            title:            Burj Khalifa
-            description:      The Burj Khalifa is with 829.8m the tallest building in the world, located in Dubai/United Arab Emirates.
-            createUserID:     1
-            accepted:         true
+        lat:              25.197145904278177
+        lng:              55.2742338180542
+        title:            Burj Khalifa
+        description:      The Burj Khalifa is with 829.8m the tallest building in the world, located in Dubai/United Arab Emirates.
+        createUserID:     1
+        accepted:         true
 
     - !!models.Picture
-            lat:              40.68916428323798
-            lng:              -74.04452562332153
-            title:            Statue of Liberty
-            description:      The Statue of Liberty, located on Liberty Island in New York City/USA, was a gift to the United States from the people of France.
-            createUserID:     1
-            accepted:         true
+        lat:              40.68916428323798
+        lng:              -74.04452562332153
+        title:            Statue of Liberty
+        description:      The Statue of Liberty, located on Liberty Island in New York City/USA, was a gift to the United States from the people of France.
+        createUserID:     1
+        accepted:         true
 
     - !!models.Picture
-            lat:              38.89756277173564
-            lng:              -77.03654050827026
-            title:            White House
-            description:      The White House, located in Washington/D.C, is the official residence and principal workplace of the President of the United States.
-            createUserID:     1
-            accepted:         true
+        lat:              38.89756277173564
+        lng:              -77.03654050827026
+        title:            White House
+        description:      The White House, located in Washington/D.C, is the official residence and principal workplace of the President of the United States.
+        createUserID:     1
+        accepted:         true
 
     - !!models.Picture
-            lat:              37.81848862108136
-            lng:              -122.47840762138367
-            title:            Golden Gate Bridge
-            description:      The Golden Gate Bridge is with 1280m the longest suspension brige of the world. The bridge is located between the San Francisco Bay and Marin County (both California/USA).
-            createUserID:     1
-            accepted:         true
+        lat:              37.81848862108136
+        lng:              -122.47840762138367
+        title:            Golden Gate Bridge
+        description:      The Golden Gate Bridge is with 1280m the longest suspension brige of the world. The bridge is located between the San Francisco Bay and Marin County (both California/USA).
+        createUserID:     1
+        accepted:         true
+
+# Games
+
+games:
+
+    - !!models.Game
+        user1ID:    5
+        user2ID:    3

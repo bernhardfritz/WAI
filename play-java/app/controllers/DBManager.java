@@ -54,8 +54,16 @@ public class DBManager {
                     e.printStackTrace();
                 }
             }
+        }
 
+        // init game table
+        if (Game.find.all().isEmpty()) {
+            List<Object> games = all.get("games");
 
+            for (Object o : games) {
+                Game g = (Game) o;
+                createGame(getUser(g.getUser1ID()), getUser(g.getUser2ID()));
+            }
         }
     }
 
@@ -107,7 +115,7 @@ public class DBManager {
      * @param user1
      * @param user2
      */
-    public void createGame(User user1, User user2) {
+    public Game createGame(User user1, User user2) {
         Game game = new Game(user1, user2);
         game.save();
 
@@ -123,12 +131,29 @@ public class DBManager {
 
             new Round(game, picture).save();
         }
+
+        return game;
     }
 
+    /**
+     * Get all unfinished games of a user.
+     * @param user
+     * @return All unfinished games of a user.
+     */
     public List<Game> getUnfinishedGames(User user) {
-        List<Game> games = new ArrayList<Game>();
         return Game.find.where().ieq("finished", "0").or(Expr.ieq("user1id", user.getId().toString()),
-                Expr.ieq("user2id", user.getId().toString())).findList();
+                Expr.ieq("user2id", user.getId().toString())).ieq("current_user_id", user.getId().toString()).findList();
+    }
+
+    public void gameAction(Game game, User user, double distance) {
+        Round round = getRounds(game).get(game.getRound() - 1);
+        User u = null;
+        if (user.equals(game.getUser1())) {
+            u = game.getUser1();
+        }
+        else if (user.equals(game.getUser2())) {
+            u = game.getUser2();
+        }
     }
 
 
@@ -221,7 +246,7 @@ public class DBManager {
      * @return The respective report or NULL if there is no report with that id.
      */
     public Report getReport(Long id) {
-        return Report.find.where().ieq("id", id.toString()).findUnique();
+        return addConnections(Report.find.where().ieq("id", id.toString()).findUnique());
     }
 
     /**
@@ -238,6 +263,33 @@ public class DBManager {
 
         report.setHandled(true);
         report.save();
+    }
+
+    private Report addConnections(Report report) {
+        if (report != null) {
+            report.setCreateUser(getUser(report.getCreateUserID()));
+        }
+
+        return report;
+    }
+
+
+    /* =========================== Round functions =========================== */
+
+    /**
+     * Get all rounds for a game.
+     * @param game
+     * @return All rounds for a game.
+     */
+    public List<Round> getRounds(Game game) {
+        List<Round> rounds = Round.find.where().ieq("game_id", game.getId().toString()).orderBy("id").findList();
+        for (Round r : rounds) {
+            r.setGame(game);
+            r.setPicture(getPicture(r.getPictureID()));
+            r.setWinner(getUser(r.getWinnerID()));
+        }
+
+        return rounds;
     }
 
 
