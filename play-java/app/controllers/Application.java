@@ -224,7 +224,7 @@ public class Application extends Controller {
             return redirect(routes.Application.index());
         }
     }
-
+    @Security.Authenticated(Secured.class)
     public static Result report(Long id) {
         Picture picture = dbManager.getPicture(id);
         double lat=picture.getLat();
@@ -244,9 +244,9 @@ public class Application extends Controller {
         String username=dynamicForm.get("user");
         User user = dbManager.getUser(username);
         Long oldID=Long.parseLong(dynamicForm.get("old_id"));
-        Integer width=Integer.parseInt(dynamicForm.get("p_width"));
-        Integer height=Integer.parseInt(dynamicForm.get("p_height"));
-        Report report=new Report(lat,lng,title,description,optional,height,width,user,oldID); //Do Something with thr Object
+        session().remove("lat");
+        session().remove("lng");
+        Report report=new Report(lat,lng,title,description,optional,user,oldID); //Do Something with thr Object
         return redirect(routes.Application.index());
     }
 

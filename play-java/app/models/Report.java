@@ -28,24 +28,18 @@ public class Report  extends Model{
 
         private String optional;
 
-        private int height;
-
-        private int width;
-
         private LocalDateTime updloadDate;
 
         // Nur die createUserID wird in der DB gespeichert, weil Sqlite keine ALTER TABLE Stmts. für die ManyToOne Beziehung unterstützt
         private Long createUserID;
         private User createUser;
 
-        public Report(double lat, double lng, String title, String description, String optional, int height, int width,  User createUser, Long oldID) {
+        public Report(double lat, double lng, String title, String description, String optional,  User createUser, Long oldID) {
             this.lat = lat;
             this.lng = lng;
             this.title = title;
             this.description = description;
             this.optional=optional;
-            this.height = height;
-            this.width = width;
             this.updloadDate = LocalDateTime.now();
             this.createUser = createUser;
             this.createUserID = createUser.getId();
@@ -96,22 +90,6 @@ public class Report  extends Model{
 
         public void setDescription(String description) {
             this.description = description;
-        }
-
-        public int getHeight() {
-            return height;
-        }
-
-        public void setHeight(int height) {
-            this.height = height;
-        }
-
-        public int getWidth() {
-            return width;
-        }
-
-        public void setWidth(int width) {
-            this.width = width;
         }
 
         public void setOptional(String optional){

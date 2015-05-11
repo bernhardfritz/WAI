@@ -55,7 +55,7 @@ public class PictureManager {
 
 
     public static BufferedImage createThumbnail(BufferedImage img, int size) { //creates a thumbnail of a picture by cutting off, the longer sides and then skaling the picture
-        if (img.getWidth() < size || img.getHeight() < size) {
+        if (img.getWidth() < size && img.getHeight() < size) {
             return img;
         } else {
 
