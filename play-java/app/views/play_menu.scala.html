@@ -3,12 +3,25 @@
 
 } {
     <div class="text-center">
-        <a href="@routes.Application.new_game_menu()" class="btn  btn-default">Start a new game</a>
+        <div class="btn-group">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                Start a new game<span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+                <li><a href="@routes.Application.search_user("")">Search from friendlist</a></li>
+                <li class="divider"></li>
+                <li><a href="@routes.Application.send_email()">Send an email to a new friend</a></li>
+                <li class="divider"></li>
+                <li><a href="#">Random</a></li>
+            </ul>
+        </div>
         <a href="@routes.Application.practise()" type="button" class="btn  btn-default">Practise</a><br/><br/>
-        <h4><p  class="text-primary">Your current open games:</p></h4><br/>
+            @if(list.length!=0) {
+                <h4><p class="text-primary">Your current open games:</p></h4> <br/>
+            }
             <div class="list-group">
             @for(game<-list) {
-                <p class="text-warning">@game.getUser2.getName<br/>Round: @game.getRound</p><a href="" class="list-group-item">Play</a><br><br>
+                <p class="text-warning">@game.getUser2.getName<br/>Round @game.getRound</p><a href="" class="list-group-item">Play</a><br><br><br>
             }
             </div>
 

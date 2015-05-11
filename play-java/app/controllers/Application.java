@@ -185,9 +185,6 @@ public class Application extends Controller {
         return ok(map.render(id, p.getWidth(), p.getHeight(), getLatLng()));
     }
 
-    public static Result new_game_menu() {
-        return ok(new_game_menu.render());
-    }
 
     public static Result no_javascript() {return ok(no_javascript.render());}
 

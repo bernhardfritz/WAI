@@ -13,7 +13,6 @@ POST        /gameAction/:id               controllers.Application.gameAction(id:
 GET         /getLocation                  controllers.Application.getLocation()
 GET         /log/:text                    controllers.Application.log(text: String)
 GET         /map/:id                      controllers.Application.map(id: Long)
-GET         /new_game_menu                controllers.Application.new_game_menu()
 GET         /no_javascript                controllers.Application.no_javascript()
 GET         /picture/:id                  controllers.Application.picture(id: Long)
 GET         /play_menu                    controllers.Application.play_menu()
