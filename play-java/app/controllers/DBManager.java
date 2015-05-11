@@ -328,7 +328,10 @@ public class DBManager {
      * @return The respective user or NULL if there is no active user with that id.
      */
     public User getUser(Long id) {
-        return User.find.where().ieq("id", id.toString()).ieq("active", "1").findUnique();
+        if (id != null) {
+            return User.find.where().ieq("id", id.toString()).ieq("active", "1").findUnique();
+        }
+        return null;
     }
 
     /**
@@ -337,7 +340,10 @@ public class DBManager {
      * @return The respective user or NULL if there is no active user with that username.
      */
     public User getUser(String username) {
-        return User.find.where().ieq("name", username).ieq("active", "1").findUnique();
+        if (username != null) {
+            return User.find.where().ieq("name", username).ieq("active", "1").findUnique();
+        }
+        return null;
     }
 
     /**
