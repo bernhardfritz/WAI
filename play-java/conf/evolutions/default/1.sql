@@ -38,10 +38,9 @@ create table report (
   title                     varchar(255),
   description               varchar(255),
   optional                  varchar(255),
-  height                    integer,
-  width                     integer,
   updload_date              timestamp,
-  create_user_id            integer)
+  create_user_id            integer,
+  handled                   integer(1))
 ;
 
 create table round (

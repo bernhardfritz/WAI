@@ -229,8 +229,8 @@ public class Application extends Controller {
         Picture picture = dbManager.getPicture(id);
         double lat=picture.getLat();
         double lng=picture.getLng();
-       session("lat", String.valueOf(lat));
-       session("lng",String.valueOf(lng));
+        session("lat", String.valueOf(lat));
+        session("lng",String.valueOf(lng));
         return ok(report.render(picture));
     }
 
@@ -247,6 +247,7 @@ public class Application extends Controller {
         session().remove("lat");
         session().remove("lng");
         Report report=new Report(lat,lng,title,description,optional,user,oldID); //Do Something with thr Object
+        dbManager.saveReport(report);
         return redirect(routes.Application.index());
     }
 

@@ -189,6 +189,58 @@ public class DBManager {
     }
 
 
+    /* =========================== Report functions =========================== */
+
+    /**
+     * Save a report to the DB.
+     * @param report
+     */
+    public void saveReport(Report report) {
+        report.save();
+    }
+
+    /**
+     * Get all reports from the DB.
+     * @return All reports from the DB.
+     */
+    public List<Report> getAllReports() {
+        return Report.find.all();
+    }
+
+    /**
+     * Get all unhandled reports.
+     * @return All unhandled reports.
+     */
+    public List<Report> getUnhandledReports() {
+        return Report.find.where().ieq("handled", "0").findList();
+    }
+
+    /**
+     * Get report from id.
+     * @param id
+     * @return The respective report or NULL if there is no report with that id.
+     */
+    public Report getReport(Long id) {
+        return Report.find.where().ieq("id", id.toString()).findUnique();
+    }
+
+    /**
+     * Change the reported picture with the report values and save it to the DB.
+     * @param report
+     */
+    public void acceptReportChanges(Report report) {
+        Picture picture = getPicture(report.getOldId());
+        picture.setLat(report.getLat());
+        picture.setLng(report.getLng());
+        picture.setTitle(report.getTitle());
+        picture.setDescription(report.getDescription());
+        picture.save();
+
+        report.setHandled(true);
+        report.save();
+    }
+
+
     /* =========================== User functions =========================== */
 
     /**

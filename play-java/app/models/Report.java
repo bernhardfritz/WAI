@@ -10,130 +10,126 @@ import javax.persistence.Id;
  * Created by philipphausle on 10.05.15.
  */
 @Entity
-public class Report  extends Model{
+public class Report extends Model {
 
+    @Id
+    private Long id;
 
-        @Id
-        private Long id;
+    private Long oldID;
 
-        private Long oldID;
+    private double lat;
 
-        private double lat;
+    private double lng;
 
-        private double lng;
+    private String title;
 
-        private String title;
+    private String description;
 
-        private String description;
+    private String optional;
 
-        private String optional;
+    private LocalDateTime updloadDate;
 
-        private LocalDateTime updloadDate;
+    private Long createUserID;
+    private User createUser;
 
-        // Nur die createUserID wird in der DB gespeichert, weil Sqlite keine ALTER TABLE Stmts. für die ManyToOne Beziehung unterstützt
-        private Long createUserID;
-        private User createUser;
+    private boolean handled;
 
-        public Report(double lat, double lng, String title, String description, String optional,  User createUser, Long oldID) {
-            this.lat = lat;
-            this.lng = lng;
-            this.title = title;
-            this.description = description;
-            this.optional=optional;
-            this.updloadDate = LocalDateTime.now();
-            this.createUser = createUser;
-            this.createUserID = createUser.getId();
-            this.oldID=oldID;
-        }
+    public Report(double lat, double lng, String title, String description, String optional,  User createUser, Long oldID) {
+        this.lat = lat;
+        this.lng = lng;
+        this.title = title;
+        this.description = description;
+        this.optional=optional;
+        this.updloadDate = LocalDateTime.now();
+        this.createUser = createUser;
+        this.createUserID = createUser.getId();
+        this.oldID=oldID;
+        handled = false;
+    }
 
-        public static Finder<Long, Report> find = new Finder<Long, Report>(Long.class, Report.class);
+    public static Finder<Long, Report> find = new Finder<Long, Report>(Long.class, Report.class);
 
-        public Long getId() {
+    public Long getId() {
             return id;
         }
 
-     public Long getOldId() {
+    public Long getOldId() {
          return oldID;
         }
 
-        public double getLat() {
+    public double getLat() {
             return lat;
         }
 
-        public void setLat(double lat) {
+    public void setLat(double lat) {
             this.lat = lat;
         }
 
-        public double getLng() {
+    public double getLng() {
             return lng;
         }
 
-        public void setLng(double lng) {
+    public void setLng(double lng) {
             this.lng = lng;
         }
 
-        public LatLng getLatLng() {
+    public LatLng getLatLng() {
             return new LatLng(lat,lng);
         }
 
-        public String getTitle() {
+    public String getTitle() {
             return title;
         }
 
-        public void setTitle(String title) {
+    public void setTitle(String title) {
             this.title = title;
         }
 
-        public String getDescription() {
+    public String getDescription() {
             return description;
         }
 
-        public void setDescription(String description) {
+    public void setDescription(String description) {
             this.description = description;
         }
 
-        public void setOptional(String optional){
+    public void setOptional(String optional){
             this.optional=optional;
         }
 
-        public String getOptional(){
+    public String getOptional(){
             return this.optional;
     }
 
-        public LocalDateTime getUpdloadDate() {
+    public LocalDateTime getUpdloadDate() {
             return updloadDate;
         }
 
-        public void setUpdloadDate(LocalDateTime updloadDate) {
+    public void setUpdloadDate(LocalDateTime updloadDate) {
             this.updloadDate = updloadDate;
         }
 
-        public Long getCreateUserID() {
+    public Long getCreateUserID() {
             return createUserID;
         }
 
-        public void setCreateUserID(Long createUserID) {
+    public void setCreateUserID(Long createUserID) {
             this.createUserID = createUserID;
         }
 
-        public User getCreateUser() {
+    public User getCreateUser() {
             return createUser;
         }
 
-        public void setCreateUser(User createUser) {
+    public void setCreateUser(User createUser) {
             this.createUser = createUser;
         }
 
-        @Override
-        public boolean equals(Object o) {
-            Report that = (Report) o;
-            return (this.id.equals(that.id) && this.lat == that.lat && this.lng == that.lng
-                    && this.title.equals(that.title) && this.description.equals(that.description));
-        }
-
-        @Override
-        public int hashCode() {
-            return (int) (id.hashCode() * lat * lng * title.hashCode() * description.hashCode());
-        }
-
+    public boolean isHandled() {
+        return handled;
     }
+
+    public void setHandled(boolean handled) {
+        this.handled = handled;
+    }
+}
