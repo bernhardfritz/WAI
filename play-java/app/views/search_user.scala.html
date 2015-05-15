@@ -42,21 +42,27 @@
   </div>
 
   <script>
-    $('#input').keyup(function(){
-     $.get( "/setUser/"+$('#input').val(), function( data ) {
-      var arr = data.split(" ");
-      var i;
-      var longstr = "";
-      for(i=0; i<arr.length-1;i++){
-        longstr+='<a href="#" class="list-group-item">';
-        longstr+=arr[i];
-        longstr+="<a>";
-      }
-      if (arr.length==1){
-       $("#listdiv").html(" ");
-      }
-      $("#listdiv").html(longstr);
-});
-  });
+     $('#input').keyup(function(){
+        $.get( "/setUser/"+$('#input').val(), function( data ) {
+            $("#listdiv").finish();
+            var arr = data.split(" ");
+            var i;
+            var longstr = "";
+            for(i=0; i<arr.length-1;i++){
+                longstr+='<a href="#" class="list-group-item">';
+                longstr+=arr[i];
+                longstr+="</a>";
+            }
+            if(arr.length==1) {
+                longstr="<p>nothing found...</p>";
+            }
+            if($("#listdiv").html()!=longstr) {
+                $("#listdiv").animate({opacity:"0.0"}, function(){
+                    $("#listdiv").html(longstr);
+                });
+                $("#listdiv").animate({opacity:"1.0"});
+            }
+        });
+     });
   </script>
 }

@@ -234,6 +234,20 @@ public class DBManager {
     }
 
     /**
+     *
+     * Get all pictures between start and end id.
+     * @return All pictures between start and end id.
+     */
+    public List<Picture> getPictureRange(Long start, Long end) {
+        List<Picture> pictures = Picture.find.where().between("id", start.toString(),end.toString()).findList();
+        for(Picture p : pictures) {
+            p = addConnections(p);
+        }
+
+        return pictures;
+    }
+
+    /**
      * Get all accepted pictures from the DB.
      * @return All accepted pictures from the DB.
      */

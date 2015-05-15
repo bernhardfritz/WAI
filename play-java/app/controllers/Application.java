@@ -81,12 +81,30 @@ public class Application extends Controller {
         return ok(bootstrap.render());
     }
 
-    public static Result gallery() {
-        List<Picture> pictures = new ArrayList<Picture>();
-        for(int i=1; i<=dbManager.getPictureCount(); i++) {
-            pictures.add(dbManager.getPicture(0L+i));
-        }
-        return ok(gallery.render(pictures));
+    public static Result gallery(Integer currentpage) {
+        Long start = (currentpage-1)*10+1L;
+        Long end = start+9L;
+        List<Picture> pictures = dbManager.getPictureRange(start,end);
+        Integer maxpage = dbManager.getPictureCount()/10+1;
+        return ok(gallery.render(currentpage,maxpage,pictures));
+    }
+
+    public static Result gallery_edit() {
+        DynamicForm dynamicForm = Form.form().bindFromRequest();
+        String id = dynamicForm.get("id");
+        String title = dynamicForm.get("title");
+        String latitude = dynamicForm.get("latitude");
+        String longitude = dynamicForm.get("longitude");
+        String description = dynamicForm.get("description");
+        System.out.println(id+"\n"+title+"\n"+latitude+"\n"+longitude+"\n"+description);
+        // TODO: DBManager soll Funktionalität bereitstellen zum Verändern von Bildern
+        return redirect(routes.Application.gallery(1));
+    }
+
+    public static Result gallery_delete(Long id) {
+        System.out.println(id);
+        // TODO: DBManager soll Funktionalität bereitstellen zum Löschen/Deaktivieren von Bildern
+        return redirect(routes.Application.gallery(1));
     }
 
     public static Result game(Long id) {
