@@ -136,13 +136,36 @@ public class DBManager {
     }
 
     /**
-     * Get all unfinished games of a user.
+     * Get all unfinished games of a user where the user has to play.
      * @param user
-     * @return All unfinished games of a user.
+     * @return All unfinished games of a user where the user has to play.
      */
-    public List<Game> getUnfinishedGames(User user) {
+    public List<Game> getReadyUnfinishedGames(User user) {
         List<Game> games = Game.find.where().ieq("finished", "0").or(Expr.ieq("user1id", user.getId().toString()),
                 Expr.ieq("user2id", user.getId().toString())).ieq("current_user_id", user.getId().toString()).findList();
+
+        for (Game g : games) {
+            g.setUser1(getUser(g.getUser1ID()));
+            g.setUser2(getUser(g.getUser2ID()));
+            if (g.getWinner() != null) {
+                g.setWinner(getUser(g.getWinnerID()));
+            }
+            if (g.getCurrentUser() != null) {
+                g.setCurrentUserUser(getUser(g.getCurrentUserID()));
+            }
+        }
+
+        return games;
+    }
+
+    /**
+     * Get all unfinished games of a user where the user has not to play.
+     * @param user
+     * @return All unfinished games of a user where the user has not to play.
+     */
+    public List<Game> getUnreadyUnfinishedGames(User user) {
+        List<Game> games = Game.find.where().ieq("finished", "0").or(Expr.ieq("user1id", user.getId().toString()),
+                Expr.ieq("user2id", user.getId().toString())).not(Expr.ieq("current_user_id", user.getId().toString())).findList();
 
         for (Game g : games) {
             g.setUser1(getUser(g.getUser1ID()));
