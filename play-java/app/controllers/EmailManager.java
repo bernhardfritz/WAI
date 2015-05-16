@@ -8,6 +8,8 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import java.io.*;
+import java.util.*;
 
 public class EmailManager {
 
@@ -43,18 +45,38 @@ public class EmailManager {
         return SingletonHelper.INSTANCE;
     }
 
-    public boolean send(String to, String headline, String text) {
+    public boolean send(int option, String to, String headline, String text) { //use option = 0 to send a normal email, option = 1 to send a html email
         try {
-            Message message = new MimeMessage(this.session);
+            MimeMessage message = new MimeMessage(this.session);
             message.setFrom(new InternetAddress(this.from));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
             message.setSubject(headline);
-            message.setText(text);
+            if(option==1) {
+                message.setText(text, "utf-8", "html");
+            }
+            else{
+                message.setText(text);
+            }
             Transport.send(message);
             System.out.println("sent");
             return true;
         } catch (MessagingException e) {
             return false;
         }
+    }
+
+    public String read(String file){
+        StringBuilder contentBuilder = new StringBuilder();
+        try {
+            BufferedReader in = new BufferedReader(new FileReader("public/emails/" + file +".html"));
+            String str;
+            while ((str = in.readLine()) != null) {
+                contentBuilder.append(str);
+            }
+            in.close();
+        } catch (IOException e) {
+        }
+        String text = contentBuilder.toString();
+        return text;
     }
 }

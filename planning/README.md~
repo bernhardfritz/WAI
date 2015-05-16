@@ -16,13 +16,13 @@ Wenn ein Task abgeschlossen ist, einfach in WAI/planning/README.md ein [x] setze
 
 
 ## Thibault
-- [x] Buttons bei index, play_menu, new_game_menu sollten so breit wie der Bildschirm ist sein.
-- [x] Einfügen von Back Buttons bei play_menu und new_game_menu anstatt dem Logo.
-- [x] Refactoring von search_friend und send_email
-  - [x] Implementieren von add_friend bei dem man einen Freund der bereits auf WAI registriert ist zu seinen Freunden hinzufügen kann. Dafür wird ein Suchfeld benötigt das den eingegeben Usernamen über AJAX mit der Datenbank abgleicht. Eine Liste der gefundenen Treffer soll auf der gleichen Seite dargestellt werden können.
-  - [x] Implementieren von invite_friend bei dem man einen Freund über dessen Email-Adresse ermuntern kann auch WAI zu spielen. Der Inhalt der Email soll nicht verändert werden können (hardcoded)
-- [x] Zentrieren von momentan linksbündigen Formularen
-- [x] Einbauen einer Möglichkeit zum Ändern des Passworts von der Weboberfläche. ("Forgot password?" bei Login und "Change password" im Sidebar Menü).
+- [ ] Buttons bei index, play_menu, new_game_menu sollten so breit wie der Bildschirm ist sein.
+- [ ] Einfügen von Back Buttons bei play_menu und new_game_menu anstatt dem Logo.
+- [ ] Refactoring von search_friend und send_email
+  - [ ] Implementieren von add_friend bei dem man einen Freund der bereits auf WAI registriert ist zu seinen Freunden hinzufügen kann. Dafür wird ein Suchfeld benötigt das den eingegeben Usernamen über AJAX mit der Datenbank abgleicht. Eine Liste der gefundenen Treffer soll auf der gleichen Seite dargestellt werden können.
+  - [ ] Implementieren von invite_friend bei dem man einen Freund über dessen Email-Adresse ermuntern kann auch WAI zu spielen. Der Inhalt der Email soll nicht verändert werden können (hardcoded)
+- [ ] Zentrieren von momentan linksbündigen Formularen
+- [ ] Einbauen einer Möglichkeit zum Ändern des Passworts von der Weboberfläche. ("Forgot password?" bei Login und "Change password" im Sidebar Menü).
 
 ## Philipp
 - [x] Bilder der Sehenswürdigkeiten unskaliert überschreiben.

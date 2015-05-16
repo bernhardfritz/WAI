@@ -5,11 +5,15 @@
 # Home page
 GET         /                             controllers.Application.index()
 
+GET         /account                      controllers.Application.account(changedOrNot: Integer)
+POST        /account                      controllers.Application.changeEmailPassw(i: Integer)
 GET         /blank                        controllers.Application.blank()
 GET         /bootstrap                    controllers.Application.bootstrap()
+GET         /forgotPassword               controllers.Application.forgotPassword(sentornot: Integer, toemail: String)
+POST        /forgotPassword               controllers.Application.forgotPasswordSend()
 GET         /gallery                      controllers.Application.gallery(currentpage: Integer ?= 1)
 POST        /gallery_edit                 controllers.Application.gallery_edit()
-GET        /gallery_delete/:id           controllers.Application.gallery_delete(id: Long)
+GET         /gallery_delete/:id           controllers.Application.gallery_delete(id: Long)
 GET         /game                         controllers.Application.game()
 POST        /gameAction/:id               controllers.Application.gameAction(id: Long)
 GET         /getLocation                  controllers.Application.getLocation()

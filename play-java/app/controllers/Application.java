@@ -2,6 +2,8 @@ package controllers;
 
 import com.google.common.io.Files;
 import models.*;
+import org.apache.commons.lang3.RandomStringUtils;
+import java.util.Random;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.mvc.Controller;
@@ -61,6 +63,10 @@ public class Application extends Controller {
         }
     }
 
+    public static Result account(int i){    // i to display if changes where successful (i=0 display nothing, i=1 display successful, i=2 display not successful
+        return ok(account.render(0, dbManager.getUser(session().get("username"))));
+    }
+
     public static Result authenticate() {
         Form<Login> loginForm = Form.form(Login.class).bindFromRequest();
         if (loginForm.hasErrors()) {
@@ -81,12 +87,64 @@ public class Application extends Controller {
         return ok(bootstrap.render());
     }
 
+    public static Result changeEmailPassw(int i) {  // i=0 change email, i=1 change password
+        HashManager hashManager = HashManager.getInstance();
+        DynamicForm dynamicForm = Form.form().bindFromRequest();
+        int changedOrNot = 0;
+        if (i==0){
+            String oldemail = dynamicForm.get("oldemail");
+            String newemail1 = dynamicForm.get("newemail1");
+            String newemail2 = dynamicForm.get("newemail2");
+            if(newemail1.equals(newemail2) && hashManager.codeString(oldemail).equals(dbManager.getUser(session().get("username")).getEmail())){
+                //change email
+                changedOrNot=1;
+            }
+            else{
+                changedOrNot=2;
+            }
+            //System.out.println("email " + oldemail +  newemail1 + newemail2);
+        }
+        if(i==1){
+            String oldpassword = dynamicForm.get("oldpassword");
+            String newpassword1 = dynamicForm.get("newpassword1");
+            String newpassword2  = dynamicForm.get("newpassword2");
+            if(newpassword1.equals(newpassword2) && hashManager.codeString(oldpassword).equals(dbManager.getUser(session().get("username")).getPassword())){
+                dbManager.changeUserPassword(dbManager.getUser(session().get("username")), newpassword1);
+                changedOrNot=3;
+            }
+            else{
+                changedOrNot=4;
+            }
+            //System.out.println("passw " + oldpassword +  newpassword1 + newpassword2 + " " + dbManager.getUser(session().get("username")).getPassword());
+        }
+        return ok(account.render(changedOrNot, dbManager.getUser(session().get("username"))));
+    }
+
+    public static Result forgotPassword(int sentornot,String email){
+        return ok(forgotPassword.render(sentornot,email));
+    }
+
+    public static Result forgotPasswordSend(){
+        DynamicForm dynamicForm = Form.form().bindFromRequest();
+        String email = dynamicForm.get("email");
+        EmailManager emailManager = new EmailManager();
+        String text1 = emailManager.read("resetPassword1");
+        String text2 = emailManager.read("resetPassword2");
+        RandomStringUtils randString = new RandomStringUtils();
+        Random rand = new Random();
+        int length = rand.nextInt(6)+10;
+        String tempPassword = randString.randomAlphanumeric(length);
+        boolean sentornot = emailManager.send(1,email,"Where am I, Reset your password",text1+tempPassword+text2);
+        int i = (sentornot) ? 1 : 2;
+        return ok(forgotPassword.render(i,email));
+    }
+
     public static Result gallery(Integer currentpage) {
         Long start = (currentpage-1)*10+1L;
         Long end = start+9L;
-        List<Picture> pictures = dbManager.getPictureRange(start,end);
+        List<Picture> pictures = dbManager.getPictureRange(start, end);
         Integer maxpage = dbManager.getPictureCount()/10+1;
-        return ok(gallery.render(currentpage,maxpage,pictures));
+        return ok(gallery.render(currentpage, maxpage, pictures));
     }
 
     public static Result gallery_edit() {
@@ -251,7 +309,7 @@ public class Application extends Controller {
         double lat=picture.getLat();
         double lng=picture.getLng();
         session("lat", String.valueOf(lat));
-        session("lng",String.valueOf(lng));
+        session("lng", String.valueOf(lng));
         return ok(report.render(picture));
     }
 
@@ -293,12 +351,11 @@ public class Application extends Controller {
         return ok(result_map.render(latlngs));
     }
 
-    public static Result search_user() {
-        DBManager dbman = DBManager.getInstance();
-        return ok(search_user.render("", dbman.getAllUsers()));
-    }
-
     public static Result search_user(String str) {
+        if (str.equals("")){
+            List<User> list = new ArrayList<User>();
+            return ok(search_user.render("", list));
+        }
         DBManager dbman = DBManager.getInstance();
         return ok(search_user.render("", dbman.findUser(str)));
     }
@@ -308,13 +365,11 @@ public class Application extends Controller {
     }
 
     public static Result send_email_action() {
-
         DynamicForm dynamicForm = Form.form().bindFromRequest();
         String email = dynamicForm.get("email");
-        String text = dynamicForm.get("text");
-        String name = dynamicForm.get("name");
         EmailManager emailManager = new EmailManager();
-        boolean sentornot = emailManager.send(email,"Where Am I Invitation (From " + name + ")",text);
+        String text1 = emailManager.read("inviteEmail");
+        boolean sentornot = emailManager.send(1,email,"Where Am I Invitation (From " + dbManager.getUser(session().get("username")).getName() + ")",text1);
         return redirect(routes.Application.send_email_done(sentornot, email));
     }
 

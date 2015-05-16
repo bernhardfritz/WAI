@@ -1,0 +1,159 @@
+@(changedOrNot: Integer)(user:User)
+@template_with_navbar("Account") {
+} {
+  <div class="container text-center">
+    <div class="text-center">
+
+      @if(changedOrNot==1){
+        <h4> successfully changed email</h4>
+      }
+      @if(changedOrNot==2){
+        <h4> couldn't change email</h4>
+      }
+      @if(changedOrNot==3){
+        <h4> successfully changed password</h4>
+      }
+      @if(changedOrNot==4){
+        <h4> couldn't change password</h4>
+      }
+
+      <div class="bs-docs-section">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="page-header">
+              <h2 id="forms">Account</h2>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg">
+            <div class="well bs-component">
+              <h4>Username: <em>@user.getName()</em> </h4><br>
+              <h4>Email: <em>@user.getEmail()</em> </h4><br>
+
+              <button type="button" class="btn btn-block btn-primary" data-toggle="modal" data-target="#mod1" data-whatever="mdo1">Change email</button>
+              <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="mod1">
+                <div class="modal-dialog modal-sm">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      <br>
+                      <form class="form-horizontal"  method="post" action="@routes.Application.changeEmailPassw(0)">
+                        <fieldset>
+                          <label for="oldemail" class="col-lg-2 control-label">old email address</label>
+                          <div class="col-lg-10">
+                            <input type="email" class="form-control" id="oldemail" placeholder="Email" name="oldemail">
+                          </div>
+                          <label for="newemail1" class="col-lg-2 control-label">new email address</label>
+                          <div class="col-lg-10">
+                            <input type="email" class="form-control" id="newemail1" placeholder="Email" name="newemail1">
+                          </div>
+                          <label for="newemail2" class="col-lg-2 control-label">confirm new email address</label>
+                          <div class="col-lg-10">
+                            <input type="email" class="form-control" id="newemail2" placeholder="Email" name="newemail2">
+                          </div><br>
+                          <button type="submit" id="submit_id1" class="btn btn-primary">Change</button> <br><br>
+                        </fieldset>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <br>
+
+              <button type="button" class="btn btn-block btn-primary" data-toggle="modal" data-target="#mod2" data-whatever="mdo2">Change password</button>
+              <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="mod2">
+                <div class="modal-dialog modal-sm">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      <br>
+                      <form class="form-horizontal"  method="post" action="@routes.Application.changeEmailPassw(1)">
+                        <fieldset>
+                          <label for="oldpassword" class="col-lg-2 control-label">old password</label>
+                          <div class="col-lg-10">
+                            <input type="password" class="form-control" id="oldpassword" placeholder="password" name="oldpassword">
+                          </div>
+                          <label for="newpassword1" class="col-lg-2 control-label">new password</label>
+                          <div class="col-lg-10">
+                            <input type="password" class="form-control" id="newpassword1" placeholder="password" name="newpassword1">
+                          </div>
+                          <label for="newpassword2" class="col-lg-2 control-label">confirm new password</label>
+                          <div class="col-lg-10">
+                            <input type="password" class="form-control" id="newpassword2" placeholder="password" name="newpassword2">
+                          </div><br>
+                          <div class="form-group">
+                            <div class="col-lg-10 col-lg-offset-2">
+                              <form action="javascript:alert( 'success!' );">
+                                <button type="submit" id="submit_id2" class="btn btn-primary">Change</button>
+                                <p><font id="error_id1" color="red"></font></p>
+                                <p><font id="error_id2" color="red"></font></p>
+                                <p><font id="error_id3" color="red"></font></p>
+                              </form>
+                            </div>
+                          </div>
+                        </fieldset>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="bs-component">
+            <ul class="pager">
+              <li class="previous"><a href="@routes.Application.index()">&larr; back</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    $( "#submit_id2").click(function( event ) {
+      if ( $( "#oldpassword" ).val() != "" && $( "#newpassword1" ).val() !=""&& $( "#newpassword2" ).val() !="") {
+        $( "span" ).text( "Changing..." ).show();
+        return;
+
+      }else {
+      if ( $ ( "#oldpassword" ).val ( ) == "" ) {
+        $ ( "#error_id1" ).text ( "old password is missing!" ).show ( ).fadeOut ( 5000 ) ;
+
+      }
+      if ( $ ( "#newpassword1" ).val ( ) == "" ) {
+        $ ( "#error_id2" ).text ( "new password is missing!" ).show ( ).fadeOut ( 5000 ) ;
+      }
+
+      if ( $ ( "#newpassword2" ).val ( ) == "" ) {
+        $ ( "#error_id3" ).text ( "new password is missing!" ).show().fadeOut(5000);
+      }
+      event.preventDefault ( ) ;
+      }
+    });
+
+    $( "#submit_id1").click(function( event ) {
+      if ( $( "#oldemail" ).val() != "" && $( "#newemail1" ).val() !=""&& $( "#newemail2" ).val() !="") {
+        $( "span" ).text( "Changing..." ).show();
+        return;
+
+      }else {
+      if ( $ ( "#oldemail" ).val ( ) == "" ) {
+        $ ( "#error_id1" ).text ( "old email is missing!" ).show ( ).fadeOut ( 5000 ) ;
+
+      }
+      if ( $ ( "#newemail1" ).val ( ) == "" ) {
+        $ ( "#error_id2" ).text ( "old email is missing!" ).show ( ).fadeOut ( 5000 ) ;
+      }
+
+      if ( $ ( "#newemail2" ).val ( ) == "" ) {
+        $ ( "#error_id3" ).text ( "old email is missing!" ).show().fadeOut(5000);
+      }
+      event.preventDefault ( ) ;
+      }
+    });
+  </script>
+}
