@@ -110,8 +110,10 @@ public class Game extends Model {
     }
 
     public void incrementRound() {
-        round++;
-        if (round > 3) {
+        if (round < 3) {
+            round++;
+        }
+        else {
             setFinished(true);
         }
     }
@@ -131,5 +133,25 @@ public class Game extends Model {
     public void setCurrentUserUser(User currentUser) {
         this.currentUser = currentUser;
         setCurrentUserID(currentUser.getId());
+    }
+
+    public User getOtherUser(User user) {
+        if (user.equals(user1)) {
+            return user2;
+        }
+        else if (user.equals(user2)) {
+            return user1;
+        }
+
+        return null;
+    }
+
+    public void checkWinner(User user1, int user1WonRounds, User user2, int user2WonRounds) {
+        if (user1WonRounds > user2WonRounds) {
+            setWinner(user1);
+        }
+        else if (user2WonRounds > user1WonRounds) {
+            setWinner(user2);
+        }
     }
 }
