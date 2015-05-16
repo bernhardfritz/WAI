@@ -97,13 +97,14 @@ public class Application extends Controller {
         String longitude = dynamicForm.get("longitude");
         String description = dynamicForm.get("description");
         System.out.println(id+"\n"+title+"\n"+latitude+"\n"+longitude+"\n"+description);
-        // TODO: DBManager soll Funktionalität bereitstellen zum Verändern von Bildern
+        dbManager.editPicture(dbManager.getPicture(Long.parseLong(id)), Double.parseDouble(latitude),
+                Double.parseDouble(longitude), title, description);
         return redirect(routes.Application.gallery(1));
     }
 
     public static Result gallery_delete(Long id) {
         System.out.println(id);
-        // TODO: DBManager soll Funktionalität bereitstellen zum Löschen/Deaktivieren von Bildern
+        dbManager.unacceptPicture(dbManager.getPicture(id));
         return redirect(routes.Application.gallery(1));
     }
 

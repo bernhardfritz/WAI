@@ -182,14 +182,31 @@ public class DBManager {
     }
 
     public void gameAction(Game game, User user, double distance) {
+        if (!game.getCurrentUser().equals(user)) {
+            return;
+        }
+
         Round round = getRounds(game).get(game.getRound() - 1);
-        User u = null;
         if (user.equals(game.getUser1())) {
-            u = game.getUser1();
+            round.setUser1Distance(distance);
         }
         else if (user.equals(game.getUser2())) {
-            u = game.getUser2();
+            round.setUser2Distance(distance);
         }
+
+        round.checkWinner(game.getUser1(), game.getUser2());
+        if (round.isFinished()) {
+            game.incrementRound();
+        }
+
+        game.checkWinner(game.getUser1(), getWonRounds(game, game.getUser1()), game.getUser2(), getWonRounds(game, game.getUser2()));
+
+        round.save();
+        game.save();
+    }
+
+    public int getWonRounds(Game game, User user) {
+        return Round.find.where().ieq("game_id", game.getId().toString()).ieq("winner_id", user.getId().toString()).findList().size();
     }
 
 
@@ -234,12 +251,11 @@ public class DBManager {
     }
 
     /**
-     *
      * Get all pictures between start and end id.
      * @return All pictures between start and end id.
      */
     public List<Picture> getPictureRange(Long start, Long end) {
-        List<Picture> pictures = Picture.find.where().between("id", start.toString(),end.toString()).findList();
+        List<Picture> pictures = Picture.find.where().between("id", start.toString(), end.toString()).findList();
         for(Picture p : pictures) {
             p = addConnections(p);
         }
@@ -265,8 +281,40 @@ public class DBManager {
      * @param picture
      */
     public void acceptPicture(Picture picture) {
-        picture.setAccepted(true);
-        savePicture(picture);
+        if (picture != null) {
+            picture.setAccepted(true);
+            savePicture(picture);
+        }
+    }
+
+    /**
+     * Unaccept the given picture and save the changes to the DB.
+     * @param picture
+     */
+    public void unacceptPicture(Picture picture) {
+        if (picture != null) {
+            picture.setAccepted(false);
+            savePicture(picture);
+        }
+    }
+
+    /**
+     * Edit a picture with the given values.
+     * @param picture
+     * @param lat
+     * @param lng
+     * @param title
+     * @param description
+     */
+    public void editPicture(Picture picture, double lat, double lng, String title, String description) {
+        if (picture != null) {
+            picture.setLat(lat);
+            picture.setLng(lng);
+            picture.setTitle(title);
+            picture.setDescription(description);
+
+            savePicture(picture);
+        }
     }
 
     /**
