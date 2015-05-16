@@ -92,13 +92,14 @@ public class Application extends Controller {
     public static Result gallery_edit() {
         DynamicForm dynamicForm = Form.form().bindFromRequest();
         String id = dynamicForm.get("id");
+        String accepted = dynamicForm.get("accepted");
         String title = dynamicForm.get("title");
         String latitude = dynamicForm.get("latitude");
         String longitude = dynamicForm.get("longitude");
         String description = dynamicForm.get("description");
-        System.out.println(id+"\n"+title+"\n"+latitude+"\n"+longitude+"\n"+description);
+        System.out.println(id+"\n"+accepted+"\n"+title+"\n"+latitude+"\n"+longitude+"\n"+description);
         dbManager.editPicture(dbManager.getPicture(Long.parseLong(id)), Double.parseDouble(latitude),
-                Double.parseDouble(longitude), title, description);
+                Double.parseDouble(longitude), title, description); // accepted noch einbaun
         return redirect(routes.Application.gallery(1));
     }
 

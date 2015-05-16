@@ -75,8 +75,12 @@
                                         <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                             <div class="form-group">
-                                                <label for="title" class="control-label">Title:</label>
-                                                <input type="text" class="form-control input-lg" name="title" value="@picture.getTitle()">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">
+                                                        <input type="checkbox" name="accepted" @if(picture.isAccepted()){checked}>
+                                                    </span>
+                                                    <input type="text" class="form-control input-lg" name="title" value="@picture.getTitle()">
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="modal-body">

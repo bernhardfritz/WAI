@@ -4,7 +4,7 @@ Wenn ein Task abgeschlossen ist, einfach in WAI/planning/README.md ein [x] setze
 ## Bernhard
 - [ ] Admin Oberfläche
   - [ ] Erstellen einer Admin Oberfläche die nur durch den User admin aufgerufen werden kann. In dieser Oberfläche soll es für einen Admin ohne großen Aufwand möglich sein upgeloadete Bilder zu verifizieren und freizuschalten.
-  - [ ] Der Admin soll visuellen Zugriff auf die gesamte Datenbank haben und fal
+  - [ ] Der Admin soll visuellen Zugriff auf die gesamte Datenbank haben
   - [ ] Der Admin soll die Möglichkeit haben böse User zu bannen.
   - [ ] Der Admin soll auch auf offene Reports zugreifen und reagieren können.
 - [ ] Erstellen einer Oberfläche zur Übersicht offener Spiele.
