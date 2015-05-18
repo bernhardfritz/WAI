@@ -340,7 +340,7 @@ public class Application extends Controller {
 
     public static Result result_map(long id) {
         Picture picture = dbManager.getPicture(id);
-        List<LatLng> latlngs = new ArrayList<>();
+        List<LatLng> latlngs = new ArrayList<LatLng>();
         latlngs.add(picture.getLatLng());
         if (getLat() != null && getLng() != null) {
             latlngs.add(new LatLng(getLat(), getLng()));
