@@ -60,7 +60,8 @@ create table user (
   name                      varchar(255),
   email                     varchar(255),
   password                  varchar(255),
-  active                    integer(1))
+  active                    integer(1),
+  register_date             timestamp)
 ;
 
 

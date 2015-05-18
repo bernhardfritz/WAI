@@ -53,7 +53,7 @@ public class Application extends Controller {
                     !password.equals(passwordConfirm)) {
                 return "Invalid name, email address or password!";
             }
-            for (User u : dbManager.getAllUsers()) {
+            for (User u : dbManager.getAllActiveUsers()) {
                 if (u.getName().equals(name) || u.getEmail().equals(email)) {
                     return "Invalid name, email address or password!";
                 }
@@ -171,9 +171,7 @@ public class Application extends Controller {
     }
 
     public static Result game() {
-        long id = 1;
-        id+=Math.random()*dbManager.getAcceptedPictureCount();
-        return ok(game.render(id));
+        return ok(game.render(dbManager.getRandomAcceptedPicture().getId()));
     }
 
     public static Result gameAction(Long id) {

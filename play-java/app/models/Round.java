@@ -119,21 +119,4 @@ public class Round extends Model {
     public void setFinished(boolean finished) {
         this.finished = finished;
     }
-
-    public void checkWinner(User user1, User user2) {
-        if (user1Distance != null && user2Distance != null) {
-            if (user1Distance < user2Distance) {
-                setWinner(user1);
-            }
-            else if (user2Distance < user1Distance) {
-                setWinner(user2);
-            }
-            // TODO: Unentschieden einbauen
-            else {
-
-            }
-
-            finished = true;
-        }
-    }
 }

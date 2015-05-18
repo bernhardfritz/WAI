@@ -34,7 +34,9 @@ public class DBManager {
             List<Object> users = all.get("users");
 
             for (Object o : users) {
-                registerUser((User) o);
+                User u = (User) o;
+                ((User) o).setRegisterDate(LocalDateTime.now());
+                registerUser(u);
             }
         }
 
@@ -123,9 +125,7 @@ public class DBManager {
         for (int i = 0; i < 3; i++) {
             Picture picture = null;
             do {
-                long id = 1;
-                id += Math.random() * getAcceptedPictureCount();
-                picture = getAcceptedPicture(id);
+                picture = getRandomAcceptedPicture();
             } while (pictures.contains(picture));
             pictures.add(picture);
 
@@ -151,7 +151,7 @@ public class DBManager {
                 g.setWinner(getUser(g.getWinnerID()));
             }
             if (g.getCurrentUser() != null) {
-                g.setCurrentUserUser(getUser(g.getCurrentUserID()));
+                g.setCurrentUser(getUser(g.getCurrentUserID()));
             }
         }
 
@@ -174,7 +174,7 @@ public class DBManager {
                 g.setWinner(getUser(g.getWinnerID()));
             }
             if (g.getCurrentUser() != null) {
-                g.setCurrentUserUser(getUser(g.getCurrentUserID()));
+                g.setCurrentUser(getUser(g.getCurrentUserID()));
             }
         }
 
@@ -194,19 +194,65 @@ public class DBManager {
             round.setUser2Distance(distance);
         }
 
-        round.checkWinner(game.getUser1(), game.getUser2());
+        // check if round is finished
+        if (round.getUser1Distance() != null && round.getUser2Distance() != null) {
+            if (round.getUser1Distance() < round.getUser2Distance()) {
+                round.setWinner(game.getUser1());
+            }
+            else if (round.getUser2Distance() < round.getUser1Distance()) {
+                round.setWinner(game.getUser2());
+            }
+            else {
+                round.setWinner(game.getUser1());
+            }
+
+            round.setFinished(true);
+        }
+
         if (round.isFinished()) {
             game.incrementRound();
         }
-
-        game.checkWinner(game.getUser1(), getWonRounds(game, game.getUser1()), game.getUser2(), getWonRounds(game, game.getUser2()));
+        else {
+            game.setCurrentUser(game.getOtherUser(user));
+        }
 
         round.save();
+
+        // check if game is finished
+        if (game.isFinished() && getWonRounds(game, game.getUser1()) >= 2) {
+            game.setWinner(game.getUser1());
+        }
+        else if (game.isFinished() && getWonRounds(game, game.getUser2()) >= 2) {
+            game.setWinner(game.getUser2());
+        }
+
         game.save();
     }
 
+    /**
+     * Get the number of won rounds of a game for a user.
+     * @param game
+     * @param user
+     * @return The number of won rounds of a game for a user.
+     */
     public int getWonRounds(Game game, User user) {
         return Round.find.where().ieq("game_id", game.getId().toString()).ieq("winner_id", user.getId().toString()).findList().size();
+    }
+
+    public Game getGame(Long id) {
+        Game game = Game.find.where().ieq("id", id.toString()).findUnique();
+        if (game != null) {
+            game.setUser1(getUser(game.getUser1ID()));
+            game.setUser2(getUser(game.getUser2ID()));
+            if (game.getWinnerID() != null) {
+                game.setWinner(getUser(game.getWinnerID()));
+            }
+            if (game.getCurrentUserID() != null) {
+                game.setCurrentUser(getUser(game.getCurrentUserID()));
+            }
+        }
+
+        return game;
     }
 
 
@@ -350,6 +396,21 @@ public class DBManager {
         return picture;
     }
 
+    /**
+     * Get a random accepted picture from the DB.
+     * @return A random accepted picture from the DB.
+     */
+    public Picture getRandomAcceptedPicture() {
+        Picture picture = null;
+        while (picture == null) {
+            long id = 1;
+            id += Math.random() * getPictureCount();
+            picture = getAcceptedPicture(id);
+        }
+
+        return picture;
+    }
+
 
     /* =========================== Report functions =========================== */
 
@@ -440,7 +501,9 @@ public class DBManager {
         for (Round r : rounds) {
             r.setGame(game);
             r.setPicture(getAcceptedPicture(r.getPictureID()));
-            r.setWinner(getUser(r.getWinnerID()));
+            if (r.getWinnerID() != null) {
+                r.setWinner(getUser(r.getWinnerID()));
+            }
         }
 
         return rounds;
@@ -495,8 +558,16 @@ public class DBManager {
      * Get a list of all registered and active users.
      * @return A list of all registered and active users.
      */
-    public List<User> getAllUsers() {
+    public List<User> getAllActiveUsers() {
         return User.find.where().ieq("active", "1").findList();
+    }
+
+    /**
+     * Get a list of all registered users.
+     * @return A list of all registered users.
+     */
+    public List<User> getAllUsers() {
+        return User.find.all();
     }
 
     public void changeUserPassword(User user, String password) {

@@ -130,7 +130,7 @@ public class Game extends Model {
         return currentUser;
     }
 
-    public void setCurrentUserUser(User currentUser) {
+    public void setCurrentUser(User currentUser) {
         this.currentUser = currentUser;
         setCurrentUserID(currentUser.getId());
     }
@@ -147,10 +147,10 @@ public class Game extends Model {
     }
 
     public void checkWinner(User user1, int user1WonRounds, User user2, int user2WonRounds) {
-        if (user1WonRounds > user2WonRounds) {
+        if (user1WonRounds >= 2) {
             setWinner(user1);
         }
-        else if (user2WonRounds > user1WonRounds) {
+        else if (user2WonRounds >= 2) {
             setWinner(user2);
         }
     }

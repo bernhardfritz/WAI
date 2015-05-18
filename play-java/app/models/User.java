@@ -3,6 +3,7 @@ package models;
 
 import controllers.DBManager;
 import controllers.HashManager;
+import org.joda.time.LocalDateTime;
 import play.db.ebean.Model;
 
 import javax.persistence.Entity;
@@ -22,6 +23,8 @@ public class User extends Model {
     private String password;
 
     private boolean active;
+
+    private LocalDateTime registerDate;
 
     public User(String name, String email, String password) {
         this.name = name;
@@ -64,6 +67,14 @@ public class User extends Model {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public LocalDateTime getRegisterDate() {
+        return registerDate;
+    }
+
+    public void setRegisterDate(LocalDateTime registerDate) {
+        this.registerDate = registerDate;
     }
 
     public static User authenticate(String username, String password) {
