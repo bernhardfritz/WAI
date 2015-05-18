@@ -124,8 +124,8 @@ public class DBManager {
             Picture picture = null;
             do {
                 long id = 1;
-                id += Math.random() * getPictureCount();
-                picture = getPicture(id);
+                id += Math.random() * getAcceptedPictureCount();
+                picture = getAcceptedPicture(id);
             } while (pictures.contains(picture));
             pictures.add(picture);
 
@@ -221,20 +221,37 @@ public class DBManager {
     }
 
     /**
-     * Get a picture from id.
+     * Get a accepted picture from id.
      * @param id
      * @return The respective picture or NULL, if there is no accepted picture with that id.
      */
-    public Picture getPicture(Long id) {
+    public Picture getAcceptedPicture(Long id) {
         return addConnections(Picture.find.where().ieq("id", id.toString()).ieq("accepted", "1").findUnique());
+    }
+
+    /**
+     * Get a picture from id.
+     * @param id
+     * @return The respective picture or NULL, if there is no picture with that id.
+     */
+    public Picture getPicture(Long id) {
+        return addConnections(Picture.find.where().ieq("id", id.toString()).findUnique());
     }
 
     /**
      * Get the number of all accepted pictures in the DB.
      * @return The number of all accepted pictures in the DB.
      */
-    public int getPictureCount() {
+    public int getAcceptedPictureCount() {
         return Picture.find.where().ieq("accepted", "1").findList().size();
+    }
+
+    /**
+     * Get the number of all pictures in the DB.
+     * @return The number of all pictures in the DB.
+     */
+    public int getPictureCount() {
+        return Picture.find.where().findList().size();
     }
 
     /**
@@ -383,7 +400,7 @@ public class DBManager {
      * @param report
      */
     public void acceptReportChanges(Report report) {
-        Picture picture = getPicture(report.getOldId());
+        Picture picture = getAcceptedPicture(report.getOldId());
         picture.setLat(report.getLat());
         picture.setLng(report.getLng());
         picture.setTitle(report.getTitle());
@@ -421,7 +438,7 @@ public class DBManager {
         List<Round> rounds = Round.find.where().ieq("game_id", game.getId().toString()).orderBy("id").findList();
         for (Round r : rounds) {
             r.setGame(game);
-            r.setPicture(getPicture(r.getPictureID()));
+            r.setPicture(getAcceptedPicture(r.getPictureID()));
             r.setWinner(getUser(r.getWinnerID()));
         }
 

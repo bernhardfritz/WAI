@@ -18,7 +18,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -143,7 +142,7 @@ public class Application extends Controller {
         Long start = (currentpage-1)*10+1L;
         Long end = start+9L;
         List<Picture> pictures = dbManager.getPictureRange(start, end);
-        Integer maxpage = dbManager.getPictureCount()/10+1;
+        Integer maxpage = dbManager.getAcceptedPictureCount()/10+1;
         return ok(gallery.render(currentpage, maxpage, pictures));
     }
 
@@ -156,14 +155,14 @@ public class Application extends Controller {
         String longitude = dynamicForm.get("longitude");
         String description = dynamicForm.get("description");
         System.out.println(id+"\n"+accepted+"\n"+title+"\n"+latitude+"\n"+longitude+"\n"+description);
-        dbManager.editPicture(dbManager.getPicture(Long.parseLong(id)), Double.parseDouble(latitude),
+        dbManager.editPicture(dbManager.getAcceptedPicture(Long.parseLong(id)), Double.parseDouble(latitude),
                 Double.parseDouble(longitude), title, description); // accepted noch einbaun
         return redirect(routes.Application.gallery(1));
     }
 
     public static Result gallery_delete(Long id) {
         System.out.println(id);
-        dbManager.unacceptPicture(dbManager.getPicture(id));
+        dbManager.unacceptPicture(dbManager.getAcceptedPicture(id));
         return redirect(routes.Application.gallery(1));
     }
 
@@ -173,7 +172,7 @@ public class Application extends Controller {
 
     public static Result game() {
         long id = 1;
-        id+=Math.random()*dbManager.getPictureCount();
+        id+=Math.random()*dbManager.getAcceptedPictureCount();
         return ok(game.render(id));
     }
 
@@ -259,7 +258,7 @@ public class Application extends Controller {
         if (id == 0L) {
             return ok(map.render(0L,0,0,getLatLng()));
         }
-        Picture p = dbManager.getPicture(id);
+        Picture p = dbManager.getAcceptedPicture(id);
         return ok(map.render(id, p.getWidth(), p.getHeight(), getLatLng()));
     }
 
@@ -278,8 +277,8 @@ public class Application extends Controller {
     public static Result practise() {
         return game();
         /*long id = 1;
-        id+=Math.random()*dbManager.getPictureCount();
-        Picture p = dbManager.getPicture(id);
+        id+=Math.random()*dbManager.getAcceptedPictureCount();
+        Picture p = dbManager.getAcceptedPicture(id);
         return ok(practise.render(id, p.getWidth(), p.getHeight()));*/
     }
 
@@ -305,7 +304,7 @@ public class Application extends Controller {
     }
     @Security.Authenticated(Secured.class)
     public static Result report(Long id) {
-        Picture picture = dbManager.getPicture(id);
+        Picture picture = dbManager.getAcceptedPicture(id);
         double lat=picture.getLat();
         double lng=picture.getLng();
         session("lat", String.valueOf(lat));
@@ -331,7 +330,7 @@ public class Application extends Controller {
     }
 
     public static Result result(long id) {
-        Picture picture = dbManager.getPicture(id);
+        Picture picture = dbManager.getAcceptedPicture(id);
         if (getDistance(picture)!=null) {
             return ok(result.render(picture, "You were off by "+prettifyDistance(getDistance(picture))+" km"));
         }
@@ -339,7 +338,7 @@ public class Application extends Controller {
     }
 
     public static Result result_map(long id) {
-        Picture picture = dbManager.getPicture(id);
+        Picture picture = dbManager.getAcceptedPicture(id);
         List<LatLng> latlngs = new ArrayList<LatLng>();
         latlngs.add(picture.getLatLng());
         if (getLat() != null && getLng() != null) {
