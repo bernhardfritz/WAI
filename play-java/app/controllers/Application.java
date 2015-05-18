@@ -269,7 +269,7 @@ public class Application extends Controller {
 
     @Security.Authenticated(Secured.class)
     public static Result play_menu() {
-        return ok(play_menu.render(dbManager.getReadyUnfinishedGames(dbManager.getUser(session().get("username")))));
+        return ok(play_menu.render(dbManager.getReadyUnfinishedGames(dbManager.getUser(session().get("username"))),dbManager.getUnreadyUnfinishedGames((dbManager.getUser(session().get("username"))))));
     }
 
     public static Result practise() {

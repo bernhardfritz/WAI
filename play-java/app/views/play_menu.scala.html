@@ -1,4 +1,4 @@
-@(list:List[Game])
+@(list:List[Game])(pendingList:List[Game])
 @template_with_navbar("Play") {
 
 } {
@@ -21,8 +21,27 @@
             }
             <div class="list-group">
             @for(game<-list) {
-                <p class="text-warning">@game.getUser2.getName<br/>Round @game.getRound</p><a href="" class="list-group-item">Play</a><br><br><br>
+                @if(game.getUser2.getName()==session.get("username")){
+                    <strong><p class="text-success">@game.getUser1.getName (Round @game.getRound)</p></strong><a href="" class="list-group-item">Play</a><br><br>
+                }else{
+                    <strong><p class="text-success">@game.getUser2.getName (Round @game.getRound)</p></strong><a href="" class="list-group-item">Play</a><br><br>
             }
+            }
+            </div>
+
+            <div class="list-group">
+                @if(pendingList.length!=0) {
+                    <h4><p class="text-primary">Pending:</p></h4> <br/>
+                }
+                <div class="list-group">
+                @for(pendingGame<-pendingList) {
+                    @if(pendingGame.getUser2.getName()==session.get("username")){
+                        <p class="text-warning">@pendingGame.getUser1.getName (Round @pendingGame.getRound) </p><br/><br/>
+                    }else{
+                        <p class="text-warning">@pendingGame.getUser2.getName (Round @pendingGame.getRound) </p><br/><br/>
+                        }
+                }
+                </div>
             </div>
 
         <div class="col-lg-4">
