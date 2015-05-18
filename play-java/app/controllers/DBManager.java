@@ -323,12 +323,13 @@ public class DBManager {
      * @param title
      * @param description
      */
-    public void editPicture(Picture picture, double lat, double lng, String title, String description) {
+    public void editPicture(Picture picture, double lat, double lng, String title, String description, boolean accepted) {
         if (picture != null) {
             picture.setLat(lat);
             picture.setLng(lng);
             picture.setTitle(title);
             picture.setDescription(description);
+            picture.setAccepted(accepted);
 
             savePicture(picture);
         }
