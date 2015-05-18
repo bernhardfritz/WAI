@@ -23,6 +23,8 @@ Wenn ein Task abgeschlossen ist, einfach in WAI/planning/README.md ein [x] setze
   - [x] Implementieren von invite_friend bei dem man einen Freund über dessen Email-Adresse ermuntern kann auch WAI zu spielen. Der Inhalt der Email soll nicht verändert werden können (hardcoded)
 - [x] Zentrieren von momentan linksbündigen Formularen
 - [x] Einbauen einer Möglichkeit zum Ändern des Passworts von der Weboberfläche. ("Forgot password?" bei Login und "Change password" im Sidebar Menü).
+- [ ] Einfügen einer friends.scala.html, die alle Freunde anzeigt.
+- [ ] Bei der Suche soll es die Möglichkeit geben eine neues Spiel mit einem User zu starten oder einen User als Freund hinzuzufügen.
 
 ## Philipp
 - [x] Bilder der Sehenswürdigkeiten unskaliert überschreiben.
@@ -47,3 +49,5 @@ Wenn ein Task abgeschlossen ist, einfach in WAI/planning/README.md ein [x] setze
 - [ ] Überleg dir bereits wie wir Punkte und Statistiken in dein Datenbankmodell einfügen können. Es möglich sein zu beliebigen Zeitpunkten neue Achivements hinzuzufügen.
 - [x] Einbauen einer Tabelle Report. Das Report Objekt beinhaltet ein bestehendes Bild oder die id eines bestehenden Bilds, neue Lat/Lng-Werte, Erstellungsdatum, User Objekt oder username des Nutzers der den Report verfasst, und ein boolean ob der Report behandelt wurde oder nicht.
 - [x] Erstellen einer Funktion im DBManager.java zum Editieren und Deaktivieren von Bildern.
+- [ ] Einbauen einer Tabelle Tokens. 1 Token (String) pro User, 1 tag gültig (Datum?). Es soll möglich sein nur mit e-mail Adresse den Token und Datum zu setzen und zu bekommen.
+- [ ] Einbauen einer Tabelle friendrequests. Wenn ein user jemanden adden will wird dieser dann zuerst in der friendrequest tabelle gespeichert.

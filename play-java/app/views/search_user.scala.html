@@ -46,26 +46,37 @@
 
   <script>
      $('#input').keyup(function(){
-        $.get( "/setUser/"+$('#input').val(), function( data ) {
-            $("#listdiv").finish();
-            var arr = data.split(" ");
-            var i;
-            var longstr = "";
-            for(i=0; i<arr.length-1;i++){
-                longstr+='<a href="#" class="list-group-item">';
-                longstr+=arr[i];
-                longstr+="</a>";
-            }
-            if(arr.length==1) {
-                longstr="<p>nothing found...</p>";
-            }
-            if($("#listdiv").html()!=longstr) {
-                $("#listdiv").animate({opacity:"0.0"}, function(){
-                    $("#listdiv").html(longstr);
-                });
-                $("#listdiv").animate({opacity:"1.0"});
-            }
-        });
+       var longstr = "";
+       if($('#input').val().length>2){
+            $.get( "/setUser/"+$('#input').val(), function( data ) {
+                $("#listdiv").finish();
+                longstr = "";
+                var arr = data.split(" ");
+                var i;
+
+                for(i=0; i<arr.length-1;i++){
+                    longstr+='<a href="#" class="list-group-item">';
+                    longstr+=arr[i];
+                    longstr+="</a>";
+                }
+
+                if(arr.length==1) {
+                    longstr="<p>nothing found...</p>";
+                }
+
+                if($("#listdiv").html()!=longstr) {
+                    $("#listdiv").animate({opacity:"0.0"}, function(){
+                        $("#listdiv").html(longstr);
+                    });
+                    $("#listdiv").animate({opacity:"1.0"});
+                }
+            });
+       }
+       else{
+           longstr="<p>enter at least 3 characters</p>";
+           $("#listdiv").html(longstr);
+       }
+
      });
   </script>
 }
