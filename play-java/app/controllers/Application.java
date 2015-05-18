@@ -155,8 +155,8 @@ public class Application extends Controller {
         String longitude = dynamicForm.get("longitude");
         String description = dynamicForm.get("description");
         System.out.println(id+"\n"+accepted+"\n"+title+"\n"+latitude+"\n"+longitude+"\n"+description);
-        dbManager.editPicture(dbManager.getAcceptedPicture(Long.parseLong(id)), Double.parseDouble(latitude),
-                Double.parseDouble(longitude), title, description); // accepted noch einbaun
+        dbManager.editPicture(dbManager.getPicture(Long.parseLong(id)), Double.parseDouble(latitude),
+                Double.parseDouble(longitude), title, description, accepted.equals("on")); // accepted noch einbaun
         return redirect(routes.Application.gallery(1));
     }
 
