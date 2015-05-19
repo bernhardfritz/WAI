@@ -570,6 +570,29 @@ public class DBManager {
         return User.find.all();
     }
 
+    /**
+     * Get all users between start and end id.
+     * @return All users between start and end id.
+     */
+    public List<User> getUserRange(Long start, Long end) {
+        List<User> users = User.find.where().between("id", start.toString(), end.toString()).findList();
+        return users;
+    }
+
+    /**
+     * Get the number of all users in the DB.
+     * @return The number of all users in the DB.
+     */
+    public int getUserCount() {
+        return User.find.where().findList().size();
+    }
+
+    public void toggleUser(Long id) {
+        User user = getUser(id);
+        user.setActive(!user.isActive());
+        user.save();
+    }
+
     public void changeUserPassword(User user, String password) {
         if (user != null) {
             user.setPassword(password);

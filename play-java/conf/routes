@@ -33,10 +33,13 @@ GET         /send_email_done              controllers.Application.send_email_don
 GET         /setLocation/:lat/:lng        controllers.Application.setLocation(lat: Double, lng: Double)
 GET         /setUser/:suchbegriff         controllers.Application.setUser(suchbegriff: String)
 GET         /template                     controllers.Application.template()
-GET         /template_wo_navbar           controllers.Application.template_with_navbar()
+GET         /template_navbar              controllers.Application.template_navbar()
+GET         /template_with_navbar         controllers.Application.template_with_navbar()
 GET         /thumbnail/:id                controllers.Application.thumbnail(id: Long)
 GET         /upload                       controllers.Application.upload()
 POST        /upload                       controllers.Application.uploadAction()
+GET         /toggle_user/:id              controllers.Application.toggleUser(id: Long)
+GET         /users                        controllers.Application.users(currentpage: Integer ?= 1)
 
 # Register
 GET         /register                     controllers.Application.gotoRegister()

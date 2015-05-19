@@ -1,0 +1,60 @@
+@(currentpage: Integer)(maxpage: Integer)(users: List[User])
+@blank("Users"){
+    <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/bootstrap.min.css")">
+} {
+    <table class="table table-striped" data-url="x" data-toggle="table">
+        <thead>
+        <tr>
+            <th data-field="id" data-halign="center" data-align="center" data-sortable="true">id</th>
+            <th data-field="name" data-halign="left" data-align="left" data-sortable="true">name</th>
+            <th data-field="email" data-halign="left" data-align="left" data-sortable="true">email</th>
+            <th data-field="register date" data-halign="center" data-align="center" data-sortable="true">register date</th>
+            <th data-field="active" data-halign="center" data-align="center" data-sortable="true">active</th>
+        </tr>
+        </thead>
+        @for(user<-users) {
+            <tr>
+                <td>@user.getId()</td>
+                <td>@user.getName()</td>
+                <td>@user.getEmail()</td>
+                <td>@user.getPrettyRegisterDate()</td>
+                <td>
+                @if(user.isActive()) {
+                    <input type="checkbox" name="@user.getId()" onclick="toggleUser(this)" checked>
+                } else {
+                    <input type="checkbox" name="@user.getId()" onclick="toggleUser(this)">
+                }
+                </td>
+            </tr>
+        }
+    </table>
+    <br>
+    <div class="text-center">
+        <ul class="pagination">
+            @if(currentpage==1) {
+                <li class="disabled"><a href="#">&laquo;</a></li>
+            } else {
+                <li><a href="@routes.Application.users(currentpage-1)">&laquo;</a></li>
+            }
+            @for(i <- 1 to maxpage) {
+                @if(i==currentpage) {
+                    <li class="active">
+                    } else {
+                    <li>
+                    }
+                <a href="@routes.Application.users(i)">@i</a></li>
+            }
+            @if(currentpage==maxpage) {
+                <li class="disabled"><a href="#">&raquo;</a></li>
+            } else {
+                <li><a href="@routes.Application.users(currentpage+1)">&raquo;</a></li>
+            }
+        </ul>
+    </div>
+    <script>
+        function toggleUser(user) {
+            alert(user.name);
+            $.get("/toggle_user/"+user.name);
+        }
+    </script>
+}

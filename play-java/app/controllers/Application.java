@@ -120,7 +120,7 @@ public class Application extends Controller {
     }
 
     public static Result forgotPassword(int sentornot,String email){
-        return ok(forgotPassword.render(sentornot,email));
+        return ok(forgotPassword.render(sentornot, email));
     }
 
     public static Result forgotPasswordSend(){
@@ -142,7 +142,7 @@ public class Application extends Controller {
         Long start = (currentpage-1)*10+1L;
         Long end = start+9L;
         List<Picture> pictures = dbManager.getPictureRange(start, end);
-        Integer maxpage = dbManager.getAcceptedPictureCount()/10+1;
+        Integer maxpage = dbManager.getPictureCount()/10+1;
         return ok(gallery.render(currentpage, maxpage, pictures));
     }
 
@@ -393,12 +393,22 @@ public class Application extends Controller {
         return ok(template.render("Template", null, null));
     }
 
+    public static Result template_navbar() {
+        return ok(template_navbar.render("Template", null));
+    }
+
     public static Result template_with_navbar() {
         return ok(template_with_navbar.render("Template with navbar", null, null));
     }
 
     public static Result thumbnail(Long id) throws IOException {
         return ok(Files.toByteArray(new File("public/images/thumbnails/" + id + ".jpg"))).as("image/jpg");
+    }
+
+    public static Result toggleUser(Long id) {
+        dbManager.toggleUser(id);
+        System.out.println(id);
+        return ok();
     }
 
     public static Result upload() {
@@ -433,5 +443,12 @@ public class Application extends Controller {
         } else {
             return upload();
         }
+    }
+
+    public static Result users(Integer currentpage) {
+        Long start = (currentpage-1)*10+1L;
+        Long end = start+9L;
+        Integer maxpage = dbManager.getUserCount()/10+1;
+        return ok(users.render(currentpage, maxpage, dbManager.getUserRange(start, end)));
     }
 }

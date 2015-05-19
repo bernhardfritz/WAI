@@ -73,6 +73,10 @@ public class User extends Model {
         return registerDate;
     }
 
+    public String getPrettyRegisterDate() {
+        return registerDate.toString("dd.MM.yyyy");
+    }
+
     public void setRegisterDate(LocalDateTime registerDate) {
         this.registerDate = registerDate;
     }

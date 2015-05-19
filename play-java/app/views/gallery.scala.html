@@ -1,17 +1,5 @@
 @(currentpage: Integer)(maxpage: Integer)(pictures: List[Picture])
 <!DOCTYPE HTML>
-<!--
-/*
- * Bootstrap Image Gallery Demo 3.0.1
- * https://github.com/blueimp/Bootstrap-Image-Gallery
- *
- * Copyright 2013, Sebastian Tschan
- * https://blueimp.net
- *
- * Licensed under the MIT license:
- * http://www.opensource.org/licenses/MIT
- */
--->
 <html lang="en">
     <head>
         <!--[if IE]>
@@ -74,6 +62,7 @@
                                         <input type="hidden" name="id" value="@picture.getId()">
                                         <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <br>
                                             <div class="form-group">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">
