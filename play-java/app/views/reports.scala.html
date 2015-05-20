@@ -1,0 +1,77 @@
+@(currentpage: Integer)(maxpage: Integer)(reports: List[Report])
+@blank("Reports"){
+    <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/bootstrap.min.css")">
+} {
+    <table class="table table-striped" data-url="x" data-toggle="table">
+        <thead>
+            <tr>
+                <th data-field="id" data-halign="center" data-align="center" data-sortable="true">id</th>
+                <th data-field="email" data-halign="left" data-align="left" data-sortable="true">created by</th>
+                <th data-field="register date" data-halign="center" data-align="center" data-sortable="true">report date</th>
+            </tr>
+        </thead>
+        @for(report<-reports) {
+            <tr>
+                <td><a href="#" data-toggle="modal" data-target="#editModal@report.getId()">@report.getId()</a></td>
+                <td>@report.getCreateUser()</td>
+                <td>@report.getPrettyUploadDate()</td>
+            </tr>
+        }
+    </table>
+    <br>
+    <div class="text-center">
+        <ul class="pagination">
+            @if(currentpage==1) {
+                <li class="disabled"><a href="#">&laquo;</a></li>
+            } else {
+                <li><a href="@routes.Application.reports(currentpage-1)">&laquo;</a></li>
+            }
+            @for(i <- 1 to maxpage) {
+                @if(i==currentpage) {
+                    <li class="active">
+                    } else {
+                    <li>
+                    }
+                <a href="@routes.Application.reports(i)">@i</a></li>
+            }
+            @if(currentpage==maxpage) {
+                <li class="disabled"><a href="#">&raquo;</a></li>
+            } else {
+                <li><a href="@routes.Application.reports(currentpage+1)">&raquo;</a></li>
+            }
+        </ul>
+    </div>
+    @for(report<-reports) {
+        <!-- Edit Modal -->
+        <div class="modal fade" id="editModal@report.getId()" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <div class="media">
+                            <div class="media-body media-middle">
+                                <h4 class="media-heading">@report.getTitle()</h4>
+                                <p>@report.getDescription()</p>
+                            </div>
+                            <div class="media-right">
+                                <img class="media-object img-circle" src="@routes.Application.thumbnail(report.getOldId())" width="100px" height="100px">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                        <img class="img-responsive" src="https://maps.googleapis.com/maps/api/staticmap?center=@report.getLat(),@report.getLng()&zoom=13&size=600x300&maptype=roadmap
+                        &markers=color:red%7C@report.getLat(),@report.getLng()">
+                    </div>
+                    <div class="modal-footer">
+                        <div class="text-left">
+                            <label for="optional" class="control-label">Comment:</label>
+                            <div class="well" id="optional">@report.getOptional()</div>
+                        </div>
+                        <a href="@routes.Application.approveReport(report.getId())" class="btn btn-success">Approve</a>
+                        <a href="@routes.Application.disapproveReport(report.getId())" class="btn btn-danger">Disapprove</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}

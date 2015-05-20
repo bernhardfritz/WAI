@@ -1,0 +1,41 @@
+@blank("Admin") {
+    <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/bootstrap.min.css")">
+} {
+    <div class="row">
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4>Reports</h4>
+                </div>
+                <div class="panel-body">
+                    <div class="embed-responsive embed-responsive-4by3">
+                        <iframe class="embed-responsive-item" src="@routes.Application.reports()" frameborder="0"></iframe><br>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4>Users</h4>
+                </div>
+                <div class="panel-body">
+                    <div class="embed-responsive embed-responsive-4by3">
+                        <iframe class="embed-responsive-item" src="@routes.Application.users()" frameborder="0"></iframe><br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4>Gallery</h4>
+        </div>
+        <div class="panel-body">
+            <div class="embed-responsive embed-responsive-4by3">
+                <iframe class="embed-responsive-item" src="@routes.Application.gallery()" frameborder="0"></iframe><br>
+            </div>
+        </div>
+    </div>
+}

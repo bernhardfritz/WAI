@@ -448,6 +448,15 @@ public class DBManager {
         return reports;
     }
 
+    public List<Report> getUnhandledReportRange(Long start, Long end) {
+        List<Report> reports = Report.find.where().ieq("handled", "0").between("id", start.toString(), end.toString()).findList();
+        return reports;
+    }
+
+    public int getUnhandledReportCount() {
+        return Report.find.all().size();
+    }
+
     /**
      * Get report from id.
      * @param id
@@ -616,7 +625,7 @@ public class DBManager {
      * @param id
      */
     public void toggleUser(Long id) {
-        User user = getActiveUser(id);
+        User user = getUser(id);
         user.setActive(!user.isActive());
         user.save();
     }

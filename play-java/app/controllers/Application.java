@@ -66,6 +66,15 @@ public class Application extends Controller {
         return ok(account.render(0, dbManager.getActiveUser(session().get("username"))));
     }
 
+    public static Result admin() {
+        return ok(admin.render());
+    }
+
+    public static Result approveReport(Long id) {
+        dbManager.acceptReportChanges(dbManager.getReport(id));
+        return redirect(routes.Application.reports(1));
+    }
+
     public static Result authenticate() {
         Form<Login> loginForm = Form.form(Login.class).bindFromRequest();
         if (loginForm.hasErrors()) {
@@ -125,6 +134,13 @@ public class Application extends Controller {
         return ok();
     }
 
+    public static Result disapproveReport(Long id) {
+        Report report = dbManager.getReport(id);
+        report.setHandled(true);
+        report.save();
+        return redirect(routes.Application.reports(1));
+    }
+
     public static Result forgotPassword(int sentornot,String email){
         return ok(forgotPassword.render(sentornot, email));
     }
@@ -147,9 +163,8 @@ public class Application extends Controller {
     public static Result gallery(Integer currentpage) {
         Long start = (currentpage-1)*10+1L;
         Long end = start+9L;
-        List<Picture> pictures = dbManager.getPictureRange(start, end);
         Integer maxpage = dbManager.getPictureCount()/10+1;
-        return ok(gallery.render(currentpage, maxpage, pictures));
+        return ok(gallery.render(currentpage, maxpage, dbManager.getPictureRange(start,end)));
     }
 
     public static Result gallery_edit() {
@@ -331,6 +346,13 @@ public class Application extends Controller {
         Report report=new Report(lat,lng,title,description,optional,user,oldID); //Do Something with thr Object
         dbManager.saveReport(report);
         return redirect(routes.Application.index());
+    }
+
+    public static Result reports(Integer currentpage) {
+        Long start = (currentpage - 1) * 10 + 1L;
+        Long end = start + 9L;
+        Integer maxpage = dbManager.getUnhandledReportCount() / 10 + 1;
+        return ok(reports.render(currentpage, maxpage, dbManager.getUnhandledReportRange(start, end)));
     }
 
     public static Result result(long id) {

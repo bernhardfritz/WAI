@@ -105,6 +105,10 @@ public class Report extends Model {
             return updloadDate;
         }
 
+    public String getPrettyUploadDate() {
+        return updloadDate.toString("dd.MM.yyyy");
+    }
+
     public void setUpdloadDate(LocalDateTime updloadDate) {
             this.updloadDate = updloadDate;
         }
