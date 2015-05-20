@@ -63,7 +63,7 @@ public class Application extends Controller {
     }
 
     public static Result account(int i){    // i to display if changes where successful (i=0 display nothing, i=1 display successful, i=2 display not successful
-        return ok(account.render(0, dbManager.getUser(session().get("username"))));
+        return ok(account.render(0, dbManager.getActiveUser(session().get("username"))));
     }
 
     public static Result authenticate() {
@@ -94,7 +94,7 @@ public class Application extends Controller {
             String oldemail = dynamicForm.get("oldemail");
             String newemail1 = dynamicForm.get("newemail1");
             String newemail2 = dynamicForm.get("newemail2");
-            if(newemail1.equals(newemail2) && hashManager.codeString(oldemail).equals(dbManager.getUser(session().get("username")).getEmail())){
+            if(newemail1.equals(newemail2) && hashManager.codeString(oldemail).equals(dbManager.getActiveUser(session().get("username")).getEmail())){
                 //change email
                 changedOrNot=1;
             }
@@ -107,16 +107,16 @@ public class Application extends Controller {
             String oldpassword = dynamicForm.get("oldpassword");
             String newpassword1 = dynamicForm.get("newpassword1");
             String newpassword2  = dynamicForm.get("newpassword2");
-            if(newpassword1.equals(newpassword2) && hashManager.codeString(oldpassword).equals(dbManager.getUser(session().get("username")).getPassword())){
-                dbManager.changeUserPassword(dbManager.getUser(session().get("username")), newpassword1);
+            if(newpassword1.equals(newpassword2) && hashManager.codeString(oldpassword).equals(dbManager.getActiveUser(session().get("username")).getPassword())){
+                dbManager.changeUserPassword(dbManager.getActiveUser(session().get("username")), newpassword1);
                 changedOrNot=3;
             }
             else{
                 changedOrNot=4;
             }
-            //System.out.println("passw " + oldpassword +  newpassword1 + newpassword2 + " " + dbManager.getUser(session().get("username")).getPassword());
+            //System.out.println("passw " + oldpassword +  newpassword1 + newpassword2 + " " + dbManager.getActiveUser(session().get("username")).getPassword());
         }
-        return ok(account.render(changedOrNot, dbManager.getUser(session().get("username"))));
+        return ok(account.render(changedOrNot, dbManager.getActiveUser(session().get("username"))));
     }
 
     public static Result forgotPassword(int sentornot,String email){
@@ -269,7 +269,7 @@ public class Application extends Controller {
 
     @Security.Authenticated(Secured.class)
     public static Result play_menu() {
-        return ok(play_menu.render(dbManager.getReadyUnfinishedGames(dbManager.getUser(session().get("username"))),dbManager.getUnreadyUnfinishedGames((dbManager.getUser(session().get("username"))))));
+        return ok(play_menu.render(dbManager.getReadyUnfinishedGames(dbManager.getActiveUser(session().get("username"))),dbManager.getUnreadyUnfinishedGames((dbManager.getActiveUser(session().get("username"))))));
     }
 
     public static Result practise() {
@@ -318,7 +318,7 @@ public class Application extends Controller {
         Double lat=Double.parseDouble(dynamicForm.get("latArea"));
         Double lng=Double.parseDouble(dynamicForm.get("lngArea"));
         String username=dynamicForm.get("user");
-        User user = dbManager.getUser(username);
+        User user = dbManager.getActiveUser(username);
         Long oldID=Long.parseLong(dynamicForm.get("old_id"));
         session().remove("lat");
         session().remove("lng");
@@ -366,7 +366,7 @@ public class Application extends Controller {
         String email = dynamicForm.get("email");
         EmailManager emailManager = new EmailManager();
         String text1 = emailManager.read("inviteEmail");
-        boolean sentornot = emailManager.send(1,email,"Where Am I Invitation (From " + dbManager.getUser(session().get("username")).getName() + ")",text1);
+        boolean sentornot = emailManager.send(1,email,"Where Am I Invitation (From " + dbManager.getActiveUser(session().get("username")).getName() + ")",text1);
         return redirect(routes.Application.send_email_done(sentornot, email));
     }
 
@@ -428,7 +428,7 @@ public class Application extends Controller {
             BufferedImage img = ImageIO.read(file);
 
             // save picture to db
-            Picture pic = new Picture(getLat(),getLng(),title,description, img.getWidth(), img.getHeight(), dbManager.getUser(session().get("username")));
+            Picture pic = new Picture(getLat(),getLng(),title,description, img.getWidth(), img.getHeight(), dbManager.getActiveUser(session().get("username")));
             dbManager.savePicture(pic);
 
             // save picture to "public/images/pictures/pictureID.jpg"

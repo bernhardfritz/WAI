@@ -82,7 +82,7 @@ public class User extends Model {
     }
 
     public static User authenticate(String username, String password) {
-        return DBManager.getInstance().getUser(username, password);
+        return DBManager.getInstance().getActiveUser(username, password);
     }
 
     @Override

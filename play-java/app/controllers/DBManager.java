@@ -64,7 +64,7 @@ public class DBManager {
 
             for (Object o : games) {
                 Game g = (Game) o;
-                createGame(getUser(g.getUser1ID()), getUser(g.getUser2ID()));
+                createGame(getActiveUser(g.getUser1ID()), getActiveUser(g.getUser2ID()));
             }
         }
     }
@@ -95,13 +95,13 @@ public class DBManager {
         if (user != null) {
             for (Friend f : Friend.find.where().ieq("user1id", user.getId().toString()).findList()) {
                 if (!friends.contains(f.getUser2ID())) {
-                    friends.add(getUser(f.getUser2ID()));
+                    friends.add(getActiveUser(f.getUser2ID()));
                 }
             }
 
             for (Friend f : Friend.find.where().ieq("user2id", user.getId().toString()).findList()) {
                 if (!friends.contains(f.getUser1ID())) {
-                    friends.add(getUser(f.getUser1ID()));
+                    friends.add(getActiveUser(f.getUser1ID()));
                 }
             }
         }
@@ -145,13 +145,13 @@ public class DBManager {
                 Expr.ieq("user2id", user.getId().toString())).ieq("current_user_id", user.getId().toString()).findList();
 
         for (Game g : games) {
-            g.setUser1(getUser(g.getUser1ID()));
-            g.setUser2(getUser(g.getUser2ID()));
+            g.setUser1(getActiveUser(g.getUser1ID()));
+            g.setUser2(getActiveUser(g.getUser2ID()));
             if (g.getWinner() != null) {
-                g.setWinner(getUser(g.getWinnerID()));
+                g.setWinner(getActiveUser(g.getWinnerID()));
             }
             if (g.getCurrentUser() != null) {
-                g.setCurrentUser(getUser(g.getCurrentUserID()));
+                g.setCurrentUser(getActiveUser(g.getCurrentUserID()));
             }
         }
 
@@ -168,13 +168,13 @@ public class DBManager {
                 Expr.ieq("user2id", user.getId().toString())).not(Expr.ieq("current_user_id", user.getId().toString())).findList();
 
         for (Game g : games) {
-            g.setUser1(getUser(g.getUser1ID()));
-            g.setUser2(getUser(g.getUser2ID()));
+            g.setUser1(getActiveUser(g.getUser1ID()));
+            g.setUser2(getActiveUser(g.getUser2ID()));
             if (g.getWinner() != null) {
-                g.setWinner(getUser(g.getWinnerID()));
+                g.setWinner(getActiveUser(g.getWinnerID()));
             }
             if (g.getCurrentUser() != null) {
-                g.setCurrentUser(getUser(g.getCurrentUserID()));
+                g.setCurrentUser(getActiveUser(g.getCurrentUserID()));
             }
         }
 
@@ -242,13 +242,13 @@ public class DBManager {
     public Game getGame(Long id) {
         Game game = Game.find.where().ieq("id", id.toString()).findUnique();
         if (game != null) {
-            game.setUser1(getUser(game.getUser1ID()));
-            game.setUser2(getUser(game.getUser2ID()));
+            game.setUser1(getActiveUser(game.getUser1ID()));
+            game.setUser2(getActiveUser(game.getUser2ID()));
             if (game.getWinnerID() != null) {
-                game.setWinner(getUser(game.getWinnerID()));
+                game.setWinner(getActiveUser(game.getWinnerID()));
             }
             if (game.getCurrentUserID() != null) {
-                game.setCurrentUser(getUser(game.getCurrentUserID()));
+                game.setCurrentUser(getActiveUser(game.getCurrentUserID()));
             }
         }
 
@@ -297,7 +297,7 @@ public class DBManager {
      * @return The number of all pictures in the DB.
      */
     public int getPictureCount() {
-        return Picture.find.where().findList().size();
+        return Picture.find.all().size();
     }
 
     /**
@@ -389,7 +389,7 @@ public class DBManager {
     private Picture addConnections(Picture picture) {
         if (picture != null) {
             if (picture.getCreateUserID() != null) {
-                picture.setCreateUser(getUser(picture.getCreateUserID()));
+                picture.setCreateUser(getActiveUser(picture.getCreateUserID()));
             }
         }
 
@@ -481,7 +481,7 @@ public class DBManager {
     private Report addConnections(Report report) {
         if (report != null) {
             if (report.getCreateUserID() != null) {
-                report.setCreateUser(getUser(report.getCreateUserID()));
+                report.setCreateUser(getActiveUser(report.getCreateUserID()));
             }
         }
 
@@ -502,7 +502,7 @@ public class DBManager {
             r.setGame(game);
             r.setPicture(getAcceptedPicture(r.getPictureID()));
             if (r.getWinnerID() != null) {
-                r.setWinner(getUser(r.getWinnerID()));
+                r.setWinner(getActiveUser(r.getWinnerID()));
             }
         }
 
@@ -526,16 +526,16 @@ public class DBManager {
      * @param password
      * @return The respective user or NULL if the authentication failed.
      */
-    public User getUser(String username, String password) {
+    public User getActiveUser(String username, String password) {
         return User.find.where().ieq("name", username).ieq("password", HashManager.getInstance().codeString(password)).ieq("active", "1").findUnique();
     }
 
     /**
-     * Get user from id.
+     * Get active user from id.
      * @param id
      * @return The respective user or NULL if there is no active user with that id.
      */
-    public User getUser(Long id) {
+    public User getActiveUser(Long id) {
         if (id != null) {
             return User.find.where().ieq("id", id.toString()).ieq("active", "1").findUnique();
         }
@@ -543,13 +543,37 @@ public class DBManager {
     }
 
     /**
-     * Get user from username.
+     * Get user from id.
+     * @param id
+     * @return The respective user or NULL if there is no user with that id.
+     */
+    public User getUser(Long id) {
+        if (id != null) {
+            return User.find.where().ieq("id", id.toString()).findUnique();
+        }
+        return null;
+    }
+
+    /**
+     * Get active user from username.
      * @param username
      * @return The respective user or NULL if there is no active user with that username.
      */
-    public User getUser(String username) {
+    public User getActiveUser(String username) {
         if (username != null) {
             return User.find.where().ieq("name", username).ieq("active", "1").findUnique();
+        }
+        return null;
+    }
+
+    /**
+     * Get user from username.
+     * @param username
+     * @return The respective user or NULL if there is no user with that username.
+     */
+    public User getUser(String username) {
+        if (username != null) {
+            return User.find.where().ieq("name", username).findUnique();
         }
         return null;
     }
@@ -584,15 +608,24 @@ public class DBManager {
      * @return The number of all users in the DB.
      */
     public int getUserCount() {
-        return User.find.where().findList().size();
+        return User.find.all().size();
     }
 
+    /**
+     * Toggle the active value of a user.
+     * @param id
+     */
     public void toggleUser(Long id) {
-        User user = getUser(id);
+        User user = getActiveUser(id);
         user.setActive(!user.isActive());
         user.save();
     }
 
+    /**
+     * Set a new password for a user.
+     * @param user
+     * @param password
+     */
     public void changeUserPassword(User user, String password) {
         if (user != null) {
             user.setPassword(password);
