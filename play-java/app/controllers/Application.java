@@ -119,6 +119,12 @@ public class Application extends Controller {
         return ok(account.render(changedOrNot, dbManager.getActiveUser(session().get("username"))));
     }
 
+    public static Result clearLatLng(){
+        session().remove("lat");
+        session().remove("lng");
+        return ok();
+    }
+
     public static Result forgotPassword(int sentornot,String email){
         return ok(forgotPassword.render(sentornot, email));
     }

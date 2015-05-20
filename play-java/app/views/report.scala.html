@@ -1,13 +1,13 @@
 @(picture: Picture)
-@template_with_navbar("Report") {
+@template_with_navbar("Report")     {
 
-} {
-
-    <div class="jumbotron">
-        <p><img src="@routes.Application.picture(picture.getId)" class="col-lg-3 img-responsive img-circle pull-left"></p><br/>
+    } {
+    <div class="container" style="background-color: #eee; -moz-border-radius: 12px;-webkit-border-radius: 12px;border-radius: 12px">
+        <br/>
+        <p> <img src="@routes.Application.thumbnail(picture.getId)" class="col-lg-3 img-circle center-block" width="150px"><br/>
         <text>Wrong Location?</text> <br>
         <iframe src="@routes.Application.map(0L)" width="100%" height="360px" frameborder="0"></iframe><br><br>
-        <font color="red">To change the position you can either type in the coordinates by yourself, or place a marker on the map and then click the Apply-Button</font><br>
+        <h5><font color="red">To change the position you can either type in the coordinates by yourself, or place a marker on the map and then click the Apply-Button</font></h5><br>
         <button id="apply" class="btn btn-default">Apply</button><br><br><br>
             <form class="form-horizontal"  method="post" action="@routes.Application.reportAction()">
                 <fieldset>
@@ -23,11 +23,12 @@
                          <textarea class="form-control" rows="3" id="descriptionArea" name="descriptionArea">@picture.getDescription</textarea><br>
                          <text>Optional</text>
                          <textarea class="form-control" rows="1" id="optionalArea" name="optionalArea"></textarea><br>
-                         <font color="red">Please only report the picture if you are really sure about your changes. Your username will be saved and you might get banned for misuse!</font><br>
-                         <button id="submit" class="btn btn-primary">Submit</button>
+                         <h5><font color="red">Please only report the picture if you are really sure about your changes. Your username will be saved and you might get banned for misuse!</font></h5><br>
+                         <button id="submit" class="btn btn-primary">Submit</button><br/><br/>
             </fieldset>
         </form>
     </div>
+
 }
 
 <script>

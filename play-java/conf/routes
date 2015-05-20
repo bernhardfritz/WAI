@@ -9,6 +9,7 @@ GET         /account                      controllers.Application.account(change
 POST        /account                      controllers.Application.changeEmailPassw(i: Integer)
 GET         /blank                        controllers.Application.blank()
 GET         /bootstrap                    controllers.Application.bootstrap()
+GET         /clearLocation                controllers.Application.clearLatLng()
 GET         /forgotPassword               controllers.Application.forgotPassword(sentornot: Integer, toemail: String)
 POST        /forgotPassword               controllers.Application.forgotPasswordSend()
 GET         /gallery                      controllers.Application.gallery(currentpage: Integer ?= 1)

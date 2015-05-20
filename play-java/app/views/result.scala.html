@@ -1,21 +1,106 @@
 @(picture: Picture)(distance: String)
-@template_with_navbar("Result") {
+@template("Result") {
 
 } {
-    <div class="jumbotron">
-        <img src="@routes.Application.picture(picture.getId)" class="col-lg-3 img-responsive img-circle pull-right">
-        <h1>@picture.getTitle</h1>
-        <p class="col-lg-8">@picture.getDescription</p>
-        <iframe src="@routes.Application.result_map(picture.getId())" width="100%" height="360px" frameborder="0"></iframe>
+    <div class="container">
+    <div class="jumbotron" style="padding-left: 10px; padding-right: 10px">
+        <img src="@routes.Application.thumbnail(picture.getId)" class="col-lg-3 img-circle center-block" width="150px">
+        <h3>@picture.getTitle</h3>
+        <h5>@picture.getDescription</h5>
+
+
+        <script type="text/javascript">
+        var height= window.innerHeight || document.body.clientHeight;
+        var pixel=height-350;
+        if (pixel<150){
+            pixel=150;
+        }
+
+        document.write ('<iframe src="@routes.Application.result_map(picture.getId)" width="100%" height="'+pixel+'px" frameborder="0"></iframe>');
+        </script>
+
         @distance<br><br>
-        <button id="report" class="btn btn-xs btn-danger">Report</button>
+        <button type="button"  class="btn btn-xs btn-danger" data-toggle="modal" data-target="#myModal">
+            Report
+        </button>
         <a href="@routes.Application.index()" class="btn btn-primary pull-right">Ok</a>
+    </div>
+</div>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Report</h4>
+                </div>
+                <div class="model-body">
+                    <div class="jumbotron" style="padding-left: 10px; padding-right: 10px">
+                    <p> <img src="@routes.Application.thumbnail(picture.getId)" class="col-lg-3 img-circle center-block" width="150px"><br/>
+                        <h5><text>Wrong Location?</text> </h5><br>
+                        <div id="mapdiv"></div>
+                        <br><br>
+                        <h5><font color="red">To change the position you can either type in the coordinates by yourself, or place a marker on the map and then click the Apply-Button</font></h5><br>
+                        <button id="apply" class="btn btn-default">Apply</button><br><br><br>
+                        <form class="form-horizontal"  method="post" action="@routes.Application.reportAction()">
+                        <fieldset>
+                            <input type="hidden" value="@session.get("username")" name="user" />
+                            <input type="hidden" value="@picture.getId" name="old_id" />
+                            <text>Lat:</text>
+                            <textarea class="form-control" rows="1" id="latArea" name="latArea">@picture.getLat</textarea><br>
+                            <text>Lng:</text>
+                            <textarea class="form-control" rows="1" id="lngArea" name="lngArea">@picture.getLng</textarea><br>
+                            <text>Wrong Title?</text> <br>
+                            <textarea class="form-control" rows="1" id="titleArea" name="titleArea">@picture.getTitle</textarea><br>
+                            <text>Wrong Description?</text>
+                            <textarea class="form-control" rows="3" id="descriptionArea" name="descriptionArea">@picture.getDescription</textarea><br>
+                            <text>Optional</text>
+                            <textarea class="form-control" rows="1" id="optionalArea" name="optionalArea"></textarea><br>
+                            <h5><font color="red">Please only report the picture if you are really sure about your changes. Your username will be saved and you might get banned for misuse!</font></h5><br>
+                            <button id="submit" class="btn btn-primary">Submit</button>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+            </div>
+    </div>
     </div>
 
     <script>
-    $('#report' ).click(function(){
-    window.location.replace("@routes.Application.report(picture.getId())");
-    });
-
+    $('#myModal').on('hidden.bs.modal', function () {
+    $.get("/clearLocation");
+    })
     </script>
+
+
+    <script>
+    $('#myModal').on('shown.bs.modal', function () {
+    var lat=@picture.getLat();
+    var lng=@picture.getLng();
+    $.get("/setLocation/"+lat+"/"+lng ).done(function() {
+    $('#mapdiv' ).html('<iframe id="map_id"src="@routes.Application.map(0L)" width="100%" height="250px" frameborder="0"></iframe>');
+    });
+    });
+    </script>
+
+    <script>
+    $('#apply' ).click(function(){
+    var lng = window.frames[1].window.lng;
+    var lat = window.frames[1].window.lat;
+
+    if (lng!= 'undefined' && lng!=null && lat !=null && lat !='undefined'){
+
+    var nlat = document.getElementById("latArea");
+    nlat.value = lat;
+
+    var nlng = document.getElementById("lngArea");
+    nlng.value = lng;
+    }
+
+    });
+    </script>
+
+
+
+
 }
