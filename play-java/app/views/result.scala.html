@@ -2,8 +2,8 @@
 @template("Result") {
 
 } {
-    <div class="container">
-    <div class="jumbotron" style="padding-left: 10px; padding-right: 10px">
+    <div class="container" style="padding-top:20px">
+    <div class="jumbotron" style="padding-left: 10px; padding-right:10px">
         <img src="@routes.Application.thumbnail(picture.getId)" class="col-lg-3 img-circle center-block" width="150px">
         <h3>@picture.getTitle</h3>
         <h5>@picture.getDescription</h5>
@@ -20,7 +20,7 @@
         </script>
 
         @distance<br><br>
-        <button type="button"  class="btn btn-xs btn-danger" data-toggle="modal" data-target="#myModal">
+        <button type="button"  class="btn btn-danger" data-toggle="modal" data-target="#myModal">
             Report
         </button>
         <a href="@routes.Application.index()" class="btn btn-primary pull-right">Ok</a>
@@ -30,19 +30,20 @@
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
+                <form class="form-horizontal"  method="post" action="@routes.Application.reportAction()">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title" id="myModalLabel">Report</h4>
                 </div>
                 <div class="model-body">
-                    <div class="jumbotron" style="padding-left: 10px; padding-right: 10px">
+                    <div class="" style="padding-left: 10px; padding-right: 10px">
+                    <br/>
                     <p> <img src="@routes.Application.thumbnail(picture.getId)" class="col-lg-3 img-circle center-block" width="150px"><br/>
                         <h5><text>Wrong Location?</text> </h5><br>
                         <div id="mapdiv"></div>
-                        <br><br>
-                        <h5><font color="red">To change the position you can either type in the coordinates by yourself, or place a marker on the map and then click the Apply-Button</font></h5><br>
-                        <button id="apply" class="btn btn-default">Apply</button><br><br><br>
-                        <form class="form-horizontal"  method="post" action="@routes.Application.reportAction()">
+                        <br>
+                        <h5><font color="red">To change the position you can either type in the coordinates by yourself, or place a marker on the map and then click on update</font></h5><br>
+                        <a href="#" class="btn btn-default" id="update">update</a><br><br>
                         <fieldset>
                             <input type="hidden" value="@session.get("username")" name="user" />
                             <input type="hidden" value="@picture.getId" name="old_id" />
@@ -57,11 +58,13 @@
                             <text>Optional</text>
                             <textarea class="form-control" rows="1" id="optionalArea" name="optionalArea"></textarea><br>
                             <h5><font color="red">Please only report the picture if you are really sure about your changes. Your username will be saved and you might get banned for misuse!</font></h5><br>
-                            <button id="submit" class="btn btn-primary">Submit</button>
                         </fieldset>
-                    </form>
                 </div>
             </div>
+                <div class="modal-footer">
+                        <button id="submit" type="submit" class="btn btn-primary">Submit</button><br/>
+                </div>
+                </form>
             </div>
     </div>
     </div>
@@ -78,13 +81,14 @@
     var lat=@picture.getLat();
     var lng=@picture.getLng();
     $.get("/setLocation/"+lat+"/"+lng ).done(function() {
-    $('#mapdiv' ).html('<iframe id="map_id"src="@routes.Application.map(0L)" width="100%" height="250px" frameborder="0"></iframe>');
+    $('#mapdiv' ).html('<iframe src="@routes.Application.map(0L)" width="100%" height="250px" frameborder="0"></iframe>');
     });
     });
     </script>
 
-    <script>
-    $('#apply' ).click(function(){
+
+    <script type="text/javascript">
+    $( '#update').click(function( event ) {
     var lng = window.frames[1].window.lng;
     var lat = window.frames[1].window.lat;
 
