@@ -450,6 +450,9 @@ public class DBManager {
 
     public List<Report> getUnhandledReportRange(Long start, Long end) {
         List<Report> reports = Report.find.where().ieq("handled", "0").between("id", start.toString(), end.toString()).findList();
+        for (Report r : reports) {
+            r = addConnections(r);
+        }
         return reports;
     }
 

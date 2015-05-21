@@ -333,13 +333,13 @@ public class Application extends Controller {
 
     public static Result reportAction() {
         DynamicForm dynamicForm = Form.form().bindFromRequest();
-        String title = dynamicForm.get("titleArea");
-        String description = dynamicForm.get("descriptionArea");
-        String optional = dynamicForm.get("optionalArea");
-        Double lat=Double.parseDouble(dynamicForm.get("latArea"));
-        Double lng=Double.parseDouble(dynamicForm.get("lngArea"));
-        String username=dynamicForm.get("user");
-        User user = dbManager.getActiveUser(username);
+        String title = dynamicForm.get("title");
+        String description = dynamicForm.get("description");
+        String optional = dynamicForm.get("optional");
+        Double lat=Double.parseDouble(dynamicForm.get("latitude"));
+        Double lng=Double.parseDouble(dynamicForm.get("longitude"));
+        String username=dynamicForm.get("username");
+        User user = dbManager.getUser(username);
         Long oldID=Long.parseLong(dynamicForm.get("old_id"));
         session().remove("lat");
         session().remove("lng");

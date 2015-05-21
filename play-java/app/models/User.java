@@ -96,4 +96,8 @@ public class User extends Model {
     public int hashCode() {
         return id.hashCode() * name.hashCode() * email.hashCode() * password.hashCode();
     }
+
+    public String toString() {
+        return this.name;
+    }
 }
