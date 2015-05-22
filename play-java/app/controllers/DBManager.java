@@ -448,6 +448,12 @@ public class DBManager {
         return reports;
     }
 
+    /**
+     * Get all unhandled reports between start and end id.
+     * @param start
+     * @param end
+     * @return All unhandled reports between start and end id.
+     */
     public List<Report> getUnhandledReportRange(Long start, Long end) {
         List<Report> reports = Report.find.where().ieq("handled", "0").between("id", start.toString(), end.toString()).findList();
         for (Report r : reports) {
@@ -456,6 +462,10 @@ public class DBManager {
         return reports;
     }
 
+    /**
+     * Get the number of unhandled reports in the DB.
+     * @return The number of unhandled reports in the DB.
+     */
     public int getUnhandledReportCount() {
         return Report.find.all().size();
     }
@@ -474,15 +484,15 @@ public class DBManager {
      * @param report
      */
     public void acceptReportChanges(Report report) {
-        Picture picture = getAcceptedPicture(report.getOldId());
+        Picture picture = report.getPicture();
         picture.setLat(report.getLat());
         picture.setLng(report.getLng());
         picture.setTitle(report.getTitle());
         picture.setDescription(report.getDescription());
-        picture.save();
+        savePicture(picture);
 
         report.setHandled(true);
-        report.save();
+        saveReport(report);
     }
 
     /**
@@ -492,6 +502,7 @@ public class DBManager {
      */
     private Report addConnections(Report report) {
         if (report != null) {
+            report.setPicture(getAcceptedPicture(report.getPictureID()));
             if (report.getCreateUserID() != null) {
                 report.setCreateUser(getActiveUser(report.getCreateUserID()));
             }

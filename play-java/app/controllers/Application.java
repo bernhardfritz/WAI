@@ -340,10 +340,10 @@ public class Application extends Controller {
         Double lng=Double.parseDouble(dynamicForm.get("longitude"));
         String username=dynamicForm.get("username");
         User user = dbManager.getUser(username);
-        Long oldID=Long.parseLong(dynamicForm.get("old_id"));
+        Picture picture = dbManager.getAcceptedPicture(Long.parseLong(dynamicForm.get("old_id")));
         session().remove("lat");
         session().remove("lng");
-        Report report=new Report(lat,lng,title,description,optional,user,oldID); //Do Something with thr Object
+        Report report=new Report(lat,lng,title,description,optional,user,picture); //Do Something with thr Object
         dbManager.saveReport(report);
         return redirect(routes.Application.index());
     }

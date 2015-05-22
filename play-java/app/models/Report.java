@@ -15,7 +15,8 @@ public class Report extends Model {
     @Id
     private Long id;
 
-    private Long oldID;
+    private Long pictureID;
+    private Picture picture;
 
     private double lat;
 
@@ -34,7 +35,7 @@ public class Report extends Model {
 
     private boolean handled;
 
-    public Report(double lat, double lng, String title, String description, String optional,  User createUser, Long oldID) {
+    public Report(double lat, double lng, String title, String description, String optional,  User createUser, Picture picture) {
         this.lat = lat;
         this.lng = lng;
         this.title = title;
@@ -43,7 +44,8 @@ public class Report extends Model {
         this.updloadDate = LocalDateTime.now();
         this.createUser = createUser;
         this.createUserID = createUser.getId();
-        this.oldID=oldID;
+        this.picture = picture;
+        this.pictureID = picture.getId();
         handled = false;
     }
 
@@ -53,9 +55,17 @@ public class Report extends Model {
             return id;
         }
 
-    public Long getOldId() {
-         return oldID;
+    public Long getPictureID() {
+         return pictureID;
         }
+
+    public Picture getPicture() {
+        return picture;
+    }
+
+    public void setPicture(Picture picture) {
+        this.picture = picture;
+    }
 
     public double getLat() {
             return lat;
