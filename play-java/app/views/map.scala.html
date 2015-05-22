@@ -98,7 +98,11 @@
                 jslatlng = new google.maps.LatLng(jslat,jslng);
                 addMarker(jslatlng);
                 latlngbounds.extend(jslatlng);
-                map.fitBounds(latlngbounds);
+                if(markers.length>1) map.fitBounds(latlngbounds);
+                else {
+                    map.center = jslatlng;
+                    map.zoom = 17;
+                }
             }
 
             // This event listener will call addMarker() when the map is clicked.

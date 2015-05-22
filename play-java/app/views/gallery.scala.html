@@ -34,44 +34,48 @@
                         <a href="@routes.Application.picture(picture.getId())" title="@picture.getTitle()" data-gallery="">
                         <img class="img-thumbnail" src="@routes.Application.thumbnail(picture.getId())" width="100px" height="100px">
                         </a>
-                        <button type="button" id="img_button_l" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editModal@picture.getId()">
+                        <button type="button" id="img_button_l" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editModal@(picture.getId()-pictures.head.getId())">
                             <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                         </button>
-                        <button type="button" id="img_button_r" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal@picture.getId()">
+                        <button type="button" id="img_button_r" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal@(picture.getId()-pictures.head.getId())">
                             <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                         </button>
                     </div>
 
                     <!-- Edit Modal -->
-                    <div class="modal fade" id="editModal@picture.getId()" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="editModal@(picture.getId()-pictures.head.getId())" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <form action="@routes.Application.gallery_edit()" method="POST">
-                                    <input type="hidden" name="id" value="@picture.getId()">
+                                    <input type="hidden" value="@picture.getId" name="id" />
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                        <br>
-                                        <div class="form-group">
-                                            <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    <input type="checkbox" name="accepted" @if(picture.isAccepted()){checked}>
-                                                </span>
-                                                <input type="text" class="form-control input-lg" name="title" value="@picture.getTitle()">
-                                            </div>
-                                        </div>
+                                        <h3>Modify data</h3>
                                     </div>
                                     <div class="modal-body">
                                         <div class="form-group">
+                                            <div class="form-group">
+                                                <label for="title" class="control-label">Title:</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">
+                                                        <input type="checkbox" name="accepted" @if(picture.isAccepted()){checked}>
+                                                    </span>
+                                                    <input type="text" class="form-control input-lg" name="title" value="@picture.getTitle()">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="description" class="control-label">Description:</label>
+                                                <textarea class="form-control" name="description">@picture.getDescription()</textarea>
+                                            </div>
+                                        </div>
+                                        <iframe src="@routes.Application.map(0L)" id="myiframe@(picture.getId()-pictures.head.getId())" width="100%" height="250px" frameborder="0"></iframe>
+                                        <div class="form-group">
                                             <label for="latitude" class="control-label">Latitude:</label>
-                                            <input type="text" class="form-control" name="latitude" value="@picture.getLat()">
+                                            <input type="text" class="form-control" id="latitude@(picture.getId()-pictures.head.getId())" name="latitude" value="@picture.getLat()">
                                         </div>
                                         <div class="form-group">
-                                            <label for="latitude" class="control-label">Longitude:</label>
-                                            <input type="text" class="form-control" name="longitude" value="@picture.getLng()">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="message-text" class="control-label">Description:</label>
-                                            <textarea class="form-control" name="description">@picture.getDescription()</textarea>
+                                            <label for="longitude" class="control-label">Longitude:</label>
+                                            <input type="text" class="form-control" id="longitude@(picture.getId()-pictures.head.getId())" name="longitude" value="@picture.getLng()">
                                         </div>
                                     </div>
                                     <div class="modal-footer">
@@ -84,7 +88,7 @@
                     </div>
 
                     <!-- Delete Modal -->
-                    <div class="modal fade" id="deleteModal@picture.getId()" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="deleteModal@(picture.getId()-pictures.head.getId())" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -168,4 +172,68 @@
     <script src="@routes.Assets.at("javascripts/jquery.blueimp-gallery.min.js")"></script>
     <script src="@routes.Assets.at("javascripts/bootstrap-image-gallery.js")"></script>
     <script src="@routes.Assets.at("javascripts/mygallery.js")"></script>
+
+    <script>
+        for(var i=0; i<10; i++) {
+            $('#editModal'+i).on('hidden.bs.modal', function () {
+                $.get("/clearLocation");
+            });
+
+            $('#editModal'+i).on('shown.bs.modal', (function(index){
+                return function() {
+                    inputOnChange(index);
+                };
+            })(i));
+
+            $('#latitude'+i).on('input', (function(index){
+                return function() {
+                    inputOnChange(index);
+                };
+            })(i));
+
+            $('#longitude'+i).on('input',(function(index){
+                return function() {
+                    inputOnChange(index);
+                };
+            })(i));
+        }
+
+        $(document).ready(function () {
+            for(var i=0; i<10; i++) {
+                //Using closures to capture each one
+                $('#myiframe'+i).on("load", (function(index){
+                    return function() {
+                        $('#myiframe'+index).contents().click(function (event) {
+                            $('#myiframe'+index).trigger("click");
+                        });
+                    };
+                })(i));
+
+                $('#myiframe'+i).click((function(index){
+                    return function() {
+                        updateLatLng(index);
+                    };
+                })(i));
+            }
+        });
+
+        function inputOnChange(index) {
+            var lat=$('#latitude'+index).val();
+            var lng=$('#longitude'+index).val();
+            $.get("/setLocation/"+lat+"/"+lng).done(function() {
+                // hackishly force iframe to reload
+                var iframe = document.getElementById("myiframe"+index);
+                iframe.src = iframe.src;
+            });
+        }
+
+        function updateLatLng(index) {
+            var lat = window.frames[index].window.lat;
+            var lng = window.frames[index].window.lng;
+            if (lng!= 'undefined' && lng!=null && lat !=null && lat !='undefined'){
+                $('#latitude'+index).val(lat);
+                $('#longitude'+index).val(lng);
+            }
+        }
+    </script>
 }
