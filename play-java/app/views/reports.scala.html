@@ -48,19 +48,57 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <div class="media">
-                            <div class="media-body media-middle">
-                                <h4 class="media-heading">@report.getTitle()</h4>
-                                <p>@report.getDescription()</p>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <h3 class="text-center">Before</h3>
                             </div>
-                            <div class="media-right">
-                                <img class="media-object img-circle" src="@routes.Application.thumbnail(report.getPictureID())" width="100px" height="100px">
+                            <div class="col-md-4">
+                                <div class="text-center">
+                                    <img class="img-circle" src="@routes.Application.thumbnail(report.getPictureID())" width="70px" height="70px">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <h3 class="text-center">After</h3>
                             </div>
                         </div>
                     </div>
                     <div class="modal-body">
-                        <img class="img-responsive" src="https://maps.googleapis.com/maps/api/staticmap?center=@report.getLat(),@report.getLng()&zoom=13&size=600x300&maptype=roadmap
-                        &markers=color:red%7C@report.getLat(),@report.getLng()">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h4>@report.getPicture().getTitle()</h4>
+                                <p>@report.getPicture().getDescription()</p>
+                            </div>
+                            <div class="col-md-6">
+                                <h4>@report.getTitle()</h4>
+                                <p>@report.getDescription()</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <img class="img-rounded" src="https://maps.googleapis.com/maps/api/staticmap?center=@report.getPicture().getLat(),@report.getPicture().getLng()&zoom=17&size=270x270&maptype=roadmap
+                                &markers=color:red%7C@report.getPicture().getLat(),@report.getPicture().getLng()">
+                            </div>
+                            <div class="col-md-6">
+                                <img class="img-rounded" src="https://maps.googleapis.com/maps/api/staticmap?center=@report.getLat(),@report.getLng()&zoom=17&size=270x270&maptype=roadmap
+                                &markers=color:red%7C@report.getLat(),@report.getLng()">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Latitude:</label>
+                                <div class="well">@report.getPicture().getLat()</div>
+                                <label>Longitude:</label>
+                                <div class="well">@report.getPicture().getLng()</div>
+                            </div>
+                            <div class="col-md-6">
+                                <label>Latitude:</label>
+                                <div class="well">@report.getLat()</div>
+                                <label>Longitude:</label>
+                                <div class="well">@report.getLng()</div>
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <div class="text-left">
