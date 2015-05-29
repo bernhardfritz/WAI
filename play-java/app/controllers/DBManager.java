@@ -533,6 +533,51 @@ public class DBManager {
     }
 
 
+    /* =========================== Token functions =========================== */
+
+    /**
+     * Create a new token and save it to the DB.
+     * @param email
+     */
+    public void createToken(String email, String tokenText) {
+        if (email != null && tokenText != null) {
+            for (User u : getAllActiveUsers()) {
+                if (u.getEmail().equals(email)) {
+                    if (getToken(email) == null) {
+                        Token token = new Token(email, tokenText);
+                        token.save();
+                    }
+                    break;
+                }
+            }
+        }
+    }
+
+    /**
+     * Get a token from the user email address.
+     * @param email
+     * @return The respective token or NULL if there is no token with that user email address.
+     */
+    public Token getTokenFromEmail(String email) {
+        if (email != null) {
+            return Token.find.where().ieq("email", email).findUnique();
+        }
+        return null;
+    }
+
+    /**
+     * Get a token from the token string.
+     * @param tokenString
+     * @return The respective token or NULL if there is no token with that string.
+     */
+    public Token getTokenFromString(String tokenString) {
+        if (tokenString != null) {
+            return Token.find.where().ieq("token_string", tokenString).findUnique();
+        }
+        return null;
+    }
+
+
     /* =========================== User functions =========================== */
 
     /**
