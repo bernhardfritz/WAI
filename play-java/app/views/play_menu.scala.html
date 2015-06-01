@@ -22,9 +22,9 @@
             <div class="list-group">
             @for(game<-list) {
                 @if(game.getUser2.getName()==session.get("username")){
-                    <strong><p class="text-success">@game.getUser1.getName (Round @game.getRound)</p></strong><a href="" class="list-group-item">Play</a><br><br>
+                    <strong><p class="text-success">@game.getUser1.getName (Round @game.getRound)</p></strong><a href="@routes.Application.game(game.getId())" class="list-group-item">Play</a><br><br>
                 }else{
-                    <strong><p class="text-success">@game.getUser2.getName (Round @game.getRound)</p></strong><a href="" class="list-group-item">Play</a><br><br>
+                    <strong><p class="text-success">@game.getUser2.getName (Round @game.getRound)</p></strong><a href="@routes.Application.game(game.getId())" class="list-group-item">Play</a><br><br>
             }
             }
             </div>

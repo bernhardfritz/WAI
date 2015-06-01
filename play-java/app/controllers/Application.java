@@ -188,14 +188,15 @@ public class Application extends Controller {
     }
 
     public static Result game(Long id) {
-        return result(id);
+        Game g=dbManager.getGame(id);
+        return ok(game.render(dbManager.getCurrentRound(g).getPictureID(),id));
     }
 
-    public static Result game() {
-        return ok(game.render(dbManager.getRandomAcceptedPicture().getId()));
-    }
-
-    public static Result gameAction(Long id) {
+    public static Result gameAction(Long id,Long gameID) {
+        Game game =dbManager.getGame(gameID);
+        User user=dbManager.getActiveUser(session().get("username"));
+        Double distance=getDistance(dbManager.getAcceptedPicture(id));
+        dbManager.gameAction(game,user,distance);
         return result(id);
     }
 
@@ -294,11 +295,7 @@ public class Application extends Controller {
     }
 
     public static Result practise() {
-        return game();
-        /*long id = 1;
-        id+=Math.random()*dbManager.getAcceptedPictureCount();
-        Picture p = dbManager.getAcceptedPicture(id);
-        return ok(practise.render(id, p.getWidth(), p.getHeight()));*/
+        return ok();
     }
 
     public static Result practiseAction(Long id) {
