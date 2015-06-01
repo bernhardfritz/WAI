@@ -255,6 +255,15 @@ public class DBManager {
         return game;
     }
 
+    /**
+     * Get the current round of a game.
+     * @param game
+     * @return The current round of a game.
+     */
+    public Round getCurrentRound(Game game) {
+        return getRounds(game).get(game.getRound() - 1);
+    }
+
 
     /* =========================== Picture functions =========================== */
 
