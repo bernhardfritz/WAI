@@ -543,7 +543,7 @@ public class DBManager {
         if (email != null && tokenText != null) {
             for (User u : getAllActiveUsers()) {
                 if (u.getEmail().equals(email)) {
-                    if (getToken(email) == null) {
+                    if (getTokenFromEmail(email) == null) {
                         Token token = new Token(email, tokenText);
                         token.save();
                     }
