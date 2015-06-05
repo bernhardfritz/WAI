@@ -2,11 +2,11 @@
 Wenn ein Task abgeschlossen ist, einfach in WAI/planning/README.md ein [x] setzen.
 
 ## Bernhard
-- [ ] Admin Oberfläche
-  - [ ] Erstellen einer Admin Oberfläche die nur durch den User admin aufgerufen werden kann. In dieser Oberfläche soll es für einen Admin ohne großen Aufwand möglich sein upgeloadete Bilder zu verifizieren und freizuschalten.
-  - [ ] Der Admin soll visuellen Zugriff auf die gesamte Datenbank haben
-  - [ ] Der Admin soll die Möglichkeit haben böse User zu bannen.
-  - [ ] Der Admin soll auch auf offene Reports zugreifen und reagieren können.
+- [x] Admin Oberfläche
+  - [x] Erstellen einer Admin Oberfläche die nur durch den User admin aufgerufen werden kann. In dieser Oberfläche soll es für einen Admin ohne großen Aufwand möglich sein upgeloadete Bilder zu verifizieren und freizuschalten.
+  - [x] Der Admin soll visuellen Zugriff auf die gesamte Datenbank haben
+  - [x] Der Admin soll die Möglichkeit haben böse User zu bannen.
+  - [x] Der Admin soll auch auf offene Reports zugreifen und reagieren können.
 - [ ] Erstellen einer Oberfläche zur Übersicht offener Spiele.
 - [ ] Verbinden der Game Oberfläche mit der aktuellen aus der Datenbank abgefragten Spielrunde des jeweiligen Users.
 - [ ] Einbauen eines Benachrichtigungssystems, das es ermöglicht dem Spieler mitzuteilen, dass ein anderer Spieler ihn zu einem Spiel herausgefordert hat, oder dass ein Spiel abgeschlossen wurde oder eine neue Runde beginnt.
