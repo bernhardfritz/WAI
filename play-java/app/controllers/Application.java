@@ -206,14 +206,12 @@ public class Application extends Controller {
 
     /**
      * Generates a page containing all pictures paginated (10 pictures per page)
-     * @param currentpage the current page
+     * @param currentpage the current page index
      * @return
      */
     public static Result gallery(Integer currentpage) {
-        Long start = (currentpage-1)*10+1L;
-        Long end = start+9L;
-        Integer maxpage = dbManager.getPictureCount()/10+1;
-        return ok(gallery.render(currentpage, maxpage, dbManager.getPictureRange(start,end)));
+        Pagination p = new Pagination(dbManager.getPictureCount(),10,currentpage);
+        return ok(gallery.render(p.getCurrentPageIndex(), p.getMaxPageIndex(), dbManager.getPictureRange(p.getStartPageIndex(), p.getEndPageIndex())));
     }
 
     /**
@@ -252,7 +250,7 @@ public class Application extends Controller {
      */
     public static Result game(Long id) {
         Game g=dbManager.getGame(id);
-        return ok(game.render(dbManager.getCurrentRound(g).getPictureID(),id));
+        return ok(game.render(dbManager.getCurrentRound(g).getPictureID(), id));
     }
 
     /**
@@ -493,15 +491,13 @@ public class Application extends Controller {
     }
 
     /**
-     * Display a table containing all reports
-     * @param currentpage
+     * Display a paginated table containing all reports
+     * @param currentpage the current page index
      * @return
      */
     public static Result reports(Integer currentpage) {
-        Long start = (currentpage - 1) * 10 + 1L;
-        Long end = start + 9L;
-        Integer maxpage = dbManager.getUnhandledReportCount() / 10 + 1;
-        return ok(reports.render(currentpage, maxpage, dbManager.getUnhandledReportRange(start, end)));
+        Pagination p = new Pagination(dbManager.getUnhandledReportCount(),10,currentpage);
+        return ok(reports.render(p.getCurrentPageIndex(), p.getMaxPageIndex(), dbManager.getUnhandledReportRange(p.getStartPageIndex(), p.getEndPageIndex())));
     }
 
     /**
@@ -699,9 +695,7 @@ public class Application extends Controller {
      * @return
      */
     public static Result users(Integer currentpage) {
-        Long start = (currentpage-1)*10+1L;
-        Long end = start+9L;
-        Integer maxpage = dbManager.getUserCount()/10+1;
-        return ok(users.render(currentpage, maxpage, dbManager.getUserRange(start, end)));
+        Pagination p = new Pagination(dbManager.getUserCount(),10,currentpage);
+        return ok(users.render(p.getCurrentPageIndex(), p.getMaxPageIndex(), dbManager.getUserRange(p.getStartPageIndex(), p.getEndPageIndex())));
     }
 }

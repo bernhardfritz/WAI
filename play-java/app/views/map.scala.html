@@ -109,13 +109,13 @@
             google.maps.event.addListener(map,'click',function(event) {
                 addMarker(event.latLng);
             if(markers[0] == null) {
-            alert("You have to select a location first");
+                alert("You have to select a location first");
             } else {
-            lat = markers[0].getPosition().lat();
-            lng = markers[0].getPosition().lng();
-            $.get("/setLocation/"+lat+"/"+lng);
-            //window.getLocation.href = "/setLocation/"+lat+"/"+lng;
-            //fixMarker(markers[0 ].getPosition())
+                lat = markers[0].getPosition().lat();
+                lng = markers[0].getPosition().lng();
+                $.get("/setLocation/"+lat+"/"+lng);
+                //window.getLocation.href = "/setLocation/"+lat+"/"+lng;
+                //fixMarker(markers[0 ].getPosition())
             }
             });
 
