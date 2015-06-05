@@ -62,10 +62,18 @@ public class Application extends Controller {
         }
     }
 
+    /**
+     * @param i to display if changes were successful (i=0 display, i=1 display successful, i=2 display not successful)
+     * @return the account page
+     */
     public static Result account(int i){    // i to display if changes where successful (i=0 display nothing, i=1 display successful, i=2 display not successful
         return ok(account.render(0, dbManager.getActiveUser(session().get("username"))));
     }
 
+    /**
+     * Display the admin webinterface
+     * @return the admin page
+     */
     public static Result admin() {
         return ok(admin.render());
     }
@@ -75,6 +83,10 @@ public class Application extends Controller {
         return redirect(routes.Application.reports(1));
     }
 
+    /**
+     * Display the authentication page
+     * @return the authenticate page
+     */
     public static Result authenticate() {
         Form<Login> loginForm = Form.form(Login.class).bindFromRequest();
         if (loginForm.hasErrors()) {
@@ -87,14 +99,27 @@ public class Application extends Controller {
         }
     }
 
+    /**
+     * For debugging reasons. Display the blank template without any content
+     * @return the blank template page for previewing reasons
+     */
     public static Result blank() {
         return ok(blank.render("Blank",null,null));
     }
 
+    /**
+     * For debugging reasons. Display a bootstrap example page
+     * @return a page containing useful bootstrap features
+     */
     public static Result bootstrap() {
         return ok(bootstrap.render());
     }
 
+    /**
+     * Evaluate a POST request to change password
+     * @param i to differ between i=0 change email and i=1 change password
+     * @return a page informing the user if changing password succeeded
+     */
     public static Result changeEmailPassw(int i) {  // i=0 change email, i=1 change password
         HashManager hashManager = HashManager.getInstance();
         DynamicForm dynamicForm = Form.form().bindFromRequest();
@@ -128,12 +153,21 @@ public class Application extends Controller {
         return ok(account.render(changedOrNot, dbManager.getActiveUser(session().get("username"))));
     }
 
+    /**
+     * Clears attribute lat and lng from session
+     * @return http ok
+     */
     public static Result clearLatLng(){
         session().remove("lat");
         session().remove("lng");
         return ok();
     }
 
+    /**
+     * Dissapprove a report
+     * @param id the id of the report in concern
+     * @return
+     */
     public static Result disapproveReport(Long id) {
         Report report = dbManager.getReport(id);
         report.setHandled(true);
@@ -141,10 +175,20 @@ public class Application extends Controller {
         return redirect(routes.Application.reports(1));
     }
 
+    /**
+     * Displays the forgot password page
+     * @param sentornot depending on the value of this variable the page is generated dynamically 0=no additional text, 1=email sent successfully, 2=email couldn't be sent
+     * @param email the email adress in concern
+     * @return
+     */
     public static Result forgotPassword(int sentornot,String email){
         return ok(forgotPassword.render(sentornot, email));
     }
 
+    /**
+     * POST action when pressing send at forgotPassword.scala.html
+     * @return
+     */
     public static Result forgotPasswordSend(){
         DynamicForm dynamicForm = Form.form().bindFromRequest();
         String email = dynamicForm.get("email");
@@ -160,6 +204,11 @@ public class Application extends Controller {
         return ok(forgotPassword.render(i,email));
     }
 
+    /**
+     * Generates a page containing all pictures paginated (10 pictures per page)
+     * @param currentpage the current page
+     * @return
+     */
     public static Result gallery(Integer currentpage) {
         Long start = (currentpage-1)*10+1L;
         Long end = start+9L;
@@ -167,6 +216,10 @@ public class Application extends Controller {
         return ok(gallery.render(currentpage, maxpage, dbManager.getPictureRange(start,end)));
     }
 
+    /**
+     * POST action when modifying a picture using gallery.scala.html
+     * @return
+     */
     public static Result gallery_edit() {
         DynamicForm dynamicForm = Form.form().bindFromRequest();
         String id = dynamicForm.get("id");
@@ -181,17 +234,33 @@ public class Application extends Controller {
         return redirect(routes.Application.gallery(1));
     }
 
+    /**
+     * GET action when deleting a picture using gallery.scala.html
+     * @param id
+     * @return
+     */
     public static Result gallery_delete(Long id) {
         System.out.println(id);
         dbManager.unacceptPicture(dbManager.getAcceptedPicture(id));
         return redirect(routes.Application.gallery(1));
     }
 
+    /**
+     * Display the game page
+     * @param id
+     * @return
+     */
     public static Result game(Long id) {
         Game g=dbManager.getGame(id);
         return ok(game.render(dbManager.getCurrentRound(g).getPictureID(),id));
     }
 
+    /**
+     * Action after a game is played
+     * @param id the picture id
+     * @param gameID the game id
+     * @return
+     */
     public static Result gameAction(Long id,Long gameID) {
         Game game =dbManager.getGame(gameID);
         User user=dbManager.getActiveUser(session().get("username"));
@@ -200,6 +269,11 @@ public class Application extends Controller {
         return result(id);
     }
 
+    /**
+     * The formula to calculate the distance between two points (point from picture and from session)
+     * @param picture
+     * @return
+     */
     public static Double getDistance(Picture picture) {
         if (getLat() != null && getLng() != null) {
             double R = 6378137; // Earth’s mean radius in meter
@@ -219,6 +293,10 @@ public class Application extends Controller {
         return null;
     }
 
+    /**
+     * Get latitude from session
+     * @return latitude if session contains attribute lat, else return null
+     */
     public static Double getLat() {
         if(session().get("lat") != null) {
             String session = session().get("lat").toString();
@@ -228,6 +306,10 @@ public class Application extends Controller {
         return null;
     }
 
+    /**
+     * Get longitude from session
+     * @return longitude if session contains attribute lng, else return null
+     */
     public static Double getLng() {
         if (session().get("lng") != null) {
             String session = session().get("lng").toString();
@@ -237,6 +319,10 @@ public class Application extends Controller {
         return null;
     }
 
+    /**
+     * Get latitude and longitude from session and create a LatLng object
+     * @return a LatLng object retrieved from session
+     */
     public static LatLng getLatLng() {
         LatLng latlng = null;
         Double lat = getLat();
@@ -245,35 +331,65 @@ public class Application extends Controller {
         return new LatLng(lat,lng);
     }
 
+    /**
+     * A page previewing latitude and longitude retrieved from session
+     * @return
+     */
     public static Result getLocation() {
         return log("" + getLat() + " " + getLng());
     }
 
+    /**
+     * Register page
+     * @return
+     */
     public static Result gotoRegister() {
         Form<Register> registerForm = Form.form(Register.class);
         return ok(register.render(registerForm));
     }
 
+    /**
+     * Main page
+     * @return
+     */
     //@Security.Authenticated(Secured.class)
     public static Result index() {
         return ok(index.render());
     }
 
+    /**
+     * Page for debugging reasons to display strings
+     * @param text
+     * @return
+     */
     public static Result log(String text) {
         return ok(log.render(text));
     }
 
+    /**
+     * Login page
+     * @return
+     */
     public static Result login() {
         Form<Login> loginForm = Form.form(Login.class);
         return ok(login.render(loginForm));
     }
 
+    /**
+     * Page to logout/clear session
+     * @return
+     */
     @Security.Authenticated(Secured.class)
     public static Result logout() {
         session().clear();
         return redirect(routes.Application.login());
     }
 
+    /**
+     * Map page. Will only be referenced by iframe
+     * @param id the picture id to preview on map. if id=0: no picture will be displayed
+     * @return
+     */
     public static Result map(long id) {
         if (id == 0L) {
             return ok(map.render(0L,0,0,getLatLng()));
@@ -282,13 +398,26 @@ public class Application extends Controller {
         return ok(map.render(id, p.getWidth(), p.getHeight(), getLatLng()));
     }
 
-
+    /**
+     * This page will be opened if javascript is disabled
+     * @return
+     */
     public static Result no_javascript() {return ok(no_javascript.render());}
 
+    /**
+     * Displays a picture using the id from parameters
+     * @param id the id of the picture from database
+     * @return
+     * @throws IOException
+     */
     public static Result picture(Long id) throws IOException {
         return ok(Files.toByteArray(new File("public/images/pictures/" + id + ".jpg"))).as("image/jpg");
     }
 
+    /**
+     * Menü mit allen offenen und wartenden Spielen
+     * @return
+     */
     @Security.Authenticated(Secured.class)
     public static Result play_menu() {
         return ok(play_menu.render(dbManager.getReadyUnfinishedGames(dbManager.getActiveUser(session().get("username"))),dbManager.getUnreadyUnfinishedGames((dbManager.getActiveUser(session().get("username"))))));
@@ -302,10 +431,19 @@ public class Application extends Controller {
         return result(id);
     }
 
+    /**
+     * Round distance for pretty printing
+     * @param distance
+     * @return
+     */
     public static String prettifyDistance(double distance) {
         return String.format("%.1f", distance / 1000.0);
     }
 
+    /**
+     * Display register page
+     * @return
+     */
     public static Result register() {
         Form<Register> registerForm = Form.form(Register.class).bindFromRequest();
         if (registerForm.hasErrors()) {
@@ -318,6 +456,11 @@ public class Application extends Controller {
             return redirect(routes.Application.index());
         }
     }
+
+    /**
+     * @param id the id to display picture from database on report
+     * @return
+     */
     @Security.Authenticated(Secured.class)
     public static Result report(Long id) {
         Picture picture = dbManager.getAcceptedPicture(id);
@@ -328,6 +471,10 @@ public class Application extends Controller {
         return ok(report.render(picture));
     }
 
+    /**
+     * POST action when submitting a report
+     * @return
+     */
     public static Result reportAction() {
         DynamicForm dynamicForm = Form.form().bindFromRequest();
         String title = dynamicForm.get("title");
@@ -345,6 +492,11 @@ public class Application extends Controller {
         return redirect(routes.Application.index());
     }
 
+    /**
+     * Display a table containing all reports
+     * @param currentpage
+     * @return
+     */
     public static Result reports(Integer currentpage) {
         Long start = (currentpage - 1) * 10 + 1L;
         Long end = start + 9L;
@@ -352,6 +504,11 @@ public class Application extends Controller {
         return ok(reports.render(currentpage, maxpage, dbManager.getUnhandledReportRange(start, end)));
     }
 
+    /**
+     * Show result containing the distance the player's guess is off including a map to preview the game visually
+     * @param id
+     * @return
+     */
     public static Result result(long id) {
         Picture picture = dbManager.getAcceptedPicture(id);
         if (getDistance(picture)!=null) {
@@ -360,6 +517,11 @@ public class Application extends Controller {
         return ok(result.render(picture, "You didn't place a marker."));
     }
 
+    /**
+     * Show the map which will be used in result as iframe
+     * @param id
+     * @return
+     */
     public static Result result_map(long id) {
         Picture picture = dbManager.getAcceptedPicture(id);
         List<LatLng> latlngs = new ArrayList<LatLng>();
@@ -373,6 +535,11 @@ public class Application extends Controller {
         return ok(result_map.render(latlngs));
     }
 
+    /**
+     * Show a list containing all users which fulfil the search string
+     * @param str the username you want to search for
+     * @return
+     */
     public static Result search_user(String str) {
         if (str.equals("")){
             List<User> list = new ArrayList<User>();
@@ -382,10 +549,18 @@ public class Application extends Controller {
         return ok(search_user.render("", dbman.findUser(str)));
     }
 
+    /**
+     * Send email page
+     * @return
+     */
     public static Result send_email() {
         return ok(send_email.render());
     }
 
+    /**
+     * Read post form, send email and give feedback if it was sent successfully
+     * @return
+     */
     public static Result send_email_action() {
         DynamicForm dynamicForm = Form.form().bindFromRequest();
         String email = dynamicForm.get("email");
@@ -395,16 +570,33 @@ public class Application extends Controller {
         return redirect(routes.Application.send_email_done(sentornot, email));
     }
 
+    /**
+     *
+     * @param sentornot is true if email was sent successfully. False otherwise.
+     * @param email the emailadress
+     * @return
+     */
     public static Result send_email_done(boolean sentornot, String email) {
         return ok(send_email_done.render(sentornot, email));
     }
 
+    /**
+     * Used to define latitude and longitude in session
+     * @param lat the latitude
+     * @param lng the longitude
+     * @return
+     */
     public static Result setLocation(double lat, double lng) {
         session("lat", String.valueOf(lat));
         session("lng",String.valueOf(lng));
         return ok();
     }
 
+    /**
+     * Used for AJAX GET requests to display searched users dynamically
+     * @param str the username
+     * @return
+     */
     public static Result setUser(String str) {
         StringBuilder strbuild = new StringBuilder();
         for (User user:dbManager.findUser(str)){
@@ -413,33 +605,64 @@ public class Application extends Controller {
         return ok(strbuild.toString());
     }
 
-
+    /**
+     * Used for debugging reasons. Displays the template without any content
+     * @return
+     */
     public static Result template() {
         return ok(template.render("Template", null, null));
     }
 
+    /**
+     * Used for debugging reasons. Displays the template_navbar without any content
+     * @return
+     */
     public static Result template_navbar() {
         return ok(template_navbar.render("Template", null));
     }
 
+    /**
+     * Used for debugging reasons. Displays the template_with_navbar without any content
+     * @return
+     */
     public static Result template_with_navbar() {
         return ok(template_with_navbar.render("Template with navbar", null, null));
     }
 
+    /**
+     * Uses a binary stream to display a picture in the browser
+     * @param id the picture id
+     * @return
+     * @throws IOException
+     */
     public static Result thumbnail(Long id) throws IOException {
         return ok(Files.toByteArray(new File("public/images/thumbnails/" + id + ".jpg"))).as("image/jpg");
     }
 
+    /**
+     * (De)Activates a user
+     * @param id the user id
+     * @return
+     */
     public static Result toggleUser(Long id) {
         dbManager.toggleUser(id);
         System.out.println(id);
         return ok();
     }
 
+    /**
+     * Display the upload page
+     * @return
+     */
     public static Result upload() {
         return ok(upload.render());
     }
 
+    /**
+     * Evaluate a multipart form and put a new Picture object in the database
+     * @return
+     * @throws IOException
+     */
     public static Result uploadAction() throws IOException {
         MultipartFormData body = request().body().asMultipartFormData();
         Map<String, String[]> asFormUrlEncoded = request().body().asMultipartFormData().asFormUrlEncoded();
@@ -470,6 +693,11 @@ public class Application extends Controller {
         }
     }
 
+    /**
+     * Displays a paginated table including all users
+     * @param currentpage the current page index
+     * @return
+     */
     public static Result users(Integer currentpage) {
         Long start = (currentpage-1)*10+1L;
         Long end = start+9L;
