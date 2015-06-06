@@ -71,6 +71,24 @@ public class Application extends Controller {
     }
 
     /**
+     * adds a freind to a user
+     * @return
+     */
+    public static Result addFriend(String user){
+        dbManager.saveFriend(dbManager.getActiveUser(session().get("username")),dbManager.getUser(user));
+        return redirect(routes.Application.search_user(""));
+    }
+
+    /**
+     * creates a game vs a user
+     * @return
+     */
+    public static Result addGame(String user){
+        dbManager.createGame(dbManager.getActiveUser(session().get("username")),dbManager.getUser(user));
+        return redirect(routes.Application.search_user(""));
+    }
+
+    /**
      * Display the admin webinterface
      * @return the admin page
      */
@@ -154,6 +172,37 @@ public class Application extends Controller {
     }
 
     /**
+     * To change the password if the current password has been forgotten
+     * @param token Token
+     * @return the page to change the password
+     */
+    public static Result changePassword(String token){
+        return ok(changePassword.render(token,0));
+    }
+
+    /**
+     * Evaluate a POST request to change password
+     * @param token Token
+     * @return the page to change the password
+     */
+    public static Result changePasswordAction(String token){
+        System.out.println(token);
+        System.out.println(dbManager.getTokenFromString(token).getEmail());
+        DynamicForm dynamicForm = Form.form().bindFromRequest();
+        int changedOrNot = 0;
+        String newpassword1 = dynamicForm.get("password1");
+        String newpassword2 = dynamicForm.get("password2");
+        if(newpassword1.equals(newpassword2) && dbManager.getTokenFromString(token).isValid()){
+            changedOrNot=1;
+            //dbManager.changeUserPassword(dbManager.getUserFromEmail(dbManager.getTokenFromString(token).getEmail(), newpassword1);
+        }
+        else{
+            changedOrNot=2;
+        }
+        return ok(changePassword.render("",changedOrNot));
+    }
+
+    /**
      * Clears attribute lat and lng from session
      * @return http ok
      */
@@ -176,36 +225,47 @@ public class Application extends Controller {
     }
 
     /**
+     * Displays the friendlist
+     * @return the page with the freindlist
+     */
+    public static Result friends() {
+        return ok(friends.render(dbManager.getFriends(dbManager.getActiveUser(session().get("username")))));
+    }
+
+    /**
      * Displays the forgot password page
      * @param sentornot depending on the value of this variable the page is generated dynamically 0=no additional text, 1=email sent successfully, 2=email couldn't be sent
      * @param email the email adress in concern
      * @return
      */
-
-    public static Result friends() {
-        return ok(friends.render(dbManager.getFriends(dbManager.getActiveUser(session().get("username")))));
-    }
-    
     public static Result forgotPassword(int sentornot,String email){
         return ok(forgotPassword.render(sentornot, email));
     }
 
     /**
      * POST action when pressing send at forgotPassword.scala.html
+     * Sends an email to a given address with a link to change a Password
      * @return
      */
     public static Result forgotPasswordSend(){
         DynamicForm dynamicForm = Form.form().bindFromRequest();
         String email = dynamicForm.get("email");
+        int i=2;
+        //if(dbManager.existsEmail(email)){
         EmailManager emailManager = new EmailManager();
         String text1 = emailManager.read("resetPassword1");
         String text2 = emailManager.read("resetPassword2");
         RandomStringUtils randString = new RandomStringUtils();
         Random rand = new Random();
-        int length = rand.nextInt(6)+10;
-        String tempPassword = randString.randomAlphanumeric(length);
-        boolean sentornot = emailManager.send(1,email,"Where am I, Reset your password",text1+tempPassword+text2);
-        int i = (sentornot) ? 1 : 2;
+        int length = rand.nextInt(15)+20;
+        String token = randString.randomAlphanumeric(length);
+        String tosend = token + "<br><a href='localhost:9000/changePassword?token=' " + token + " style='color:#225A92; text-decoration:none;'>";
+        boolean sentornot = emailManager.send(1,email,"Where am I, Reset your password",text1+tosend+text2);
+        i = (sentornot) ? 1 : 2;
+        dbManager.createToken(email, token);
+        System.out.println(token);
+        System.out.println(dbManager.getTokenFromEmail(email).getTokenString());
+        //}
         return ok(forgotPassword.render(i,email));
     }
 

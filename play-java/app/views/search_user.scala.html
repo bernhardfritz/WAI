@@ -44,10 +44,10 @@
                       </div>
                       <div id="buttons">
                           <div class="col-xs-2">
-                              <a href="#" class="btn btn-block btn-success" > <span class="glyphicon glyphicon-user"></span></a>
+                              <a href="@routes.Application.addFriend(user.getName())" class="btn btn-block btn-success" > <span class="glyphicon glyphicon-user"></span></a>
                           </div>
                           <div class="col-xs-2">
-                              <a href="#" class="btn btn-block btn-info"><span class="glyphicon glyphicon-globe"></span></a>
+                              <a href="@routes.Application.addGame(user.getName())" class="btn btn-block btn-info"><span class="glyphicon glyphicon-globe"></span></a>
                           </div>
                       </div>
                   </div>
@@ -79,7 +79,7 @@
                     longstr+='<div class="col-xs-8"> <div class="panel panel-default"><div class="panel-body">';
                     longstr+=arr[i];
                     longstr+="</div></div></div>";
-                    longstr+='<div id="buttons"><div class="col-xs-2"><a href="#" class="btn btn-block btn-success" > <span class="glyphicon glyphicon-user"></span></a></div><div class="col-xs-2"><a href="#" class="btn btn-block btn-info"><span class="glyphicon glyphicon-globe"></span></a></div></div>'
+                    longstr+="<div id='buttons'><div class='col-xs-2'><a href='#' class='btn btn-block btn-success'> <span class='glyphicon glyphicon-user'></span></a></div><div class='col-xs-2'><a href='#' class='btn btn-block btn-info'><span class='glyphicon glyphicon-globe'></span></a></div></div>";
                 }
                 longstr+='</div>'
 
