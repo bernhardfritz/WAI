@@ -194,7 +194,7 @@ public class Application extends Controller {
         String newpassword2 = dynamicForm.get("password2");
         if(newpassword1.equals(newpassword2) && dbManager.getTokenFromString(token).isValid()){
             changedOrNot=1;
-            //dbManager.changeUserPassword(dbManager.getUserFromEmail(dbManager.getTokenFromString(token).getEmail(), newpassword1);
+            dbManager.changeUserPassword(dbManager.getActiveUserFromEmail(dbManager.getTokenFromString(token).getEmail()), newpassword1);
         }
         else{
             changedOrNot=2;
@@ -251,21 +251,21 @@ public class Application extends Controller {
         DynamicForm dynamicForm = Form.form().bindFromRequest();
         String email = dynamicForm.get("email");
         int i=2;
-        //if(dbManager.existsEmail(email)){
-        EmailManager emailManager = new EmailManager();
-        String text1 = emailManager.read("resetPassword1");
-        String text2 = emailManager.read("resetPassword2");
-        RandomStringUtils randString = new RandomStringUtils();
-        Random rand = new Random();
-        int length = rand.nextInt(15)+20;
-        String token = randString.randomAlphanumeric(length);
-        String tosend = token + "<br><a href='localhost:9000/changePassword?token=' " + token + " style='color:#225A92; text-decoration:none;'>";
-        boolean sentornot = emailManager.send(1,email,"Where am I, Reset your password",text1+tosend+text2);
-        i = (sentornot) ? 1 : 2;
-        dbManager.createToken(email, token);
-        System.out.println(token);
-        System.out.println(dbManager.getTokenFromEmail(email).getTokenString());
-        //}
+        if(dbManager.isEmailTaken(email)){
+            EmailManager emailManager = new EmailManager();
+            String text1 = emailManager.read("resetPassword1");
+            String text2 = emailManager.read("resetPassword2");
+            RandomStringUtils randString = new RandomStringUtils();
+            Random rand = new Random();
+            int length = rand.nextInt(15)+20;
+            String token = randString.randomAlphanumeric(length);
+            String tosend = token + "<br><a href='localhost:9000/changePassword?token=' " + token + " style='color:#225A92; text-decoration:none;'>";
+            boolean sentornot = emailManager.send(1,email,"Where am I, Reset your password",text1+tosend+text2);
+            i = (sentornot) ? 1 : 2;
+            dbManager.saveToken(email, token);
+            System.out.println(token);
+            System.out.println(dbManager.getTokenFromEmail(email).getTokenString());
+        }
         return ok(forgotPassword.render(i,email));
     }
 
