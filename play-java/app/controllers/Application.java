@@ -175,19 +175,17 @@ public class Application extends Controller {
         return redirect(routes.Application.reports(1));
     }
 
-<<<<<<< Updated upstream
     /**
      * Displays the forgot password page
      * @param sentornot depending on the value of this variable the page is generated dynamically 0=no additional text, 1=email sent successfully, 2=email couldn't be sent
      * @param email the email adress in concern
      * @return
      */
-=======
+
     public static Result friends() {
         return ok(friends.render(dbManager.getFriends(dbManager.getActiveUser(session().get("username")))));
     }
-
->>>>>>> Stashed changes
+    
     public static Result forgotPassword(int sentornot,String email){
         return ok(forgotPassword.render(sentornot, email));
     }
