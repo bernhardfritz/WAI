@@ -1,15 +1,15 @@
-@(id: Long)(idGame: Long)
+@(pictureID: Long)(gameID: Long)
 @template("Game") {
 } {
     <script type="text/javascript">
-    var height= window.innerHeight || document.body.clientHeight;
-    var pixel=height-50;
+    var windowHeight= window.innerHeight || document.body.clientHeight;
+    var mapHeight=windowHeight-50;
 
-    document.write ('<iframe src="@routes.Application.map(id)" width="100%" height="'+pixel+'px" frameborder="0"></iframe>');
+    document.write ('<iframe src="@routes.Application.map(pictureID)" width="100%" height="'+mapHeight+'px" frameborder="0"></iframe>');
 
 
     </script>
-    <form action="@routes.Application.gameAction(id,idGame)" method="post">
+    <form action="@routes.Application.gameAction(pictureID,gameID)" method="post">
         <button type="submit" class="btn btn-default btn-block" id="countdown">Submit (60)</button>
     </form>
 
@@ -18,7 +18,7 @@
         setInterval(function() {
             $("#countdown").html("Submit (" +count+")");
             if (count <= 0) {
-                window.location.replace("@routes.Application.result(id)");
+            $('#countdown').click();
             }
     count = count - 1;
         },1000);

@@ -233,7 +233,7 @@ public class Application extends Controller {
         String description = dynamicForm.get("description");
         System.out.println(id+"\n"+accepted+"\n"+title+"\n"+latitude+"\n"+longitude+"\n"+description);
         dbManager.editPicture(dbManager.getPicture(Long.parseLong(id)), Double.parseDouble(latitude),
-                Double.parseDouble(longitude), title, description, accepted!=null);
+                Double.parseDouble(longitude), title, description, accepted != null);
         return redirect(routes.Application.gallery(1));
     }
 
@@ -268,6 +268,9 @@ public class Application extends Controller {
         Game game =dbManager.getGame(gameID);
         User user=dbManager.getActiveUser(session().get("username"));
         Double distance=getDistance(dbManager.getAcceptedPicture(id));
+        if (distance==null){
+            distance=-1.0;
+        }
         dbManager.gameAction(game,user,distance);
         return result(id);
     }
@@ -427,7 +430,10 @@ public class Application extends Controller {
     }
 
     public static Result practise() {
-        return ok();
+        long id=dbManager.getRandomAcceptedPicture().getId();
+        int height=dbManager.getPicture(id).getHeight();
+        int width=dbManager.getPicture(id).getWidth();
+        return ok(practise.render(id,width,height));
     }
 
     public static Result practiseAction(Long id) {

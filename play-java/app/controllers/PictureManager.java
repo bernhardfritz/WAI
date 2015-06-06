@@ -59,27 +59,31 @@ public class PictureManager {
             return img;
         } else {
 
-            BufferedImage dest = img;
+            BufferedImage square = null;
+
+            if ((img.getWidth() - img.getHeight()) == 0) {
+                square =img;
+            }
 
             if ((img.getWidth() - img.getHeight()) > 0) {
-                int tmp = img.getWidth() - img.getHeight();
-                dest = img.getSubimage((tmp / 2), 0, img.getWidth() - tmp, img.getHeight());
+                int difference = img.getWidth() - img.getHeight();
+                square = img.getSubimage((difference / 2), 0, img.getWidth() - difference, img.getHeight());
 
             }
             if ((img.getWidth() - img.getHeight()) < 0) {
-                int tmp = img.getHeight() - img.getWidth();
-                dest = img.getSubimage(0, (tmp / 2), img.getWidth(), img.getHeight() - tmp);
+                int difference = img.getHeight() - img.getWidth();
+                square = img.getSubimage(0, (difference / 2), img.getWidth(), img.getHeight() - difference);
             }
 
-            Image tmp = dest.getScaledInstance(size, size, Image.SCALE_SMOOTH);
-            BufferedImage dimg = new BufferedImage(size, size, BufferedImage.TYPE_INT_RGB);
+            Image scaled_square = square.getScaledInstance(size, size, Image.SCALE_SMOOTH);
+            BufferedImage result = new BufferedImage(size, size, BufferedImage.TYPE_INT_RGB);
 
 
-            Graphics2D g2d = dimg.createGraphics();
-            g2d.drawImage(tmp, 0, 0, null);
+            Graphics2D g2d = result.createGraphics();
+            g2d.drawImage(scaled_square, 0, 0, null);
             g2d.dispose();
 
-            return dimg;
+            return result;
         }
     }
 
