@@ -1,6 +1,6 @@
 package models;
 
-import controllers.DBManager;
+import org.joda.time.LocalDateTime;
 import play.db.ebean.Model;
 
 import javax.persistence.Entity;
@@ -27,6 +27,10 @@ public class Round extends Model {
 
     private boolean finished;
 
+    private LocalDateTime secondPlayerBegin;
+
+    private LocalDateTime evaluateBegin;
+
     public Round(Game game, Picture picture) {
         this.gameID = game.getId();
         this.game = game;
@@ -37,6 +41,8 @@ public class Round extends Model {
         this.winnerID = null;
         this.winner = null;
         this.finished = false;
+        this.secondPlayerBegin = null;
+        this.evaluateBegin = null;
     }
 
     public static Finder<Long, Round> find = new Finder<Long, Round>(Long.class, Round.class);
@@ -118,5 +124,21 @@ public class Round extends Model {
 
     public void setFinished(boolean finished) {
         this.finished = finished;
+    }
+
+    public LocalDateTime getSecondPlayerBegin() {
+        return secondPlayerBegin;
+    }
+
+    public void setSecondPlayerBegin(LocalDateTime secondPlayerBegin) {
+        this.secondPlayerBegin = secondPlayerBegin;
+    }
+
+    public LocalDateTime getEvaluateBegin() {
+        return evaluateBegin;
+    }
+
+    public void setEvaluateBegin(LocalDateTime evaluateBegin) {
+        this.evaluateBegin = evaluateBegin;
     }
 }

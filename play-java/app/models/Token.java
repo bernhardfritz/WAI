@@ -42,6 +42,18 @@ public class Token extends Model {
         return tokenString;
     }
 
+    public void setValidUntil(LocalDateTime validUntil) {
+        this.validUntil = validUntil;
+    }
+
+    public void setTokenString(String tokenString) {
+        this.tokenString = tokenString;
+    }
+
+    public void resetValidUntil() {
+        this.validUntil = LocalDateTime.now().plusDays(1);
+    }
+
     public String getPrettyValidUntil() {
         return validUntil.toString("dd.MM.yyyy H:m:s");
     }

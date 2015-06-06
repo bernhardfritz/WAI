@@ -145,14 +145,16 @@ public class DBManager {
                 Expr.ieq("user2id", user.getId().toString())).ieq("current_user_id", user.getId().toString()).findList();
 
         for (Game g : games) {
-            g.setUser1(getActiveUser(g.getUser1ID()));
-            g.setUser2(getActiveUser(g.getUser2ID()));
-            if (g.getWinner() != null) {
-                g.setWinner(getActiveUser(g.getWinnerID()));
-            }
-            if (g.getCurrentUser() != null) {
-                g.setCurrentUser(getActiveUser(g.getCurrentUserID()));
-            }
+            g = addConnections(g);
+
+            checkGameConditions(g);
+        }
+
+        games = Game.find.where().ieq("finished", "0").or(Expr.ieq("user1id", user.getId().toString()),
+                Expr.ieq("user2id", user.getId().toString())).ieq("current_user_id", user.getId().toString()).findList();
+
+        for (Game g : games) {
+            g = addConnections(g);
         }
 
         return games;
@@ -168,25 +170,86 @@ public class DBManager {
                 Expr.ieq("user2id", user.getId().toString())).not(Expr.ieq("current_user_id", user.getId().toString())).findList();
 
         for (Game g : games) {
-            g.setUser1(getActiveUser(g.getUser1ID()));
-            g.setUser2(getActiveUser(g.getUser2ID()));
-            if (g.getWinner() != null) {
-                g.setWinner(getActiveUser(g.getWinnerID()));
-            }
-            if (g.getCurrentUser() != null) {
-                g.setCurrentUser(getActiveUser(g.getCurrentUserID()));
-            }
+            g = addConnections(g);
+
+            checkGameConditions(g);
+        }
+
+        games = Game.find.where().ieq("finished", "0").or(Expr.ieq("user1id", user.getId().toString()),
+                Expr.ieq("user2id", user.getId().toString())).not(Expr.ieq("current_user_id", user.getId().toString())).findList();
+
+        for (Game g : games) {
+            g = addConnections(g);
         }
 
         return games;
     }
 
+    /**
+     * Initialize the game values when a user start a round.
+     * @param game
+     * @param user
+     */
+    public void onGameStart(Game game, User user) {
+        Round round = getRounds(game).get(game.getRound() - 1);
+
+        round.setEvaluateBegin(LocalDateTime.now().plusSeconds(60));
+
+        if (round.getUser1Distance() == null && round.getUser2Distance() == null) {
+            round.setSecondPlayerBegin(LocalDateTime.now().plusSeconds(60));
+        }
+
+        if (user.equals(game.getUser1())) {
+            round.setUser1Distance(-1.0);
+        }
+        else if (user.equals(game.getUser2())) {
+            round.setUser2Distance(-1.0);
+        }
+
+        round.save();
+    }
+
+    /**
+     * Check the game conditions and do necessary changes when the play_menu page is loaded.
+     * @param game
+     */
+    public void checkGameConditions(Game game) {
+        Round round = getRounds(game).get(game.getRound() - 1);
+        if (round.getEvaluateBegin() == null || (round.getEvaluateBegin() != null && round.getEvaluateBegin().isAfter(LocalDateTime.now()))) {
+            return;
+        }
+
+        round = roundWinnerCalculation(round, game);
+
+        if (((game.getRound() % 2 == 1 && game.getCurrentUser().equals(game.getUser1())) ||
+                (game.getRound() % 2 == 0 && game.getCurrentUser().equals(game.getUser2()))) &&
+                round.getSecondPlayerBegin().isBefore(LocalDateTime.now())) {
+            game.setCurrentUser(game.getOtherUser(game.getCurrentUser()));
+        }
+
+        if (round.isFinished()) {
+            game.incrementRound();
+        }
+
+        round.save();
+
+        game = gameWinnerCalculation(game);
+        game.save();
+    }
+
+    /**
+     * Do necessary calculations when the submit button in a game is clicked.
+     * @param game
+     * @param user
+     * @param distance
+     */
     public void gameAction(Game game, User user, double distance) {
         if (!game.getCurrentUser().equals(user)) {
             return;
         }
 
         Round round = getRounds(game).get(game.getRound() - 1);
+
         if (user.equals(game.getUser1())) {
             round.setUser1Distance(distance);
         }
@@ -194,12 +257,38 @@ public class DBManager {
             round.setUser2Distance(distance);
         }
 
-        // check if round is finished
+        round = roundWinnerCalculation(round, game);
+
+        if (round.isFinished()) {
+            game.incrementRound();
+        }
+        else {
+            game.setCurrentUser(game.getOtherUser(user));
+        }
+
+        if (round.getSecondPlayerBegin().isAfter(LocalDateTime.now())){
+            round.setSecondPlayerBegin(LocalDateTime.now());
+        }
+        round.setEvaluateBegin(LocalDateTime.now());
+
+        round.save();
+
+        game = gameWinnerCalculation(game);
+        game.save();
+    }
+
+    /**
+     * Check if a round is finished and set the winner of the round.
+     * @param round
+     * @param game
+     * @return The changed round object.
+     */
+    private Round roundWinnerCalculation(Round round, Game game) {
         if (round.getUser1Distance() != null && round.getUser2Distance() != null) {
-            if (round.getUser1Distance() < round.getUser2Distance()) {
+            if ((round.getUser1Distance() != -1 && round.getUser1Distance() < round.getUser2Distance()) || round.getUser2Distance() == -1.0) {
                 round.setWinner(game.getUser1());
             }
-            else if (round.getUser2Distance() < round.getUser1Distance()) {
+            else if ((round.getUser2Distance() != -1 && round.getUser2Distance() < round.getUser1Distance()) || round.getUser1Distance() == -1.0) {
                 round.setWinner(game.getUser2());
             }
             else {
@@ -209,16 +298,15 @@ public class DBManager {
             round.setFinished(true);
         }
 
-        if (round.isFinished()) {
-            game.incrementRound();
-        }
-        else {
-            game.setCurrentUser(game.getOtherUser(user));
-        }
+        return round;
+    }
 
-        round.save();
-
-        // check if game is finished
+    /**
+     * Check if a game is finished and set the winner of the game.
+     * @param game
+     * @return The changed game object.
+     */
+    private Game gameWinnerCalculation(Game game) {
         if (game.isFinished() && getWonRounds(game, game.getUser1()) >= 2) {
             game.setWinner(game.getUser1());
         }
@@ -226,7 +314,7 @@ public class DBManager {
             game.setWinner(game.getUser2());
         }
 
-        game.save();
+        return game;
     }
 
     /**
@@ -239,6 +327,11 @@ public class DBManager {
         return Round.find.where().ieq("game_id", game.getId().toString()).ieq("winner_id", user.getId().toString()).findList().size();
     }
 
+    /**
+     * Get a game from id.
+     * @param id
+     * @return The respective game or NULL if there is no game with that id.
+     */
     public Game getGame(Long id) {
         Game game = Game.find.where().ieq("id", id.toString()).findUnique();
         if (game != null) {
@@ -264,6 +357,24 @@ public class DBManager {
         return getRounds(game).get(game.getRound() - 1);
     }
 
+    /**
+     * Add missing object connections to a game.
+     * @param game
+     * @return The game with full object connectivity.
+     */
+    private Game addConnections(Game game) {
+        game.setUser1(getActiveUser(game.getUser1ID()));
+        game.setUser2(getActiveUser(game.getUser2ID()));
+        if (game.getWinnerID() != null) {
+            game.setWinner(getActiveUser(game.getWinnerID()));
+        }
+        if (game.getCurrentUserID() != null) {
+            game.setCurrentUser(getActiveUser(game.getCurrentUserID()));
+        }
+
+        return game;
+    }
+
 
     /* =========================== Picture functions =========================== */
 
@@ -278,7 +389,7 @@ public class DBManager {
     /**
      * Get a accepted picture from id.
      * @param id
-     * @return The respective picture or NULL, if there is no accepted picture with that id.
+     * @return The respective picture or NULL if there is no accepted picture with that id.
      */
     public Picture getAcceptedPicture(Long id) {
         return addConnections(Picture.find.where().ieq("id", id.toString()).ieq("accepted", "1").findUnique());
@@ -545,19 +656,23 @@ public class DBManager {
     /* =========================== Token functions =========================== */
 
     /**
-     * Create a new token and save it to the DB.
+     * Create a new token or edit an existing one and save it to the DB.
      * @param email
+     * @param tokenString
      */
-    public void createToken(String email, String tokenText) {
-        if (email != null && tokenText != null) {
-            for (User u : getAllActiveUsers()) {
-                if (u.getEmail().equals(email)) {
-                    if (getTokenFromEmail(email) == null) {
-                        Token token = new Token(email, tokenText);
-                        token.save();
-                    }
-                    break;
+    public void saveToken(String email, String tokenString) {
+        if (email != null && tokenString != null) {
+            User user = getActiveUserFromEmail(email);
+            if (user != null) {
+                Token token = getTokenFromEmail(email);
+                if (token == null) {
+                    token = new Token(email, tokenString);
                 }
+                else {
+                    token.setTokenString(tokenString);
+                    token.resetValidUntil();
+                }
+                token.save();
             }
         }
     }
@@ -656,6 +771,18 @@ public class DBManager {
     }
 
     /**
+     * Get user from email address.
+     * @param email
+     * @return The respective user or NULL if there is no user with that email address.
+     */
+    public User getActiveUserFromEmail(String email) {
+        if (email != null) {
+            return User.find.where().ieq("email", email).findUnique();
+        }
+        return null;
+    }
+
+    /**
      * Get a list of all registered and active users.
      * @return A list of all registered and active users.
      */
@@ -718,5 +845,20 @@ public class DBManager {
     public List<User> findUser(String searchString) {
         String name = searchString.toLowerCase() + "%";
         return User.find.where().like("name", name).findList();
+    }
+
+    /**
+     * Check if a user email is registered in the DB.
+     * @param email
+     * @return True if the given email is registered or false otherwise.
+     */
+    public boolean isEmailTaken(String email) {
+        List<User> users = getAllActiveUsers();
+        for (User u : users) {
+            if (u.getEmail().equals(email)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

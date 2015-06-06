@@ -255,6 +255,7 @@ public class Application extends Controller {
      */
     public static Result game(Long id) {
         Game g=dbManager.getGame(id);
+        dbManager.onGameStart(g, dbManager.getActiveUser(session().get("username")));
         return ok(game.render(dbManager.getCurrentRound(g).getPictureID(), id));
     }
 
