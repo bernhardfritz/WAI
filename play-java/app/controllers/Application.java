@@ -175,12 +175,19 @@ public class Application extends Controller {
         return redirect(routes.Application.reports(1));
     }
 
+<<<<<<< Updated upstream
     /**
      * Displays the forgot password page
      * @param sentornot depending on the value of this variable the page is generated dynamically 0=no additional text, 1=email sent successfully, 2=email couldn't be sent
      * @param email the email adress in concern
      * @return
      */
+=======
+    public static Result friends() {
+        return ok(friends.render(dbManager.getFriends(dbManager.getActiveUser(session().get("username")))));
+    }
+
+>>>>>>> Stashed changes
     public static Result forgotPassword(int sentornot,String email){
         return ok(forgotPassword.render(sentornot, email));
     }
@@ -418,7 +425,7 @@ public class Application extends Controller {
      */
     @Security.Authenticated(Secured.class)
     public static Result play_menu() {
-        return ok(play_menu.render(dbManager.getReadyUnfinishedGames(dbManager.getActiveUser(session().get("username"))),dbManager.getUnreadyUnfinishedGames((dbManager.getActiveUser(session().get("username"))))));
+        return ok(play_menu.render(dbManager.getReadyUnfinishedGames(dbManager.getActiveUser(session().get("username"))), dbManager.getUnreadyUnfinishedGames((dbManager.getActiveUser(session().get("username"))))));
     }
 
     public static Result practise() {
@@ -508,7 +515,7 @@ public class Application extends Controller {
     public static Result result(long id) {
         Picture picture = dbManager.getAcceptedPicture(id);
         if (getDistance(picture)!=null) {
-            return ok(result.render(picture, "You were off by "+prettifyDistance(getDistance(picture))+" km"));
+            return ok(result.render(picture, "You were off by " + prettifyDistance(getDistance(picture)) + " km"));
         }
         return ok(result.render(picture, "You didn't place a marker."));
     }

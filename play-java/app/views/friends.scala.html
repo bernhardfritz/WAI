@@ -1,0 +1,9 @@
+@(userlist:List[User])
+@template_with_navbar("send an email") {
+} {
+  <h1> Friends </h1>
+
+  @for(friend<-userlist){
+      <h4>@friend.getName</h4>
+  }
+}

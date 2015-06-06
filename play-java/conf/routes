@@ -12,6 +12,7 @@ GET         /approveReport/:id            controllers.Application.approveReport(
 GET         /blank                        controllers.Application.blank()
 GET         /bootstrap                    controllers.Application.bootstrap()
 GET         /clearLocation                controllers.Application.clearLatLng()
+GET         /friends                      controllers.Application.friends()
 GET         /forgotPassword               controllers.Application.forgotPassword(sentornot: Integer, toemail: String)
 POST        /forgotPassword               controllers.Application.forgotPasswordSend()
 GET         /disapproveReport/:id         controllers.Application.disapproveReport(id: Long)

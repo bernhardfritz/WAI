@@ -1,12 +1,18 @@
 @(suchbegriff: String, userlist: List[User])
-@template_with_navbar("search a friend") {
+@template_with_navbar("search a User") {
+    <style>
+        #buttons{
+            padding-top:5px;
+        }
+
+    </style>
 } {
     <div class="container text-center">
         <div class="bs-docs-section">
             <div class="row">
               <div class="col-lg-12">
                 <div class="page-header">
-                  <h2 id="forms">Search Friend</h2>
+                  <h2 id="forms">Search User</h2>
                 </div>
               </div>
             </div>
@@ -28,7 +34,23 @@
               </form>
               <div class="list-group" id="listdiv">
               @for(user<-userlist) {
-                <a href="#" class="list-group-item"> @user.getName()</a>
+                  <div class="row">
+                      <div class="col-xs-8">
+                        <div class="panel panel-default">
+                             <div class="panel-body">
+                            @user.getName()
+                             </div>
+                        </div>
+                      </div>
+                      <div id="buttons">
+                          <div class="col-xs-2">
+                              <a href="#" class="btn btn-block btn-success" > <span class="glyphicon glyphicon-user"></span></a>
+                          </div>
+                          <div class="col-xs-2">
+                              <a href="#" class="btn btn-block btn-info"><span class="glyphicon glyphicon-globe"></span></a>
+                          </div>
+                      </div>
+                  </div>
               }
               </div>
             </div>
@@ -50,15 +72,16 @@
        if($('#input').val().length>2){
             $.get( "/setUser/"+$('#input').val(), function( data ) {
                 $("#listdiv").finish();
-                longstr = "";
+                longstr = '<div class="row">';
                 var arr = data.split(" ");
                 var i;
-
                 for(i=0; i<arr.length-1;i++){
-                    longstr+='<a href="#" class="list-group-item">';
+                    longstr+='<div class="col-xs-8"> <div class="panel panel-default"><div class="panel-body">';
                     longstr+=arr[i];
-                    longstr+="</a>";
+                    longstr+="</div></div></div>";
+                    longstr+='<div id="buttons"><div class="col-xs-2"><a href="#" class="btn btn-block btn-success" > <span class="glyphicon glyphicon-user"></span></a></div><div class="col-xs-2"><a href="#" class="btn btn-block btn-info"><span class="glyphicon glyphicon-globe"></span></a></div></div>'
                 }
+                longstr+='</div>'
 
                 if(arr.length==1) {
                     longstr="<p>nothing found...</p>";

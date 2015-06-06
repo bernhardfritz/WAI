@@ -12,7 +12,8 @@
                 <a data-toggle="collapse" href="#menuOne">@session.get("username") <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></a>
                 <div class="subitem collapse out" id="menuOne">
                     <a href="#"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> Show statistics</a>
-                    <a href="@routes.Application.account(0)">Account</a>
+                    <a href="@routes.Application.friends()"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>Friends</a>
+                    <a href="@routes.Application.account(0)"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>Account</a>
                     <a href="@routes.Application.logout()"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> Sign out</a>
                 </div>
             </li>
