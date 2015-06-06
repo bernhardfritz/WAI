@@ -853,12 +853,6 @@ public class DBManager {
      * @return True if the given email is registered or false otherwise.
      */
     public boolean isEmailTaken(String email) {
-        List<User> users = getAllActiveUsers();
-        for (User u : users) {
-            if (u.getEmail().equals(email)) {
-                return true;
-            }
-        }
-        return false;
+        return getActiveUserFromEmail(email) != null;
     }
 }
