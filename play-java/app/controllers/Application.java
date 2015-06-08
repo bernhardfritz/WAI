@@ -106,7 +106,6 @@ public class Application extends Controller {
             IDs.add(x.getUser1ID());
             IDs.add(x.getUser2ID());
         }
-
         if(games.size()+1>=dbManager.getUserCount()){
             return redirect(routes.Application.randomGameError());
         }
