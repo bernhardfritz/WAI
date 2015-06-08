@@ -9,6 +9,7 @@ GET         /account                      controllers.Application.account(change
 POST        /account                      controllers.Application.changeEmailPassw(i: Integer)
 GET         /addFriend                    controllers.Application.addFriend(user:String)
 GET         /addGame                      controllers.Application.addGame(user:String)
+GET         /addGameMenu                  controllers.Application.addGameMenu(user:String)
 GET         /admin                        controllers.Application.admin()
 GET         /approveReport/:id            controllers.Application.approveReport(id: Long)
 GET         /blank                        controllers.Application.blank()

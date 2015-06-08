@@ -88,6 +88,11 @@ public class Application extends Controller {
         return redirect(routes.Application.search_user(""));
     }
 
+    public static Result addGameMenu(String user){
+        dbManager.createGame(getCurrentUser(), dbManager.getUser(user));
+        return redirect(routes.Application.play_menu());
+    }
+
     /**
      * Display the admin webinterface
      * @return the admin page
@@ -495,7 +500,7 @@ public class Application extends Controller {
      */
     @Security.Authenticated(Secured.class)
     public static Result play_menu() {
-        return ok(play_menu.render(dbManager.getReadyUnfinishedGames(getCurrentUser()), dbManager.getUnreadyUnfinishedGames((getCurrentUser()))));
+        return ok(play_menu.render(dbManager.getReadyUnfinishedGames(getCurrentUser()), dbManager.getUnreadyUnfinishedGames((getCurrentUser())), dbManager.getFinishedGames(getCurrentUser(),10)));
     }
 
     public static Result practise() {

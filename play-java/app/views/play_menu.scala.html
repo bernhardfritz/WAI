@@ -1,4 +1,4 @@
-@(readyToPlay:List[Game])(pending:List[Game])
+@(readyToPlay:List[Game])(pending:List[Game])(finished:List[Game])
 @template_with_navbar("Play") {
 
 } {
@@ -53,11 +53,11 @@
                         </div>
                 </div>
                     </div>
-                <div class="item" style="transition(.6s ease-in-out left)">
+                <div class="item">
                     <br/>
                     <div class="list-group">
                         @if(pending.length==0) {
-                            <h4><p class="text-danger"><strong>No Games</strong></p></h4>
+                            <h4><p class="text-danger"><strong>No Pending Games</strong></p></h4>
                         }
                         <div class="list-group">
                         @for(pendingGame<-pending) {
@@ -79,7 +79,18 @@
                 </div>
                 <div class="item">
                     <br/>
-                    Nothing to show yet<br>
+                    <div class="list-group">
+                        @if(pending.length==0) {
+                            <h4><p class="text-danger"><strong>No Finished Games</strong></p></h4>
+                        }
+                        <div class="list-group">
+                            @for(finishedGame<-finished) {
+                                @if(finishedGame.getUser2.getName()==session.get("username")){
+                                    <h4><p class="text-default"><strong>@finishedGame.getUser1.getName</strong> (Winner: @finishedGame.getWinner.getName)</p><a href="@routes.Application.addGameMenu(finishedGame.getUser1.getName)" class="list-group-item btn btn-default"> <span class="glyphicon glyphicon-repeat"> Revanche</span></a><br><br></h4>
+                                }else{
+                                    <h4><p class="text-default"><strong>@finishedGame.getUser2.getName</strong> (Winner @finishedGame.getWinner.getName)</p><a href="@routes.Application.addGameMenu(finishedGame.getUser2.getName)" class="list-group-item btn btn-default"> <span class="glyphicon glyphicon-repeat"> Revanche</span></a><br><br></h4>
+                                }
+                            }
                     <div class="col-lg-4">
                         <div class="bs-component">
                             <ul class="pager">
