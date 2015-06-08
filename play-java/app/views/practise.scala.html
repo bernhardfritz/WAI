@@ -1,112 +1,15 @@
-@(id: Long)(width: Integer)(height: Integer)
-@template_with_navbar("Game") {
+@(pictureID: Long)
+    @template("Game") {
+    } {
+        <script type="text/javascript">
+        var windowHeight= window.innerHeight || document.body.clientHeight;
+        var mapHeight=windowHeight-50;
 
-} {
-    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-      <div class="panel panel-default">
-        <div class="panel-heading" role="tab" id="headingOne">
-          <h4 class="panel-title">
-            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-              Picture
-            </a>
-          </h4>
-        </div>
-        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-          <div class="panel-body">
-            <div class="text-center img">
-              <img src="@routes.Application.picture(id)" id="picture">
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="panel panel-default">
-        <div class="panel-heading" role="tab" id="headingTwo">
-          <h4 class="panel-title">
-            <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-              Guess a location
-            </a>
-          </h4>
-        </div>
-        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-          <div class="panel-body">
-            <iframe src="@routes.Application.map(0)" width="100%" height="360px" frameborder="0"></iframe>
-          </div>
-        </div>
-      </div>
-      <br/>
-      <form action="@routes.Application.practiseAction(id)" method="post">
-        <button type="submit" class="btn btn-default btn-block">Submit</button>
-      </form>
-    </div>
-    <!-- Root element of PhotoSwipe. Must have class pswp. -->
-    <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
-            <!-- Background of PhotoSwipe.
-        It's a separate element as animating opacity is faster than rgba(). -->
-        <div class="pswp__bg"></div>
-            <!-- Slides wrapper with overflow:hidden. -->
-        <div class="pswp__scroll-wrap">
-                <!-- Container that holds slides.
-            PhotoSwipe keeps only 3 of them in the DOM to save memory.
-            Don't modify these 3 pswp__item elements, data is added later on. -->
-            <div class="pswp__container">
-                <div class="pswp__item"></div>
-                <div class="pswp__item"></div>
-                <div class="pswp__item"></div>
-            </div>
-                <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
-            <div class="pswp__ui pswp__ui--hidden">
-                <div class="pswp__top-bar">
-                        <!--  Controls are self-explanatory. Order can be changed. -->
-                    <div class="pswp__counter"></div>
-                    <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
-                    <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
-                    <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
-                        <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
-                        <!-- element will get class pswp__preloader--active when preloader is running -->
-                    <div class="pswp__preloader">
-                        <div class="pswp__preloader__icn">
-                            <div class="pswp__preloader__cut">
-                                <div class="pswp__preloader__donut"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
-                    <div class="pswp__share-tooltip"></div>
-                </div>
-                <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
-                </button>
-                <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
-                </button>
-                <div class="pswp__caption">
-                    <div class="pswp__caption__center"></div>
-                </div>
-            </div>
-        </div>
-    </div>
+        document.write ('<iframe src="@routes.Application.map(pictureID)" width="100%" height="'+mapHeight+'px" frameborder="0"></iframe>');
 
-    <script type="text/javascript">
-        var openPhotoSwipe = function() {
-    var pswpElement = document.querySelectorAll('.pswp')[0];
-    // build items array
-    var items = [
-    {
-    src: '@routes.Application.picture(id)',
-    w: @width,
-    h: @height
+
+        </script>
+        <form action="@routes.Application.practiseAction(pictureID)" method="post">
+            <button type="submit" class="btn btn-default btn-block" id="countdown">Submit</button>
+        </form>
     }
-    ];
-    // define options (if needed)
-    var options = {
-    // history & focus options are disabled on CodePen
-    history: false,
-    focus: false,
-    showAnimationDuration: 0,
-    hideAnimationDuration: 0
-    };
-    var gallery = new PhotoSwipe( pswpElement, PhotoSwipeUI_Default, items, options);
-    gallery.init();
-    };
-    document.getElementById('picture').onclick = openPhotoSwipe;
-    </script>
-}

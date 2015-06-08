@@ -84,7 +84,7 @@ public class Application extends Controller {
      * @return
      */
     public static Result addGame(String user){
-        dbManager.createGame(getCurrentUser(),dbManager.getUser(user));
+        dbManager.createGame(getCurrentUser(), dbManager.getUser(user));
         return redirect(routes.Application.search_user(""));
     }
 
@@ -500,9 +500,7 @@ public class Application extends Controller {
 
     public static Result practise() {
         long id=dbManager.getRandomAcceptedPicture().getId();
-        int height=dbManager.getPicture(id).getHeight();
-        int width=dbManager.getPicture(id).getWidth();
-        return ok(practise.render(id,width,height));
+        return ok(practise.render(id));
     }
 
     public static Result practiseAction(Long id) {
