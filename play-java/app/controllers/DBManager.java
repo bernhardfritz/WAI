@@ -215,16 +215,7 @@ public class DBManager {
      * @return Maximal maxResultCount finished games of a user.
      */
     public List<Game> getFinishedGames(User user, int maxResultCount) {
-        List<Game> games =  Game.find.where().ieq("finished", "1").or(Expr.ieq("user1id", user.getId().toString()),
-                Expr.ieq("user2id", user.getId().toString())).findList();
-
-        List<Game> uniqueGames = new ArrayList<Game>();
-        for (Game g : games) {
-            if (!uniqueGames.contains(g)) {
-                g = addConnections(g);
-                uniqueGames.add(g);
-            }
-        }
+        List<Game> uniqueGames = getFinishedGames(user);
 
         if (uniqueGames.size() > maxResultCount) {
             uniqueGames = uniqueGames.subList(0, maxResultCount);
