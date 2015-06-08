@@ -67,7 +67,7 @@ public class Application extends Controller {
      * @return the account page
      */
     public static Result account(int i){    // i to display if changes where successful (i=0 display nothing, i=1 display successful, i=2 display not successful
-        return ok(account.render(0, dbManager.getActiveUser(session().get("username"))));
+        return ok(account.render(0, getCurrentUser()));
     }
 
     /**
@@ -75,7 +75,7 @@ public class Application extends Controller {
      * @return
      */
     public static Result addFriend(String user){
-        dbManager.saveFriend(dbManager.getActiveUser(session().get("username")),dbManager.getUser(user));
+        dbManager.saveFriend(getCurrentUser(),dbManager.getUser(user));
         return redirect(routes.Application.search_user(""));
     }
 
@@ -84,7 +84,7 @@ public class Application extends Controller {
      * @return
      */
     public static Result addGame(String user){
-        dbManager.createGame(dbManager.getActiveUser(session().get("username")),dbManager.getUser(user));
+        dbManager.createGame(getCurrentUser(),dbManager.getUser(user));
         return redirect(routes.Application.search_user(""));
     }
 
@@ -146,7 +146,7 @@ public class Application extends Controller {
             String oldemail = dynamicForm.get("oldemail");
             String newemail1 = dynamicForm.get("newemail1");
             String newemail2 = dynamicForm.get("newemail2");
-            if(newemail1.equals(newemail2) && hashManager.codeString(oldemail).equals(dbManager.getActiveUser(session().get("username")).getEmail())){
+            if(newemail1.equals(newemail2) && hashManager.codeString(oldemail).equals(getCurrentUser().getEmail())){
                 //change email
                 changedOrNot=1;
             }
@@ -159,8 +159,8 @@ public class Application extends Controller {
             String oldpassword = dynamicForm.get("oldpassword");
             String newpassword1 = dynamicForm.get("newpassword1");
             String newpassword2  = dynamicForm.get("newpassword2");
-            if(newpassword1.equals(newpassword2) && hashManager.codeString(oldpassword).equals(dbManager.getActiveUser(session().get("username")).getPassword())){
-                dbManager.changeUserPassword(dbManager.getActiveUser(session().get("username")), newpassword1);
+            if(newpassword1.equals(newpassword2) && hashManager.codeString(oldpassword).equals(getCurrentUser().getPassword())){
+                dbManager.changeUserPassword(getCurrentUser(), newpassword1);
                 changedOrNot=3;
             }
             else{
@@ -168,7 +168,15 @@ public class Application extends Controller {
             }
             //System.out.println("passw " + oldpassword +  newpassword1 + newpassword2 + " " + dbManager.getActiveUser(session().get("username")).getPassword());
         }
-        return ok(account.render(changedOrNot, dbManager.getActiveUser(session().get("username"))));
+        return ok(account.render(changedOrNot, getCurrentUser()));
+    }
+
+    /**
+     * To get the current User
+     * @return the current User object
+     */
+    private static User getCurrentUser() {
+        return dbManager.getActiveUser(session().get("username"));
     }
 
     /**
@@ -229,7 +237,7 @@ public class Application extends Controller {
      * @return the page with the freindlist
      */
     public static Result friends() {
-        return ok(friends.render(dbManager.getFriends(dbManager.getActiveUser(session().get("username")))));
+        return ok(friends.render(dbManager.getFriends(getCurrentUser())));
     }
 
     /**
@@ -315,7 +323,7 @@ public class Application extends Controller {
      */
     public static Result game(Long id) {
         Game g=dbManager.getGame(id);
-        dbManager.onGameStart(g, dbManager.getActiveUser(session().get("username")));
+        dbManager.onGameStart(g, getCurrentUser());
         return ok(game.render(dbManager.getCurrentRound(g).getPictureID(), id));
     }
 
@@ -327,7 +335,7 @@ public class Application extends Controller {
      */
     public static Result gameAction(Long id,Long gameID) {
         Game game =dbManager.getGame(gameID);
-        User user=dbManager.getActiveUser(session().get("username"));
+        User user= getCurrentUser();
         Double distance=getDistance(dbManager.getAcceptedPicture(id));
         if (distance==null){
             distance=-1.0;
@@ -487,7 +495,7 @@ public class Application extends Controller {
      */
     @Security.Authenticated(Secured.class)
     public static Result play_menu() {
-        return ok(play_menu.render(dbManager.getReadyUnfinishedGames(dbManager.getActiveUser(session().get("username"))), dbManager.getUnreadyUnfinishedGames((dbManager.getActiveUser(session().get("username"))))));
+        return ok(play_menu.render(dbManager.getReadyUnfinishedGames(getCurrentUser()), dbManager.getUnreadyUnfinishedGames((getCurrentUser()))));
     }
 
     public static Result practise() {
@@ -634,7 +642,7 @@ public class Application extends Controller {
         String email = dynamicForm.get("email");
         EmailManager emailManager = new EmailManager();
         String text1 = emailManager.read("inviteEmail");
-        boolean sentornot = emailManager.send(1,email,"Where Am I Invitation (From " + dbManager.getActiveUser(session().get("username")).getName() + ")",text1);
+        boolean sentornot = emailManager.send(1,email,"Where Am I Invitation (From " + getCurrentUser().getName() + ")",text1);
         return redirect(routes.Application.send_email_done(sentornot, email));
     }
 
@@ -744,7 +752,7 @@ public class Application extends Controller {
             BufferedImage img = ImageIO.read(file);
 
             // save picture to db
-            Picture pic = new Picture(getLat(),getLng(),title,description, img.getWidth(), img.getHeight(), dbManager.getActiveUser(session().get("username")));
+            Picture pic = new Picture(getLat(),getLng(),title,description, img.getWidth(), img.getHeight(), getCurrentUser());
             dbManager.savePicture(pic);
 
             // save picture to "public/images/pictures/pictureID.jpg"

@@ -1,9 +1,25 @@
 @(userlist:List[User])
 @template_with_navbar("send an email") {
 } {
-  <h1> Friends </h1>
-
-  @for(friend<-userlist){
-      <h4>@friend.getName</h4>
-  }
+    <div class="container text-center">
+        <h1> Friends </h1>
+        <div class="row">
+            <div class="col-xs-8"></div>
+            <div class="col-xs-2">
+                <h3> Play Game </h3>
+            </div>
+        </div>
+        <br>
+          @for(friend<-userlist){
+              <div class="row">
+                  <div class="col-xs-8">
+                    <h4>@friend.getName</h4>
+                  </div>
+                  <div class="col-xs-2">
+                    <a href="@routes.Application.addGame(friend.getName())" class="btn btn-block btn-info"><span class="glyphicon glyphicon-globe"></span></a>
+                  </div>
+              </div>
+              <br>
+          }
+    </div>
 }
