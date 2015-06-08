@@ -209,6 +209,31 @@ public class DBManager {
     }
 
     /**
+     * Get maximal maxResultCount finished games of a user.
+     * @param user
+     * @param maxResultCount
+     * @return Maximal maxResultCount finished games of a user.
+     */
+    public List<Game> getFinishedGames(User user, int maxResultCount) {
+        List<Game> games =  Game.find.where().ieq("finished", "1").or(Expr.ieq("user1id", user.getId().toString()),
+                Expr.ieq("user2id", user.getId().toString())).findList();
+
+        List<Game> uniqueGames = new ArrayList<Game>();
+        for (Game g : games) {
+            if (!uniqueGames.contains(g)) {
+                g = addConnections(g);
+                uniqueGames.add(g);
+            }
+        }
+
+        if (uniqueGames.size() > maxResultCount) {
+            uniqueGames = uniqueGames.subList(0, maxResultCount);
+        }
+
+        return uniqueGames;
+    }
+
+    /**
      * Initialize the game values when a user start a round.
      * @param game
      * @param user
