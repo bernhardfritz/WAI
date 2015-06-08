@@ -652,6 +652,57 @@ public class DBManager {
         return rounds;
     }
 
+    /**
+     * Get a list of rounds from a picture.
+     * @param picture
+     * @return A list of rounds from a picture.
+     */
+    public List<Round> getRounds(Picture picture) {
+        List<Round> rounds = Round.find.where().ieq("picture_id", picture.getId().toString()).findList();
+        for (Round r : rounds) {
+            r.setGame(getGame(r.getGameID()));
+            r.setPicture(picture);
+            if (r.getWinnerID() != null) {
+                r.setWinner(getActiveUser(r.getWinnerID()));
+            }
+        }
+
+        return rounds;
+    }
+
+    /**
+     * Get a list of all saved rounds.
+     * @return A list of all saved rounds.
+     */
+    public List<Round> getAllRounds() {
+        return Round.find.all();
+    }
+
+    /**
+     * Get the average saved distance for a given picture.
+     * @param picture
+     * @return The average saved distance for a given picture.
+     */
+    public Double getAverageDistance(Picture picture) {
+        Double sum = 0.0;
+        int count = 1;
+
+        for (Round r : getRounds(picture)) {
+            if (r.getUser1Distance() != null && r.getUser1Distance() >= 0) {
+                sum += r.getUser1Distance();
+                count++;
+            }
+            if (r.getUser2Distance() != null && r.getUser2Distance() >= 0) {
+                sum += r.getUser2Distance();
+                count++;
+            }
+        }
+
+        count = Math.max(1, count-1);
+
+        return sum / ((double) count);
+    }
+
 
     /* =========================== Token functions =========================== */
 
