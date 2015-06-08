@@ -12,7 +12,7 @@
                 <li class="divider"></li>
                 <li><a href="@routes.Application.send_email()">Send an email to a new friend</a></li>
                 <li class="divider"></li>
-                <li><a href="#">Random</a></li>
+                <li><a href="@routes.Application.addRandomGameMenu()">Random</a></li>
                 <li class="divider"></li>
                 <li><a href="@routes.Application.practise()">Practise</a></li>
             </ul>
@@ -39,9 +39,9 @@
                     <div class="list-group">
                     @for(readyToPlayGame<-readyToPlay) {
                         @if(readyToPlayGame.getUser2.getName()==session.get("username")){
-                            <h4><p class="text-success"><strong>@readyToPlayGame.getUser1.getName</strong> (Round @readyToPlayGame.getRound)</p><a href="@routes.Application.game(readyToPlayGame.getId())" class="list-group-item btn btn-success"> <span class="glyphicon glyphicon-play"> Play</span></a><br><br></h4>
+                            <h4><p class="text-default"><strong>@readyToPlayGame.getUser1.getName</strong> (Round @readyToPlayGame.getRound)</p><a href="@routes.Application.game(readyToPlayGame.getId())" class="list-group-item btn btn-success"> <span class="glyphicon glyphicon-play"> Play</span></a><br><br></h4>
                         }else{
-                            <h4><p class="text-success"><strong>@readyToPlayGame.getUser2.getName </strong>(Round @readyToPlayGame.getRound)</p><a href="@routes.Application.game(readyToPlayGame.getId())" class="list-group-item  btn btn-success"><span class="glyphicon glyphicon-play"> Play</span></a><br><br></h4>
+                            <h4><p class="text-default"><strong>@readyToPlayGame.getUser2.getName </strong>(Round @readyToPlayGame.getRound)</p><a href="@routes.Application.game(readyToPlayGame.getId())" class="list-group-item  btn btn-success"><span class="glyphicon glyphicon-play"> Play</span></a><br><br></h4>
                             }
                     }
                         <div class="col-lg-4">
@@ -86,9 +86,17 @@
                         <div class="list-group">
                             @for(finishedGame<-finished) {
                                 @if(finishedGame.getUser2.getName()==session.get("username")){
-                                    <h4><p class="text-default"><strong>@finishedGame.getUser1.getName</strong> (Winner: @finishedGame.getWinner.getName)</p><a href="@routes.Application.addGameMenu(finishedGame.getUser1.getName)" class="list-group-item btn btn-default"> <span class="glyphicon glyphicon-repeat"> Revanche</span></a><br><br></h4>
+                                    @if(finishedGame.getWinner.getName()==session.get("username")){
+                                    <h4><p class="text-success"><strong>@finishedGame.getUser1.getName</strong> (You Won)</p><a href="@routes.Application.addGameMenu(finishedGame.getUser1.getName)" class="list-group-item btn btn-default"> <span class="glyphicon glyphicon-repeat"> Revanche</span></a><br><br></h4>
+                                        }else{
+                                    <h4><p class="text-success"><strong>@finishedGame.getUser2.getName</strong> (You Won)</p><a href="@routes.Application.addGameMenu(finishedGame.getUser2.getName)" class="list-group-item btn btn-default"> <span class="glyphicon glyphicon-repeat"> Revanche</span></a><br><br></h4>
+                                }
                                 }else{
-                                    <h4><p class="text-default"><strong>@finishedGame.getUser2.getName</strong> (Winner @finishedGame.getWinner.getName)</p><a href="@routes.Application.addGameMenu(finishedGame.getUser2.getName)" class="list-group-item btn btn-default"> <span class="glyphicon glyphicon-repeat"> Revanche</span></a><br><br></h4>
+                                    @if(finishedGame.getWinner.getName()==session.get("username")){
+                                        <h4><p class="text-danger"><strong>@finishedGame.getUser1.getName</strong> (You Lost)</p><a href="@routes.Application.addGameMenu(finishedGame.getUser1.getName)" class="list-group-item btn btn-default"> <span class="glyphicon glyphicon-repeat"> Revanche</span></a><br><br></h4>
+                                    }else{
+                                        <h4><p class="text-danger"><strong>@finishedGame.getUser2.getName</strong> (You Lost)</p><a href="@routes.Application.addGameMenu(finishedGame.getUser2.getName)" class="list-group-item btn btn-default"> <span class="glyphicon glyphicon-repeat"> Revanche</span></a><br><br></h4>
+                                    }
                                 }
                             }
                     <div class="col-lg-4">

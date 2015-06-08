@@ -93,6 +93,34 @@ public class Application extends Controller {
         return redirect(routes.Application.play_menu());
     }
 
+    public static Result addRandomGameMenu() {
+        Random rand = new Random();
+        Long ret=-1L;
+        List<Game> unf = dbManager.getUnreadyUnfinishedGames(getCurrentUser());
+        List<Game> fin = dbManager.getReadyUnfinishedGames(getCurrentUser());
+        List<Game> games = new ArrayList<Game>();
+        games.addAll(unf);
+        games.addAll(fin);
+        List<Long> IDs = new ArrayList<Long>();
+        for (Game x : games) {
+            IDs.add(x.getUser1ID());
+            IDs.add(x.getUser2ID());
+        }
+
+        if(games.size()+1>=dbManager.getUserCount()){
+            return redirect(routes.Application.randomGameError());
+        }
+        while(ret==-1){
+            int id = rand.nextInt(dbManager.getUserCount()) + 1;
+            Long ID=new Long(id);
+            if(!IDs.contains(ID)){
+                ret=ID;
+            }
+        }
+        dbManager.createGame(getCurrentUser(), dbManager.getUser(ret));
+        return redirect(routes.Application.play_menu());
+    }
+
     /**
      * Display the admin webinterface
      * @return the admin page
@@ -519,6 +547,10 @@ public class Application extends Controller {
      */
     public static String prettifyDistance(double distance) {
         return String.format("%.1f", distance / 1000.0);
+    }
+
+    public static Result randomGameError(){
+        return ok(randomGameError.render());
     }
 
     /**
