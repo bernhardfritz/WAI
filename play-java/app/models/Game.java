@@ -154,4 +154,11 @@ public class Game extends Model {
             setWinner(user2);
         }
     }
+
+    @Override
+    public boolean equals(Object o) {
+        Game that = (Game) o;
+        return (this.getUser1ID().equals(that.getUser1ID())) && this.getUser2ID().equals(that.getUser2ID()) ||
+                (this.getUser1ID().equals(that.getUser2ID()) && this.getUser2ID().equals(that.getUser1ID()));
+    }
 }

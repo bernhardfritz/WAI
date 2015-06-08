@@ -119,6 +119,9 @@ public class DBManager {
      */
     public Game createGame(User user1, User user2) {
         Game game = new Game(user1, user2);
+        if (getReadyUnfinishedGames(user1).contains(game) || getUnreadyUnfinishedGames(user1).contains(game)) {
+            return null;
+        }
         game.save();
 
         List<Picture> pictures = new ArrayList<Picture>();
@@ -183,6 +186,26 @@ public class DBManager {
         }
 
         return games;
+    }
+
+    /**
+     * Get all finished games of a user.
+     * @param user
+     * @return All finished games of a user.
+     */
+    public List<Game> getFinishedGames(User user) {
+        List<Game> games =  Game.find.where().ieq("finished", "1").or(Expr.ieq("user1id", user.getId().toString()),
+                Expr.ieq("user2id", user.getId().toString())).findList();
+
+        List<Game> uniqueGames = new ArrayList<Game>();
+        for (Game g : games) {
+            if (!uniqueGames.contains(g)) {
+                g = addConnections(g);
+                uniqueGames.add(g);
+            }
+        }
+
+        return uniqueGames;
     }
 
     /**
