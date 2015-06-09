@@ -1,5 +1,6 @@
 @(title: String)(head: Html)(body: Html)
 @template(title) {
+    <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/non-responsive.css")">
     @head
 } {
     @template_navbar(title) {

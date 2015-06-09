@@ -44,22 +44,11 @@
 
         <!-- Page Content -->
     <div id="page-content-wrapper">
-        <nav class="navbar navbar-default">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <a class="navbar-center navbar-brand" href="@routes.Application.index()">@title <img style="margin: -10px auto 0px 0px;"  align="right" height="40px"src="@routes.Assets.at("images/logo.png")"></a>
-                </div>
-                <div>
-                    <ul class="nav navbar-nav navbar-left">
-                        <li>
-                            <a id="menu-toggle" href="#menu-toggle">
-                                <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
+        <ul class="nav nav-justified">
+            <li class="myli"><a id="menu-toggle" href="#menu-toggle"><span class="glyphicon glyphicon-menu-hamburger pull-left" aria-hidden="true"></span></a></li>
+            <li class="myli"><a href="@routes.Application.index()">@title</a></li>
+            <li class="myli"><a href="@routes.Application.index()"><img class="pull-right" src="@routes.Assets.at("images/logo.png")" width="18px" height="18px"></a></li>
+        </ul>
         <div id="container">
             <div class="container-fluid">
             @body
