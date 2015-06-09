@@ -30,9 +30,9 @@
 
             <table style="width:100%" class="table table-striped">
             @for(round<-rounds) {
-                @if(round.getUser1Distance() != null || round.getUser2Distance() != null) {
+                @if(round.getUser1Distance() != null || round.getUser2Distance() != null) {  <!--Only display rounds where at least one player played-->
                 <tr>
-                    @if(round.getUser1Distance() == null || round.getUser2Distance() == null){
+                    @if(round.getWinner==null){ <!--if one distance is not filled yet, show black text-->
                         <td>@game.getUser1.getName = @if(round.getUser1Distance() == null) {Not played } else {
                         @if(round.getUser1Distance() == (-1)) {Failed! } else {
                             @round.getUser1Distance().toInt
@@ -43,47 +43,10 @@
                                 @round.getUser2Distance().toInt
                                 km}</td>
                     }
-                    }
-                    @if(round.getUser1Distance() != null && round.getUser2Distance() != null){
 
-                    @if((round.getUser1Distance() < round.getUser2Distance()&&round.getUser1Distance()!=(-1)) || round.getUser2Distance()==(-1)){
-                        @if(game.getUser1().getName().equals(session.get("username"))){
-                        <td class="text-success">@game.getUser1.getName = @if(round.getUser1Distance() == null) {Not played } else {
-                            @if(round.getUser1Distance() == (-1)) {Failed! } else {
-                                @round.getUser1Distance().toInt
-                                km }
-                        }</td>
-                        <td class="text-success">@game.getUser2.getName = @if(round.getUser2Distance() == null) {Not played } else {
-                            @if(round.getUser2Distance() == (-1)) {Failed! } else {
-                                @round.getUser2Distance().toInt
-                                km}</td>
-                    }
-                    }else{
-                            <td class="text-danger">@game.getUser1.getName = @if(round.getUser1Distance() == null) {Not played } else {
-                                @if(round.getUser1Distance() == (-1)) {Failed! } else {
-                                    @round.getUser1Distance().toInt
-                                    km }
-                            }</td>
-                            <td class="text-danger">@game.getUser2.getName = @if(round.getUser2Distance() == null) {Not played } else {
-                            @if(round.getUser2Distance() == (-1)) {Failed! } else {
-                                @round.getUser2Distance().toInt
-                                km}</td>
-                        }
 
-                        }
                     }else{
-                        @if(game.getUser1().getName().equals(session.get("username"))){
-                            <td class="text-danger">@game.getUser1.getName = @if(round.getUser1Distance() == null) {Not played } else {
-                                @if(round.getUser1Distance() == (-1)) {Failed! } else {
-                                    @round.getUser1Distance().toInt
-                                    km }
-                            }</td>
-                            <td class="text-danger">@game.getUser2.getName = @if(round.getUser2Distance() == null) {Not played } else {
-                                @if(round.getUser2Distance() == (-1)) {Failed! } else {
-                                    @round.getUser2Distance().toInt
-                                    km}</td>
-                        }
-                        }else{
+                        @if(round.getWinner.getName.equals((session.get("username")))){
                             <td class="text-success">@game.getUser1.getName = @if(round.getUser1Distance() == null) {Not played } else {
                                 @if(round.getUser1Distance() == (-1)) {Failed! } else {
                                     @round.getUser1Distance().toInt
@@ -94,10 +57,18 @@
                                     @round.getUser2Distance().toInt
                                     km}</td>
                         }
-
+                        }else{
+                            <td class="text-danger">@game.getUser1.getName = @if(round.getUser1Distance() == null) {Not played } else {
+                                @if(round.getUser1Distance() == (-1)) {Failed! } else {
+                                    @round.getUser1Distance().toInt
+                                    km }
+                            }</td>
+                            <td class="text-danger">@game.getUser2.getName = @if(round.getUser2Distance() == null) {Not played } else {
+                                @if(round.getUser2Distance() == (-1)) {Failed! } else {
+                                    @round.getUser2Distance().toInt
+                                    km}</td>
                         }
-
-                    }
+                        }
                     }
                 </tr>
                 }
