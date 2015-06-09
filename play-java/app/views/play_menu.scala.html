@@ -38,7 +38,7 @@
                     }
                     <div class="list-group">
                     @for(readyToPlayGame<-readyToPlay) {
-                        @if(readyToPlayGame.getUser2.getName()==session.get("username")){
+                        @if(readyToPlayGame.getUser2.getName().equals(session.get("username"))){
                             <h4><p class="text-default"><strong>@readyToPlayGame.getUser1.getName</strong> (Round @readyToPlayGame.getRound)</p><a href="@routes.Application.game(readyToPlayGame.getId())" class="list-group-item btn btn-success"> <span class="glyphicon glyphicon-play"> Play</span></a><br><br></h4>
                         }else{
                             <h4><p class="text-default"><strong>@readyToPlayGame.getUser2.getName </strong>(Round @readyToPlayGame.getRound)</p><a href="@routes.Application.game(readyToPlayGame.getId())" class="list-group-item  btn btn-success"><span class="glyphicon glyphicon-play"> Play</span></a><br><br></h4>
@@ -61,7 +61,7 @@
                         }
                         <div class="list-group">
                         @for(pendingGame<-pending) {
-                            @if(pendingGame.getUser2.getName()==session.get("username")){
+                            @if(pendingGame.getUser2.getName().equals(session.get("username"))){
                                 <h4><p class="text-default"><strong>@pendingGame.getUser1.getName</strong> (Round @pendingGame.getRound)</p><a href="#" class=" disabled list-group-item btn btn-default"> <span class="glyphicon glyphicon-pause"> Wait</span></a><br><br></h4>
                             }else{
                                 <h4><p class="text-default"><strong>@pendingGame.getUser2.getName</strong> (Round @pendingGame.getRound)</p><a href="#" class="disabled list-group-item btn btn-default"> <span class="glyphicon glyphicon-pause"> Wait</span></a><br><br></h4>
@@ -85,14 +85,14 @@
                         }
                         <div class="list-group">
                             @for(finishedGame<-finished) {
-                                @if(finishedGame.getUser1.getName()==session.get("username")){
-                                    @if(finishedGame.getWinner().getName()==session.get("username")){
+                                @if(finishedGame.getUser1.getName().equals(session.get("username"))){
+                                    @if(finishedGame.getWinner().getName().equals(session.get("username"))){
                                     <h4><p class="text-success"><strong>@finishedGame.getUser2.getName</strong> (You Won)</p><a href="@routes.Application.addGameMenu(finishedGame.getUser2.getName)" class="list-group-item btn btn-default"> <span class="glyphicon glyphicon-repeat"> Revanche</span></a><br><br></h4>
                                         }else{
                                     <h4><p class="text-danger"><strong>@finishedGame.getUser2.getName</strong> (You Lost)</p><a href="@routes.Application.addGameMenu(finishedGame.getUser2.getName)" class="list-group-item btn btn-default"> <span class="glyphicon glyphicon-repeat"> Revanche</span></a><br><br></h4>
                                 }
                                 }else{
-                                    @if(finishedGame.getWinner().getName()==session.get("username")){
+                                    @if(finishedGame.getWinner().getName().equals(session.get("username"))){
                                         <h4><p class="text-success"><strong>@finishedGame.getUser1.getName</strong> (You Won)</p><a href="@routes.Application.addGameMenu(finishedGame.getUser1.getName)" class="list-group-item btn btn-default"> <span class="glyphicon glyphicon-repeat"> Revanche</span></a><br><br></h4>
                                     }else{
                                         <h4><p class="text-danger"><strong>@finishedGame.getUser1.getName</strong> (You Lost)</p><a href="@routes.Application.addGameMenu(finishedGame.getUser1.getName)" class="list-group-item btn btn-default"> <span class="glyphicon glyphicon-repeat"> Revanche</span></a><br><br></h4>
@@ -112,4 +112,3 @@
     </div>
 
 }
-

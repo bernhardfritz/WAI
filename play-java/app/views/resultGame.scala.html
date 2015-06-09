@@ -47,7 +47,7 @@
                     @if(round.getUser1Distance() != null && round.getUser2Distance() != null){
 
                     @if((round.getUser1Distance() < round.getUser2Distance()&&round.getUser1Distance()!=(-1)) || round.getUser2Distance()==(-1)){
-                        @if(game.getUser1().getName()==session.get("username")){
+                        @if(game.getUser1().getName().equals(session.get("username"))){
                         <td class="text-success">@game.getUser1.getName = @if(round.getUser1Distance() == null) {Not played } else {
                             @if(round.getUser1Distance() == (-1)) {Failed! } else {
                                 @round.getUser1Distance().toInt
@@ -72,7 +72,7 @@
 
                         }
                     }else{
-                        @if(game.getUser1().getName()==session.get("username")){
+                        @if(game.getUser1().getName().equals(session.get("username"))){
                             <td class="text-danger">@game.getUser1.getName = @if(round.getUser1Distance() == null) {Not played } else {
                                 @if(round.getUser1Distance() == (-1)) {Failed! } else {
                                     @round.getUser1Distance().toInt
@@ -105,7 +105,7 @@
             }</table>
 
             @if(game.getWinner()!=null){
-                @if(game.getWinner().getName()==session.get("username")){
+                @if(game.getWinner().getName().equals(session.get("username"))){
                     <h3><p class="text-success text-center">You Win!</p></h3>
                 }else{
                     <h3><p class="text-danger text-center">You Lose!</p></h3>
