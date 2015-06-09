@@ -38,6 +38,7 @@ POST        /practiseAction/:id           controllers.Application.practiseAction
 GET         /randomGameError              controllers.Application.randomGameError()
 GET         /reports                      controllers.Application.reports(currentpage: Integer ?= 1)
 GET         /result/:id                   controllers.Application.result(id: Long)
+GET         /resultGame/:id/               controllers.Application.resultGame(id: Long,idGame:Long)
 GET         /result_map/:id               controllers.Application.result_map(id: Long)
 GET         /search_user                  controllers.Application.search_user(suchbegriff: String?="")
 GET         /send_email                   controllers.Application.send_email()

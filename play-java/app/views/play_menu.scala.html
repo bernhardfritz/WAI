@@ -85,17 +85,17 @@
                         }
                         <div class="list-group">
                             @for(finishedGame<-finished) {
-                                @if(finishedGame.getUser2.getName()==session.get("username")){
-                                    @if(finishedGame.getWinner.getName()==session.get("username")){
-                                    <h4><p class="text-success"><strong>@finishedGame.getUser1.getName</strong> (You Won)</p><a href="@routes.Application.addGameMenu(finishedGame.getUser1.getName)" class="list-group-item btn btn-default"> <span class="glyphicon glyphicon-repeat"> Revanche</span></a><br><br></h4>
-                                        }else{
+                                @if(finishedGame.getUser1.getName()==session.get("username")){
+                                    @if(finishedGame.getWinner().getName()==session.get("username")){
                                     <h4><p class="text-success"><strong>@finishedGame.getUser2.getName</strong> (You Won)</p><a href="@routes.Application.addGameMenu(finishedGame.getUser2.getName)" class="list-group-item btn btn-default"> <span class="glyphicon glyphicon-repeat"> Revanche</span></a><br><br></h4>
+                                        }else{
+                                    <h4><p class="text-danger"><strong>@finishedGame.getUser2.getName</strong> (You Lost)</p><a href="@routes.Application.addGameMenu(finishedGame.getUser2.getName)" class="list-group-item btn btn-default"> <span class="glyphicon glyphicon-repeat"> Revanche</span></a><br><br></h4>
                                 }
                                 }else{
-                                    @if(finishedGame.getWinner.getName()==session.get("username")){
-                                        <h4><p class="text-danger"><strong>@finishedGame.getUser1.getName</strong> (You Lost)</p><a href="@routes.Application.addGameMenu(finishedGame.getUser1.getName)" class="list-group-item btn btn-default"> <span class="glyphicon glyphicon-repeat"> Revanche</span></a><br><br></h4>
+                                    @if(finishedGame.getWinner().getName()==session.get("username")){
+                                        <h4><p class="text-success"><strong>@finishedGame.getUser1.getName</strong> (You Won)</p><a href="@routes.Application.addGameMenu(finishedGame.getUser1.getName)" class="list-group-item btn btn-default"> <span class="glyphicon glyphicon-repeat"> Revanche</span></a><br><br></h4>
                                     }else{
-                                        <h4><p class="text-danger"><strong>@finishedGame.getUser2.getName</strong> (You Lost)</p><a href="@routes.Application.addGameMenu(finishedGame.getUser2.getName)" class="list-group-item btn btn-default"> <span class="glyphicon glyphicon-repeat"> Revanche</span></a><br><br></h4>
+                                        <h4><p class="text-danger"><strong>@finishedGame.getUser1.getName</strong> (You Lost)</p><a href="@routes.Application.addGameMenu(finishedGame.getUser1.getName)" class="list-group-item btn btn-default"> <span class="glyphicon glyphicon-repeat"> Revanche</span></a><br><br></h4>
                                     }
                                 }
                             }

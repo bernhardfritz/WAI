@@ -1,0 +1,216 @@
+@(picture: Picture)(game:Game)(rounds:List[Round])(distance: String)
+@template("Game-Result") {
+
+} {
+    <div class="container" style="padding-top:20px">
+        <div class="jumbotron" style="padding-left: 10px; padding-right:10px">
+            <div class="media">
+                <div class="media-body media-middle">
+                    <h3 class="media-heading">@picture.getTitle</h3>
+                    <h4>@picture.getDescription</h4>
+                </div>
+                <div class="media-right">
+                    <img class="media-object img-circle" src="@routes.Application.thumbnail(picture.getId)" width="100px" height="100px">
+                </div>
+            </div>
+
+            <br>
+
+            <script type="text/javascript">
+            var height= window.innerHeight || document.body.clientHeight;
+            var pixel=height-350;
+            if (pixel<150){
+            pixel=150;
+            }
+
+            document.write ('<iframe src="@routes.Application.result_map(picture.getId)" width="100%" height="'+pixel+'px" frameborder="0"></iframe>');
+            </script>
+
+            @distance<br><br>
+
+            <table style="width:100%" class="table table-striped">
+            @for(round<-rounds) {
+                @if(round.getUser1Distance() != null || round.getUser2Distance() != null) {
+                <tr>
+                    @if(round.getUser1Distance() == null || round.getUser2Distance() == null){
+                        <td>@game.getUser1.getName = @if(round.getUser1Distance() == null) {Not played } else {
+                        @if(round.getUser1Distance() == (-1)) {Failed! } else {
+                            @round.getUser1Distance().toInt
+                            km }
+                    }</td>
+                    <td>@game.getUser2.getName = @if(round.getUser2Distance() == null) {Not played } else {
+                            @if(round.getUser2Distance() == (-1)) {Failed! } else {
+                                @round.getUser2Distance().toInt
+                                km}</td>
+                    }
+                    }
+                    @if(round.getUser1Distance() != null && round.getUser2Distance() != null){
+
+                    @if((round.getUser1Distance() < round.getUser2Distance()&&round.getUser1Distance()!=(-1)) || round.getUser2Distance()==(-1)){
+                        @if(game.getUser1().getName()==session.get("username")){
+                        <td class="text-success">@game.getUser1.getName = @if(round.getUser1Distance() == null) {Not played } else {
+                            @if(round.getUser1Distance() == (-1)) {Failed! } else {
+                                @round.getUser1Distance().toInt
+                                km }
+                        }</td>
+                        <td class="text-success">@game.getUser2.getName = @if(round.getUser2Distance() == null) {Not played } else {
+                            @if(round.getUser2Distance() == (-1)) {Failed! } else {
+                                @round.getUser2Distance().toInt
+                                km}</td>
+                    }
+                    }else{
+                            <td class="text-danger">@game.getUser1.getName = @if(round.getUser1Distance() == null) {Not played } else {
+                                @if(round.getUser1Distance() == (-1)) {Failed! } else {
+                                    @round.getUser1Distance().toInt
+                                    km }
+                            }</td>
+                            <td class="text-danger">@game.getUser2.getName = @if(round.getUser2Distance() == null) {Not played } else {
+                            @if(round.getUser2Distance() == (-1)) {Failed! } else {
+                                @round.getUser2Distance().toInt
+                                km}</td>
+                        }
+
+                        }
+                    }else{
+                        @if(game.getUser1().getName()==session.get("username")){
+                            <td class="text-danger">@game.getUser1.getName = @if(round.getUser1Distance() == null) {Not played } else {
+                                @if(round.getUser1Distance() == (-1)) {Failed! } else {
+                                    @round.getUser1Distance().toInt
+                                    km }
+                            }</td>
+                            <td class="text-danger">@game.getUser2.getName = @if(round.getUser2Distance() == null) {Not played } else {
+                                @if(round.getUser2Distance() == (-1)) {Failed! } else {
+                                    @round.getUser2Distance().toInt
+                                    km}</td>
+                        }
+                        }else{
+                            <td class="text-success">@game.getUser1.getName = @if(round.getUser1Distance() == null) {Not played } else {
+                                @if(round.getUser1Distance() == (-1)) {Failed! } else {
+                                    @round.getUser1Distance().toInt
+                                    km }
+                            }</td>
+                            <td class="text-success">@game.getUser2.getName = @if(round.getUser2Distance() == null) {Not played } else {
+                                @if(round.getUser2Distance() == (-1)) {Failed! } else {
+                                    @round.getUser2Distance().toInt
+                                    km}</td>
+                        }
+
+                        }
+
+                    }
+                    }
+                </tr>
+                }
+
+            }</table>
+
+            @if(game.getWinner()!=null){
+                @if(game.getWinner().getName()==session.get("username")){
+                    <h3><p class="text-success text-center">You Win!</p></h3>
+                }else{
+                    <h3><p class="text-danger text-center">You Lose!</p></h3>
+                }
+            }
+
+            <div class="row">
+                <div class="col-md-6">
+                    <button type="button"  class="btn btn-danger pull-left" data-toggle="modal" data-target="#myModal">Report</button>
+                </div>
+                <div class="col-md-6">
+                    <a href="@routes.Application.play_menu()" class="btn btn-primary pull-right">Ok</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="@routes.Application.reportAction()" method="POST">
+                    <input type="hidden" value="@session.get("username")" name="username" />
+                    <input type="hidden" value="@picture.getId" name="old_id" />
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h3>Report</h3>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label for="title" class="control-label">Title:</label>
+                                <input type="text" class="form-control input-lg" name="title" value="@picture.getTitle()">
+                            </div>
+                            <div class="form-group">
+                                <label for="description" class="control-label">Description:</label>
+                                <textarea class="form-control" name="description">@picture.getDescription()</textarea>
+                            </div>
+                        </div>
+                        <iframe src="@routes.Application.map(0L)" id="myiframe" width="100%" height="250px" frameborder="0"></iframe>
+                        <div class="form-group">
+                            <label for="latitude" class="control-label">Latitude:</label>
+                            <input type="text" class="form-control" id="latitude" name="latitude" value="@picture.getLat()">
+                        </div>
+                        <div class="form-group">
+                            <label for="latitude" class="control-label">Longitude:</label>
+                            <input type="text" class="form-control" id="longitude" name="longitude" value="@picture.getLng()">
+                        </div>
+                        <div class="form-group">
+                            <label for="optional">Optional:</label>
+                            <textarea class="form-control" name="optional"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Send report</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    $('#myModal').on('hidden.bs.modal', function () {
+    $.get("/clearLocation");
+    })
+
+    $('#myModal').on('shown.bs.modal', inputOnChange);
+
+    $('#latitude' ).on('input',inputOnChange);
+
+    $('#longitude' ).on('input',inputOnChange);
+
+    $(document).ready(function () {
+    $("#myiframe").each(function () {
+    //Using closures to capture each one
+    var iframe = $(this);
+    iframe.on("load", function () { //Make sure it is fully loaded
+    iframe.contents().click(function (event) {
+    iframe.trigger("click");
+    });
+    });
+
+    iframe.click(function () {
+    updateLatLng();
+    });
+    });
+    });
+
+    function inputOnChange() {
+    var lat=$('#latitude' ).val();
+    var lng=$('#longitude' ).val();
+    $.get("/setLocation/"+lat+"/"+lng ).done(function() {
+    // hackishly force iframe to reload
+    var iframe = document.getElementById("myiframe");
+    iframe.src = iframe.src;
+    });
+    }
+
+    function updateLatLng() {
+    var lat = window.frames[1].window.lat;
+    var lng = window.frames[1].window.lng;
+    if (lng!= 'undefined' && lng!=null && lat !=null && lat !='undefined'){
+    $('#latitude' ).val(lat);
+    $('#longitude' ).val(lng);
+    }
+    }
+    </script>
+}

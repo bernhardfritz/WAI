@@ -373,7 +373,8 @@ public class Application extends Controller {
             distance=-1.0;
         }
         dbManager.gameAction(game,user,distance);
-        return result(id);
+
+        return resultGame(id,gameID);
     }
 
     /**
@@ -626,6 +627,18 @@ public class Application extends Controller {
         }
         return ok(result.render(picture, "You didn't place a marker."));
     }
+
+    public static Result resultGame(long id,Long idGame) {
+        Game game =dbManager.getGame(idGame);
+        Picture picture = dbManager.getAcceptedPicture(id);
+        List<Round> rounds=dbManager.getRounds(game);
+        if (getDistance(picture)!=null) {
+            return ok(resultGame.render(picture,game,rounds, "You were off by " + prettifyDistance(getDistance(picture)) + " km"));
+        }
+        return ok(resultGame.render(picture,game,rounds, "You didn't place a marker."));
+    }
+
+
 
     /**
      * Show the map which will be used in result as iframe
