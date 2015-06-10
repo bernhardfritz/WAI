@@ -23,8 +23,8 @@ Wenn ein Task abgeschlossen ist, einfach in WAI/planning/README.md ein [x] setze
   - [x] Implementieren von invite_friend bei dem man einen Freund über dessen Email-Adresse ermuntern kann auch WAI zu spielen. Der Inhalt der Email soll nicht verändert werden können (hardcoded)
 - [x] Zentrieren von momentan linksbündigen Formularen
 - [x] Einbauen einer Möglichkeit zum Ändern des Passworts von der Weboberfläche. ("Forgot password?" bei Login und "Change password" im Sidebar Menü).
-- [ ] Einfügen einer friends.scala.html, die alle Freunde anzeigt.
-- [ ] Bei der Suche soll es die Möglichkeit geben eine neues Spiel mit einem User zu starten oder einen User als Freund hinzuzufügen.
+- [x] Einfügen einer friends.scala.html, die alle Freunde anzeigt.
+- [x] Bei der Suche soll es die Möglichkeit geben eine neues Spiel mit einem User zu starten oder einen User als Freund hinzuzufügen.
 
 ## Philipp
 - [x] Bilder der Sehenswürdigkeiten unskaliert überschreiben.

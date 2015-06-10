@@ -2,11 +2,11 @@
 Wenn ein Task abgeschlossen ist, einfach in WAI/planning/README.md ein [x] setzen.
 
 ## Bernhard
-- [ ] Admin Oberfläche
-  - [ ] Erstellen einer Admin Oberfläche die nur durch den User admin aufgerufen werden kann. In dieser Oberfläche soll es für einen Admin ohne großen Aufwand möglich sein upgeloadete Bilder zu verifizieren und freizuschalten.
-  - [ ] Der Admin soll visuellen Zugriff auf die gesamte Datenbank haben
-  - [ ] Der Admin soll die Möglichkeit haben böse User zu bannen.
-  - [ ] Der Admin soll auch auf offene Reports zugreifen und reagieren können.
+- [x] Admin Oberfläche
+  - [x] Erstellen einer Admin Oberfläche die nur durch den User admin aufgerufen werden kann. In dieser Oberfläche soll es für einen Admin ohne großen Aufwand möglich sein upgeloadete Bilder zu verifizieren und freizuschalten.
+  - [x] Der Admin soll visuellen Zugriff auf die gesamte Datenbank haben
+  - [x] Der Admin soll die Möglichkeit haben böse User zu bannen.
+  - [x] Der Admin soll auch auf offene Reports zugreifen und reagieren können.
 - [ ] Erstellen einer Oberfläche zur Übersicht offener Spiele.
 - [ ] Verbinden der Game Oberfläche mit der aktuellen aus der Datenbank abgefragten Spielrunde des jeweiligen Users.
 - [ ] Einbauen eines Benachrichtigungssystems, das es ermöglicht dem Spieler mitzuteilen, dass ein anderer Spieler ihn zu einem Spiel herausgefordert hat, oder dass ein Spiel abgeschlossen wurde oder eine neue Runde beginnt.
@@ -49,3 +49,5 @@ Wenn ein Task abgeschlossen ist, einfach in WAI/planning/README.md ein [x] setze
 - [ ] Überleg dir bereits wie wir Punkte und Statistiken in dein Datenbankmodell einfügen können. Es möglich sein zu beliebigen Zeitpunkten neue Achivements hinzuzufügen.
 - [x] Einbauen einer Tabelle Report. Das Report Objekt beinhaltet ein bestehendes Bild oder die id eines bestehenden Bilds, neue Lat/Lng-Werte, Erstellungsdatum, User Objekt oder username des Nutzers der den Report verfasst, und ein boolean ob der Report behandelt wurde oder nicht.
 - [x] Erstellen einer Funktion im DBManager.java zum Editieren und Deaktivieren von Bildern.
+- [x] Einbauen einer Tabelle Tokens. 1 Token (String) pro User, 1 tag gültig (Datum?). Es soll möglich sein nur mit e-mail Adresse den Token und Datum zu setzen und zu bekommen.
+- [ ] Einbauen einer Tabelle friendrequests. Wenn ein user jemanden adden will wird dieser dann zuerst in der friendrequest tabelle gespeichert.

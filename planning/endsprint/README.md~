@@ -10,12 +10,12 @@ Wenn ein Task abgeschlossen ist, einfach in WAI/planning/endsprint/README.md ein
   - [ ] UnitTest für die Distanzberechnung (Innsbruck->Wien ca. 500km)
 
 ## Thibault
-- [x] Überarbeite send_email. Lass den grauen Kasten sowie die Überschrift im grauen Kasten weg. Ändere die Überschriften in der Navbar dementsprechend. Bleib konsistent.
-- [x] Überarbeite friends. Die Überschrift in der Navbar stimmt nicht. Das Design kann noch verbessert werden. Es ist noch nicht intuitiv dass mit dem blauen Button ein neues Spiel begonnen werden kann. Das "Play" schwebt in der Luft. Mach vielleicht so ähnlich wie bei search_user einen Kasten in dem der Name des Freundes und der Button zum Spielen drin ist. Schreib in den Button einfach "Play" hinein statt dem Bild.
-- [x] Achte auf richtige Verlinkung
-  - [x] Nachdem man einen Freund bei search_user hinzufügt, sollte auf friends redirected werden
-  - [x] Nachdem ein Spiel bei search_user begonnen wurde, sollte auf play_menu redirected werden
-- [x] Füge deine wichtigsten Funktionen in die Sidebar ein
+- [ ] Überarbeite send_email. Lass den grauen Kasten sowie die Überschrift im grauen Kasten weg. Ändere die Überschriften in der Navbar dementsprechend. Bleib konsistent.
+- [ ] Überarbeite friends. Die Überschrift in der Navbar stimmt nicht. Das Design kann noch verbessert werden. Es ist noch nicht intuitiv dass mit dem blauen Button ein neues Spiel begonnen werden kann. Das "Play" schwebt in der Luft. Mach vielleicht so ähnlich wie bei search_user einen Kasten in dem der Name des Freundes und der Button zum Spielen drin ist. Schreib in den Button einfach "Play" hinein statt dem Bild.
+- [ ] Achte auf richtige Verlinkung
+  - [ ] Nachdem man einen Freund bei search_user hinzufügt, sollte auf friends redirected werden
+  - [ ] Nachdem ein Spiel bei search_user begonnen wurde, sollte auf play_menu redirected werden
+- [ ] Füge deine wichtigsten Funktionen in die Sidebar ein
 
 ## Philipp
 - [ ] Überarbeite/Vereinfache dein resultGame damit der richtige User rot bzw. grün dargestellt wird
