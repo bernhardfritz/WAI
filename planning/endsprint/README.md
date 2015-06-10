@@ -3,7 +3,7 @@ Wenn ein Task abgeschlossen ist, einfach in WAI/planning/endsprint/README.md ein
 
 ## Bernhard
 - [ ] Überarbeite alle GUI Elemente die noch nicht ausgereift sind
-  - [ ] play_menu sieht noch nicht fertig aus
+  - [x] play_menu sieht noch nicht fertig aus
   - [ ] result sieht noch nicht fertig aus
   - [ ] result_map muss noch fertig implementiert werden (-> LatLng Objekte)
 - [ ] Implementiere UnitTests

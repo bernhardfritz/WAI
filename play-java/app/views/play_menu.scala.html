@@ -2,12 +2,9 @@
 @template_with_navbar("Play") {
 
 } {
-    <div class="container-fluid text-center">
-        <div class="btn-group">
-            <button type="button" class="btn btn-lg btn-block btn-success dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                Start a new game <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu" role="menu">
+        <div class="dropdown">
+            <a href="#" class="btn btn-lg btn-block btn-success dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Start a new game <span class="caret"></span></a>
+            <ul class="dropdown-menu col-xs-12" role="menu">
                 <li><a href="@routes.Application.search_user("")">Search a user</a></li>
                 <li class="divider"></li>
                 <li><a href="@routes.Application.send_email()">Send an email to a new friend</a></li>
@@ -16,18 +13,24 @@
                 <li class="divider"></li>
                 <li><a href="@routes.Application.practise()">Practise</a></li>
             </ul>
-            </div>
-            </div><br/>
+        </div><br/>
 
 
     <div class="text-center">
         <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
             <!— Indicators —>
 
-
-            <button data-target="#myCarousel" data-slide-to="0" type="button" class="btn btn-primary">Games</button>
-            <button data-target="#myCarousel" data-slide-to="1" type="button" class="btn btn-primary">Pending</button>
-            <button data-target="#myCarousel" data-slide-to="2" type="button" class="btn btn-primary">Finished</button>
+            <div class="btn-group btn-group-justified" role="group" aria-label="...">
+                <div class="btn-group" role="group">
+                    <button data-target="#myCarousel" data-slide-to="0" type="button" class="btn btn-primary">Games</button>
+                </div>
+                <div class="btn-group" role="group">
+                    <button data-target="#myCarousel" data-slide-to="1" type="button" class="btn btn-primary">Pending</button>
+                </div>
+                <div class="btn-group" role="group">
+                    <button data-target="#myCarousel" data-slide-to="2" type="button" class="btn btn-primary">Finished</button>
+                </div>
+            </div>
 
             <!— Wrapper for slides —>
             <div class="carousel-inner" role="listbox">
