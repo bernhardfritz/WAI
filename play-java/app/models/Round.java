@@ -151,6 +151,10 @@ public class Round extends Model {
     }
 
     private Double prettifyDistance(Double distance) {
+        if (distance == null) {
+            return null;
+        }
+        
         return ((long) (distance / 100.0)) / 10.0;
     }
 }
