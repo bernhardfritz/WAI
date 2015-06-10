@@ -39,12 +39,12 @@
                       <div class="col-xs-12">
                         <div class="panel panel-default">
                              <div class="panel-body">
-                                <div class="col-xs-8"><h4>@user.getName()</h4></div>
-                                <div class="col-xs-2">
+                                <div class="col-xs-6"><h4>@user.getName()</h4></div>
+                                <div class="col-xs-3">
                                     <a href="@routes.Application.addFriend(user.getName())" class="btn btn-sm btn-success"><span class="glyphicon glyphicon-user"></span></a>
                                 </div>
                                 <div class="col-xs-2">
-                                    <a href="@routes.Application.addGame(user.getName())" class="btn btn-sm btn-info"><span class="glyphicon glyphicon-globe"></span></a>
+                                    <a href="@routes.Application.addGameMenu(user.getName())" class="btn btn-sm btn-info"><span class="glyphicon glyphicon-globe"></span></a>
                                 </div>
                              </div>
                         </div>
@@ -76,12 +76,12 @@
                     longstr+='<div class="col-xs-12">';
                     longstr+='<div class="panel panel-default">';
                     longstr+='<div class="panel-body">';
-                    longstr+='<div class="col-xs-8"><h4>'+arr[i]+'</h4></div>';
-                    longstr+='<div class="col-xs-2">';
+                    longstr+='<div class="col-xs-6"><h4>'+arr[i]+'</h4></div>';
+                    longstr+='<div class="col-xs-3">';
                     longstr+='<a href="/addFriend?user='+arr[i]+'" class="btn btn-sm btn-success"><span class="glyphicon glyphicon-user"></span></a>';
                     longstr+='</div>';
                     longstr+='<div class="col-xs-2">';
-                    longstr+='<a href="/addGame?user='+arr[i]+'" class="btn btn-sm btn-info"><span class="glyphicon glyphicon-globe"></span></a>';
+                    longstr+='<a href="/addGameMenu?user='+arr[i]+'" class="btn btn-sm btn-info"><span class="glyphicon glyphicon-globe"></span></a>';
                     longstr+='</div>';
                     longstr+='</div>';
                     longstr+='</div>';

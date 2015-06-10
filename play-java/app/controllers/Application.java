@@ -76,18 +76,13 @@ public class Application extends Controller {
      */
     public static Result addFriend(String user){
         dbManager.saveFriend(getCurrentUser(),dbManager.getUser(user));
-        return redirect(routes.Application.search_user(""));
+        return redirect(routes.Application.friends());
     }
 
     /**
      * creates a game vs a user
      * @return
      */
-    public static Result addGame(String user){
-        dbManager.createGame(getCurrentUser(), dbManager.getUser(user));
-        return redirect(routes.Application.search_user(""));
-    }
-
     public static Result addGameMenu(String user){
         dbManager.createGame(getCurrentUser(), dbManager.getUser(user));
         return redirect(routes.Application.play_menu());

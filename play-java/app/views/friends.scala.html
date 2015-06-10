@@ -1,5 +1,5 @@
 @(userlist:List[User])
-@template_with_navbar("send an email") {
+@template_with_navbar("Friends") {
 } {
     <style>
     #buttons{
@@ -9,33 +9,27 @@
     .btn{min-width:50px}
 
     </style>
-    @if(userlist.length!=0){
-    <div class="container text-center">
-        <h1> Friends </h1>
-        <div class="row">
-            <div class="col-xs-8"></div>
-            <div class="col-xs-2">
-                <h4> Play </h4>
-            </div>
-        </div>
-        <br>
-        }else{
-        <div class="text-center">
+    <div class="text-center">
+        @if(userlist.length==0){
             <h3> You don't have any friends </h3>
-            <br/>
-        </div>
-    }
+        }
+        <br>
           @for(friend<-userlist){
               <div class="row">
-                  <div class="col-xs-8">
-                    <h4>@friend.getName</h4>
-                  </div>
-                  <div class="col-xs-2">
-                    <a href="@routes.Application.addGameMenu(friend.getName())" class="btn btn-block btn-info"><span class="glyphicon glyphicon-globe"></span></a>
+                  <div class="col-xs-12">
+                      <div class="panel panel-default">
+                          <div class="panel-body">
+                              <div class="col-xs-5">
+                                  <h4>@friend.getName</h4>
+                              </div>
+                              <div class="col-xs-7">
+                                  <a href="@routes.Application.addGameMenu(friend.getName())" class="btn btn-info">Start a new game</a>
+                              </div>
+                          </div>
+                      </div>
                   </div>
               </div>
-              <br>
-              }
+          }
         <div class="col-lg-4">
             <div class="bs-component">
                 <ul class="pager">
