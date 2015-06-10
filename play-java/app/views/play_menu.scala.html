@@ -69,13 +69,23 @@
                                 @for(readyToPlayGame<-readyToPlay) {
                                     <div class="panel panel-default">
                                         <div class="panel-body">
+                                            <div class="media">
                                             @if(readyToPlayGame.getUser2.getName().equals(session.get("username"))){
-                                                <div class="col-xs-10"><h4><strong>@readyToPlayGame.getUser1.getName</strong> (Round @readyToPlayGame.getRound)</h4></div>
-                                                <div class="col-xs-2"><a href="@routes.Application.game(readyToPlayGame.getId())" class="list-group-item btn btn-success">Play <span class="glyphicon glyphicon-play"></span></a></div>
+                                                <div class="media-body">
+                                                    <h4><strong>@readyToPlayGame.getUser1.getName</strong><br>(Round @readyToPlayGame.getRound)</h4>
+                                                </div>
+                                                <div class="media-right media-middle">
+                                                    <a href="@routes.Application.game(readyToPlayGame.getId())" class="list-group-item btn btn-success">Play <span class="glyphicon glyphicon-play"></span></a>
+                                                </div>
                                             }else{
-                                                <div class="col-xs-10"><h4><strong>@readyToPlayGame.getUser2.getName</strong> (Round @readyToPlayGame.getRound)</h4></div>
-                                                <div class="col-xs-2"><a href="@routes.Application.game(readyToPlayGame.getId())" class="list-group-item btn btn-success">Play <span class="glyphicon glyphicon-play"></span></a></div>
+                                                <div class="media-body">
+                                                    <h4><strong>@readyToPlayGame.getUser2.getName</strong><br>(Round @readyToPlayGame.getRound)</h4>
+                                                </div>
+                                                <div class="media-right media-middle">
+                                                    <a href="@routes.Application.game(readyToPlayGame.getId())" class="list-group-item btn btn-success">Play <span class="glyphicon glyphicon-play"></span></a>
+                                                </div>
                                             }
+                                            </div>
                                         </div>
                                     </div>
                                 }
@@ -94,13 +104,23 @@
                                 @for(pendingGame<-pending) {
                                     <div class="panel panel-default">
                                         <div class="panel-body">
+                                            <div class="media">
                                             @if(pendingGame.getUser2.getName().equals(session.get("username"))){
-                                                <div class="col-xs-10"><h4><strong>@pendingGame.getUser1.getName</strong> (Round @pendingGame.getRound)</h4></div>
-                                                <div class="col-xs-2"><a href="#" class=" disabled list-group-item btn btn-default">Wait <span class="glyphicon glyphicon-pause"></span></a></div>
+                                                <div class="media-body">
+                                                    <h4><strong>@pendingGame.getUser1.getName</strong><br>(Round @pendingGame.getRound)</h4>
+                                                </div>
+                                                <div class="media-right media-middle">
+                                                    <a href="#" class="list-group-item btn btn-default disabled">Wait <span class="glyphicon glyphicon-pause"></span></a>
+                                                </div>
                                             }else{
-                                                <div class="col-xs-10"><h4><strong>@pendingGame.getUser2.getName</strong> (Round @pendingGame.getRound)</h4></div>
-                                                <div class="col-xs-2"><a href="#" class=" disabled list-group-item btn btn-default">Wait <span class="glyphicon glyphicon-pause"></span></a></div>
+                                                <div class="media-body">
+                                                    <h4><strong>@pendingGame.getUser2.getName</strong><br>(Round @pendingGame.getRound)</h4>
+                                                </div>
+                                                <div class="media-right media-middle">
+                                                    <a href="#" class="list-group-item btn btn-default disabled">Wait <span class="glyphicon glyphicon-pause"></span></a>
+                                                </div>
                                             }
+                                            </div>
                                         </div>
                                     </div>
                                 }
@@ -119,23 +139,41 @@
                                 @for(finishedGame<-finished) {
                                     <div class="panel panel-default">
                                         <div class="panel-body">
+                                            <div class="media">
                                             @if(finishedGame.getUser1.getName().equals(session.get("username"))){
                                                 @if(finishedGame.getWinner().getName().equals(session.get("username"))){
-                                                    <div class="col-xs-10"><h4 class="text-success"><strong>@finishedGame.getUser2.getName</strong> (You Won)</h4></div>
-                                                    <div class="col-xs-2"><a href="@routes.Application.addGameMenu(finishedGame.getUser1.getName)" class="list-group-item btn btn-default">Revanche <span class="glyphicon glyphicon-repeat"></span></a></div>
+                                                    <div class="media-body">
+                                                        <h4 class="text-success"><strong>@finishedGame.getUser2.getName</strong><br>(You won)</h4>
+                                                    </div>
+                                                    <div class="media-right media-middle">
+                                                        <a href="@routes.Application.addGameMenu(finishedGame.getUser1.getName)" class="list-group-item btn btn-success">Revanche <span class="glyphicon glyphicon-repeat"></span></a>
+                                                    </div>
                                                 } else{
-                                                    <div class="col-xs-10"><h4 class="text-success"><strong>@finishedGame.getUser2.getName</strong> (You Lost)</h4></div>
-                                                    <div class="col-xs-2"><a href="@routes.Application.addGameMenu(finishedGame.getUser1.getName)" class="list-group-item btn btn-default">Revanche <span class="glyphicon glyphicon-repeat"></span></a></div>
+                                                    <div class="media-body">
+                                                        <h4 class="text-danger"><strong>@finishedGame.getUser2.getName</strong><br>(You lost)</h4>
+                                                    </div>
+                                                    <div class="media-right media-middle">
+                                                        <a href="@routes.Application.addGameMenu(finishedGame.getUser1.getName)" class="list-group-item btn btn-success">Revanche <span class="glyphicon glyphicon-repeat"></span></a>
+                                                    </div>
                                                 }
                                             }else{
                                                 @if(finishedGame.getWinner().getName().equals(session.get("username"))){
-                                                    <div class="col-xs-10"><h4 class="text-success"><strong>@finishedGame.getUser1.getName</strong> (You Won)</h4></div>
-                                                    <div class="col-xs-2"><a href="@routes.Application.addGameMenu(finishedGame.getUser2.getName)" class="list-group-item btn btn-default">Revanche <span class="glyphicon glyphicon-repeat"></span></a></div>
+                                                    <div class="media-body">
+                                                        <h4 class="text-success"><strong>@finishedGame.getUser1.getName</strong><br>(You won)</h4>
+                                                    </div>
+                                                    <div class="media-right media-middle">
+                                                        <a href="@routes.Application.addGameMenu(finishedGame.getUser2.getName)" class="list-group-item btn btn-success">Revanche <span class="glyphicon glyphicon-repeat"></span></a>
+                                                    </div>
                                                 } else{
-                                                    <div class="col-xs-10"><h4 class="text-success"><strong>@finishedGame.getUser1.getName</strong> (You Lost)</h4></div>
-                                                    <div class="col-xs-2"><a href="@routes.Application.addGameMenu(finishedGame.getUser2.getName)" class="list-group-item btn btn-default">Revanche <span class="glyphicon glyphicon-repeat"></span></a></div>
+                                                    <div class="media-body">
+                                                        <h4 class="text-danger"><strong>@finishedGame.getUser1.getName</strong><br>(You lost)</h4>
+                                                    </div>
+                                                    <div class="media-right media-middle">
+                                                        <a href="@routes.Application.addGameMenu(finishedGame.getUser2.getName)" class="list-group-item btn btn-success">Revanche <span class="glyphicon glyphicon-repeat"></span></a>
+                                                    </div>
                                                 }
                                             }
+                                            </div>
                                         </div>
                                     </div>
                                 }
