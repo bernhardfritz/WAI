@@ -24,7 +24,7 @@ Wenn ein Task abgeschlossen ist, einfach in WAI/planning/endsprint/README.md ein
 
 ## Mario
 - [ ] LatLng Objekte in Runde einbauen damit wir sie in der result_map verwenden können
-- [ ] Es sollte nicht möglich sein mit sich selbst ein Spiel beginnen zu können. Bei search_user beispielsweise kann man sich selbst finden und mit sich selbst ein Spiel beginnen. Sich mit sich selbst zu befreunden geht zum Glück nicht :p
+- [x] Es sollte nicht möglich sein mit sich selbst ein Spiel beginnen zu können. Bei search_user beispielsweise kann man sich selbst finden und mit sich selbst ein Spiel beginnen. Sich mit sich selbst zu befreunden geht zum Glück nicht :p
 - [ ] Verwende prettifyDistance damit Philipp seine Distanzen schön als km darstellen kann. Zur Berechnung sollte aber der exakte Wert verwendet werden.
 - [ ] Stelle sicher, dass admin-only Webseiten auch wirklich nur durch den Admin aufgerufen werden können
 - [ ] Implementiere UnitTests

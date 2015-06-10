@@ -118,6 +118,10 @@ public class DBManager {
      * @param user2
      */
     public Game createGame(User user1, User user2) {
+        if (user1.equals(user2)) {
+            return null;
+        }
+
         Game game = new Game(user1, user2);
         if (getReadyUnfinishedGames(user1).contains(game) || getUnreadyUnfinishedGames(user1).contains(game)) {
             return null;
@@ -195,17 +199,13 @@ public class DBManager {
      */
     public List<Game> getFinishedGames(User user) {
         List<Game> games =  Game.find.where().ieq("finished", "1").or(Expr.ieq("user1id", user.getId().toString()),
-                Expr.ieq("user2id", user.getId().toString())).findList();
+                Expr.ieq("user2id", user.getId().toString())).orderBy().desc("id").findList();
 
-        List<Game> uniqueGames = new ArrayList<Game>();
         for (Game g : games) {
-            if (!uniqueGames.contains(g)) {
-                g = addConnections(g);
-                uniqueGames.add(g);
-            }
+            g = addConnections(g);
         }
 
-        return uniqueGames;
+        return games;
     }
 
     /**
@@ -215,13 +215,13 @@ public class DBManager {
      * @return Maximal maxResultCount finished games of a user.
      */
     public List<Game> getFinishedGames(User user, int maxResultCount) {
-        List<Game> uniqueGames = getFinishedGames(user);
+        List<Game> games = getFinishedGames(user);
 
-        if (uniqueGames.size() > maxResultCount) {
-            uniqueGames = uniqueGames.subList(0, maxResultCount);
+        if (games.size() > maxResultCount) {
+            games = games.subList(0, maxResultCount);
         }
 
-        return uniqueGames;
+        return games;
     }
 
     /**
