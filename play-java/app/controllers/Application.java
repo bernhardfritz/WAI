@@ -669,7 +669,7 @@ public class Application extends Controller {
             return ok(search_user.render("", list));
         }
         DBManager dbman = DBManager.getInstance();
-        return ok(search_user.render("", dbman.findUser(str)));
+        return ok(search_user.render("", dbman.findUser(str,getCurrentUser())));
     }
 
     /**
@@ -722,7 +722,7 @@ public class Application extends Controller {
      */
     public static Result setUser(String str) {
         StringBuilder strbuild = new StringBuilder();
-        for (User user:dbManager.findUser(str)){
+        for (User user:dbManager.findUser(str,getCurrentUser())){
             strbuild.append(user.getName()).append(" ");
         }
         return ok(strbuild.toString());
