@@ -18,7 +18,7 @@ Wenn ein Task abgeschlossen ist, einfach in WAI/planning/endsprint/README.md ein
 - [x] Füge deine wichtigsten Funktionen in die Sidebar ein
 
 ## Philipp
-- [ ] Überarbeite/Vereinfache dein resultGame damit der richtige User rot bzw. grün dargestellt wird
+- [x] Überarbeite/Vereinfache dein resultGame damit der richtige User rot bzw. grün dargestellt wird
 - [ ] Implementiere UnitTests
   - [ ] UnitTest für deinen PictureManager. Schau ob das Bild nach der Skalierung wirklich die richtige Größe hat.
 
