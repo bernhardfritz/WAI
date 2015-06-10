@@ -23,13 +23,10 @@ Wenn ein Task abgeschlossen ist, einfach in WAI/planning/endsprint/README.md ein
   - [x] Nachdem ein Spiel bei search_user begonnen wurde, sollte auf play_menu redirected werden
 - [x] Füge deine wichtigsten Funktionen in die Sidebar ein
 - [ ] Überarbeite Account
-  - [ ] Bei Account ein bisschen bei beide Seiten des grauen Kastens einrücken
+  - [ ] Bei Account ein bisschen bei beiden Seiten des grauen Kastens einrücken (probier container)
   - [ ] Username und Email linksbündig machen
   - [ ] Der Inhalt des Modal sollte auch linksbündig sein
-- [ ] Überarbeite Forgot Password
-  - [ ] grauen Kasten entfernen aber Abstand vom Rand
- beibehalten
- - [ ] Funktioniert das Rücksetzen des Passworts bereits?
+- [ ] Funktioniert das Rücksetzen des Passworts bereits?
 
 ## Philipp
 - [x] Überarbeite/Vereinfache dein resultGame damit der richtige User rot bzw. grün dargestellt wird
