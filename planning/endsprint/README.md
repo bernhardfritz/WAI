@@ -3,7 +3,13 @@ Wenn ein Task abgeschlossen ist, einfach in WAI/planning/endsprint/README.md ein
 
 ## Bernhard
 - [ ] Überarbeite alle GUI Elemente die noch nicht ausgereift sind
-  - [x] play_menu sieht noch nicht fertig aus
+  - [x] Überarbeite navbar
+  - [x] Überarbeite index
+  - [x] Überarbeite play_menu
+  - [x] Überarbeite practise
+  - [x] Überarbeite game
+  - [x] Überarbeite login
+  - [x] Überarbeite register
   - [ ] result sieht noch nicht fertig aus
   - [ ] result_map muss noch fertig implementiert werden (-> LatLng Objekte)
 - [ ] Implementiere UnitTests
@@ -16,8 +22,14 @@ Wenn ein Task abgeschlossen ist, einfach in WAI/planning/endsprint/README.md ein
   - [x] Nachdem man einen Freund bei search_user hinzufügt, sollte auf friends redirected werden
   - [x] Nachdem ein Spiel bei search_user begonnen wurde, sollte auf play_menu redirected werden
 - [x] Füge deine wichtigsten Funktionen in die Sidebar ein
-- [ ] Bei Account ein bisschen bei beide Seiten des grauen Kastens einrücken
-- [ ] Username und Email linksbündig machen
+- [ ] Überarbeite Account
+  - [ ] Bei Account ein bisschen bei beide Seiten des grauen Kastens einrücken
+  - [ ] Username und Email linksbündig machen
+  - [ ] Der Inhalt des Modal sollte auch linksbündig sein
+- [ ] Überarbeite Forgot Password
+  - [ ] grauen Kasten entfernen aber Abstand vom Rand
+ beibehalten
+ - [ ] Funktioniert das Rücksetzen des Passworts bereits?
 
 ## Philipp
 - [x] Überarbeite/Vereinfache dein resultGame damit der richtige User rot bzw. grün dargestellt wird

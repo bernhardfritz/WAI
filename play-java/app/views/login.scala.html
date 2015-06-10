@@ -2,36 +2,34 @@
 @template("login") {
     <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/theme.css")">
 } {
-    <!--login modal-->
-        <div id="loginModal" class="modal show" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    @if(form.hasGlobalErrors) {
-                        <p style="color: red; font-weight: bold;">
-                        @form.globalError.message
-                        </p>
-                    }
+    <div class="container-fluid center-block">
+        @if(form.hasGlobalErrors) {
+            <p style="color: red; font-weight: bold;">
+            @form.globalError.message
+            </p>
+        }
 
-                    @helper.form(routes.Application.authenticate) {
-                        <div class="modal-header">
-                            <a href="@routes.Application.index()" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></a>
-                            <h1 class="text-center">Login</h1>
-                        </div>
-                        <div class="modal-body modal-body-touch">
-                            <div class="form-group">
-                                <input type="text" name="username" class="form-control input-lg" placeholder="Username">
-                            </div>
-                            <div class="form-group">
-                                <input type="password" name="password" class="form-control input-lg" placeholder="Password">
-                                <span class="help-block"><a href ="@routes.Application.forgotPassword(0, "")">forgot password?</a></span>
-                            </div>
-                            <div class="form-group">
-                                <button class="btn btn-success btn-lg btn-block">Sign In</button>
-                               <h4><span class="pull-right"><a href="@routes.Application.register()">Register</a></span></h4>
-                            </div>
-                        </div>
-                    }
+        @helper.form(routes.Application.authenticate) {
+            <div class="media">
+                <div class="media-body">
+                    <h3 class="text-center">Login</h3>
+                </div>
+                <div class="media-right media-middle">
+                    <a href="@routes.Application.index()"><h3>&times;</h3></a>
                 </div>
             </div>
-        </div>
+            <div class="form-group">
+                <input type="text" name="username" class="form-control input-lg" placeholder="Username">
+            </div>
+            <div class="form-group">
+                <input type="password" name="password" class="form-control input-lg" placeholder="Password">
+                <div class="col-xs-6"><a href ="@routes.Application.forgotPassword(0, "")">Forgot password?</a></div>
+                <div class="col-xs-6"><a href="@routes.Application.register()" class="pull-right">No account yet?</a></div>
+                <br>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-success btn-lg btn-block">Sign In</button>
+            </div>
+        }
+    </div>
 }

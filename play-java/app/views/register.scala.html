@@ -2,39 +2,37 @@
 @template("register") {
     <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/theme.css")">
 } {
-<div id="loginModal" class="modal show" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            @if(form.hasGlobalErrors) {
-                <p style="color: red; font-weight: bold;">
-                @form.globalError.message
-                </p>
-            }
-            @helper.form(routes.Application.register) {
-                <div class="modal-header">
-                    <a href="@routes.Application.index()" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></a>
-                    <h1 class="text-center">Register</h1>
+    <div class="container-fluid center-block">
+        @if(form.hasGlobalErrors) {
+            <p style="color: red; font-weight: bold;">
+            @form.globalError.message
+            </p>
+        }
+        @helper.form(routes.Application.register) {
+            <div class="media">
+                <div class="media-body">
+                    <h3 class="text-center">Register</h3>
                 </div>
-                <div class="modal-body modal-body-touch">
-                    <div class="form-group">
-                        <input type="text" name="name" class="form-control input-lg" placeholder="Username">
-                    </div>
-                    <div class="form-group">
-                        <input type="text" name="email" class="form-control input-lg" placeholder="Email">
-                    </div>
-                    <div class="form-group">
-                        <input type="password" name="password" class="form-control input-lg" placeholder="Password">
-                    </div>
-                    <div class="form-group">
-                        <input type="password" name="passwordConfirm" class="form-control input-lg" placeholder="Confirm password">
-                    </div>
-                    <div class="form-group">
-                        <button class="btn btn-success btn-lg btn-block" type="submit">Register</button>
-                        <h4><span class="pull-right"><a href="@routes.Application.login()">Login</a></span></h4>
-                    </div>
+                <div class="media-right media-middle">
+                    <a href="@routes.Application.login()"><h3>&times;</h3></a>
                 </div>
-            }
-        </div>
+            </div>
+
+            <div class="form-group">
+                <input type="text" name="name" class="form-control input-lg" placeholder="Username">
+            </div>
+            <div class="form-group">
+                <input type="text" name="email" class="form-control input-lg" placeholder="Email">
+            </div>
+            <div class="form-group">
+                <input type="password" name="password" class="form-control input-lg" placeholder="Password">
+            </div>
+            <div class="form-group">
+                <input type="password" name="passwordConfirm" class="form-control input-lg" placeholder="Confirm password">
+            </div>
+            <div class="form-group">
+                <button class="btn btn-success btn-lg btn-block" type="submit">Register</button>
+            </div>
+        }
     </div>
-</div>
 }
