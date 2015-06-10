@@ -199,7 +199,7 @@ public class DBManager {
      */
     public List<Game> getFinishedGames(User user) {
         List<Game> games =  Game.find.where().ieq("finished", "1").or(Expr.ieq("user1id", user.getId().toString()),
-                Expr.ieq("user2id", user.getId().toString())).orderBy().desc("id").findList();
+                Expr.ieq("user2id", user.getId().toString())).orderBy("id").findList();
 
         for (Game g : games) {
             g = addConnections(g);
