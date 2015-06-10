@@ -141,4 +141,16 @@ public class Round extends Model {
     public void setEvaluateBegin(LocalDateTime evaluateBegin) {
         this.evaluateBegin = evaluateBegin;
     }
+
+    public Double getPrettyUser1Distance() {
+        return prettifyDistance(user1Distance);
+    }
+
+    public Double getPrettyUser2Distance() {
+        return prettifyDistance(user2Distance);
+    }
+
+    private Double prettifyDistance(Double distance) {
+        return ((long) (distance / 100.0)) / 10.0;
+    }
 }
