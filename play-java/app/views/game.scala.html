@@ -1,16 +1,24 @@
 @(pictureID: Long)(gameID: Long)
 @template("Game") {
+    <style>
+        form {
+            margin-top:-5px;
+        }
+        button {
+            height: 50px;
+        }
+    </style>
 } {
     <script type="text/javascript">
     var windowHeight= window.innerHeight || document.body.clientHeight;
-    var mapHeight=windowHeight-50;
+    var mapHeight=windowHeight-48;
 
     document.write ('<iframe src="@routes.Application.map(pictureID)" width="100%" height="'+mapHeight+'px" frameborder="0"></iframe>');
 
 
     </script>
     <form action="@routes.Application.gameAction(pictureID,gameID)" method="post">
-        <button type="submit" class="btn btn-default btn-block" id="countdown">Submit (60)</button>
+        <button type="submit" class="btn btn-primary btn-block" id="countdown">Submit (60)</button>
     </form>
 
     <script>
