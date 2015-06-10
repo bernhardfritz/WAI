@@ -1,17 +1,56 @@
 @template_with_navbar("Where Am I") {
+    <style>
+    html, body, #wrapper, #container, .container-fluid, #page-content-wrapper {
+    height: 100%;
+    }
 
+    section {
+    height: 40%;
+    width: 100%;
+    }
+
+    .outer {
+    display: table;
+    position: absolute;
+    height: 40%;
+    width: 100%;
+        padding-right:30px;
+    }
+
+    .middle {
+    display: table-cell;
+    vertical-align: middle;
+    }
+
+    .inner {
+    margin-left: auto;
+    margin-right: auto;
+    }
+    </style>
+
+    <script>
+    addToHomescreen({
+    displayPace:1140}); //minutes, before message is shown again (shows the annoying message only once a day)
+    </script>
 } {
-    <head>
-        <script>
-        addToHomescreen({
-        displayPace:1140}); //minutes, before message is shown again (shows the annoying message only once a day)
-        </script>
-    </head>
-    <body>
-    <div class="text-center">
-        <a href="@routes.Application.play_menu()" class="btn btn-lg btn-block btn-default">Play</a><br/>
-        <a href="@routes.Application.upload()" class="btn btn-lg btn-block btn-default">Upload</a><br/>
-        <a href="#" class="btn btn-lg btn-block btn-default">Statistics</a>
-    </div>
-    </body>
+    <section>
+        <div class="outer">
+            <a href="@routes.Application.play_menu()" class="btn btn-lg btn-success middle">
+                <div class="inner">
+                    Play <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                </div>
+            </a>
+        </div>
+    </section>
+    <br>
+    <br>
+    <section>
+        <div class="outer">
+            <a href="@routes.Application.upload()" class="btn btn-lg btn-warning middle">
+                <div class="inner">
+                    Upload <span class="glyphicon glyphicon-open" aria-hidden="true"></span>
+                </div>
+            </a>
+        </div>
+    </section>
 }

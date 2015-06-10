@@ -33,13 +33,13 @@
             </div>
 
                 <div class="btn-group btn-group-justified" role="group" aria-label="..." data-toggle="buttons">
-                    <label class="btn btn-primary active" onclick="button1(); return false;">
+                    <label class="btn btn-info active" onclick="button1(); return false;">
                         <input type="radio" autocomplete="off" checked> Games
                     </label>
-                    <label class="btn btn-primary" onclick="button2(); return false;">
+                    <label class="btn btn-info" onclick="button2(); return false;">
                         <input type="radio" autocomplete="off"> Pending
                     </label>
-                    <label class="btn btn-primary" onclick="button3(); return false;">
+                    <label class="btn btn-info" onclick="button3(); return false;">
                         <input type="radio" autocomplete="off"> Finished
                     </label>
                 </div>
@@ -60,46 +60,50 @@
             <div class="carousel-inner" role="listbox">
                 <div class="item active">
                     <br/>
-                    @if(readyToPlay.length==0) {
-                        <h4> <p class="text-danger"><strong>No Games</strong></p></h4>
-                    }
                     <div class="list-group">
-                    @for(readyToPlayGame<-readyToPlay) {
-                        @if(readyToPlayGame.getUser2.getName().equals(session.get("username"))){
-                            <h4><p class="text-default"><strong>@readyToPlayGame.getUser1.getName</strong> (Round @readyToPlayGame.getRound)</p><a href="@routes.Application.game(readyToPlayGame.getId())" class="list-group-item btn btn-success"> <span class="glyphicon glyphicon-play"> Play</span></a><br><br></h4>
-                        }else{
-                            <h4><p class="text-default"><strong>@readyToPlayGame.getUser2.getName </strong>(Round @readyToPlayGame.getRound)</p><a href="@routes.Application.game(readyToPlayGame.getId())" class="list-group-item  btn btn-success"><span class="glyphicon glyphicon-play"> Play</span></a><br><br></h4>
-                            }
-                    }
-                        <div class="col-lg-4">
-                            <div class="bs-component">
-                                <ul class="pager">
-                                    <li class="previous"><a href="@routes.Application.index()">&larr; back</a></li>
-                                </ul>
+                        @if(readyToPlay.length==0) {
+                            <h4> <p class="text-danger"><strong>No Games</strong></p></h4>
+                        }
+                        <div class="row">
+                            <div class="col-xs-12">
+                                @for(readyToPlayGame<-readyToPlay) {
+                                    <div class="panel panel-default">
+                                        <div class="panel-body">
+                                            @if(readyToPlayGame.getUser2.getName().equals(session.get("username"))){
+                                                <div class="col-xs-10"><h4><strong>@readyToPlayGame.getUser1.getName</strong> (Round @readyToPlayGame.getRound)</h4></div>
+                                                <div class="col-xs-2"><a href="@routes.Application.game(readyToPlayGame.getId())" class="list-group-item btn btn-success">Play <span class="glyphicon glyphicon-play"></span></a></div>
+                                            }else{
+                                                <div class="col-xs-10"><h4><strong>@readyToPlayGame.getUser2.getName</strong> (Round @readyToPlayGame.getRound)</h4></div>
+                                                <div class="col-xs-2"><a href="@routes.Application.game(readyToPlayGame.getId())" class="list-group-item btn btn-success">Play <span class="glyphicon glyphicon-play"></span></a></div>
+                                            }
+                                        </div>
+                                    </div>
+                                }
                             </div>
                         </div>
-                </div>
                     </div>
+                </div>
                 <div class="item">
                     <br/>
                     <div class="list-group">
                         @if(pending.length==0) {
                             <h4><p class="text-danger"><strong>No Pending Games</strong></p></h4>
                         }
-                        <div class="list-group">
-                        @for(pendingGame<-pending) {
-                            @if(pendingGame.getUser2.getName().equals(session.get("username"))){
-                                <h4><p class="text-default"><strong>@pendingGame.getUser1.getName</strong> (Round @pendingGame.getRound)</p><a href="#" class=" disabled list-group-item btn btn-default"> <span class="glyphicon glyphicon-pause"> Wait</span></a><br><br></h4>
-                            }else{
-                                <h4><p class="text-default"><strong>@pendingGame.getUser2.getName</strong> (Round @pendingGame.getRound)</p><a href="#" class="disabled list-group-item btn btn-default"> <span class="glyphicon glyphicon-pause"> Wait</span></a><br><br></h4>
-                            }
-                        }
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="bs-component">
-                                <ul class="pager">
-                                    <li class="previous"><a href="@routes.Application.index()">&larr; back</a></li>
-                                </ul>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                @for(pendingGame<-pending) {
+                                    <div class="panel panel-default">
+                                        <div class="panel-body">
+                                            @if(pendingGame.getUser2.getName().equals(session.get("username"))){
+                                                <div class="col-xs-10"><h4><strong>@pendingGame.getUser1.getName</strong> (Round @pendingGame.getRound)</h4></div>
+                                                <div class="col-xs-2"><a href="#" class=" disabled list-group-item btn btn-default">Wait <span class="glyphicon glyphicon-pause"></span></a></div>
+                                            }else{
+                                                <div class="col-xs-10"><h4><strong>@pendingGame.getUser2.getName</strong> (Round @pendingGame.getRound)</h4></div>
+                                                <div class="col-xs-2"><a href="#" class=" disabled list-group-item btn btn-default">Wait <span class="glyphicon glyphicon-pause"></span></a></div>
+                                            }
+                                        </div>
+                                    </div>
+                                }
                             </div>
                         </div>
                     </div>
@@ -110,32 +114,37 @@
                         @if(finished.length==0) {
                             <h4><p class="text-danger"><strong>No Finished Games</strong></p></h4>
                         }
-                        <div class="list-group">
-                            @for(finishedGame<-finished) {
-                                @if(finishedGame.getUser1.getName().equals(session.get("username"))){
-                                    @if(finishedGame.getWinner().getName().equals(session.get("username"))){
-                                    <h4><p class="text-success"><strong>@finishedGame.getUser2.getName</strong> (You Won)</p><a href="@routes.Application.addGameMenu(finishedGame.getUser2.getName)" class="list-group-item btn btn-default"> <span class="glyphicon glyphicon-repeat"> Revanche</span></a><br><br></h4>
-                                        }else{
-                                    <h4><p class="text-danger"><strong>@finishedGame.getUser2.getName</strong> (You Lost)</p><a href="@routes.Application.addGameMenu(finishedGame.getUser2.getName)" class="list-group-item btn btn-default"> <span class="glyphicon glyphicon-repeat"> Revanche</span></a><br><br></h4>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                @for(finishedGame<-finished) {
+                                    <div class="panel panel-default">
+                                        <div class="panel-body">
+                                            @if(finishedGame.getUser1.getName().equals(session.get("username"))){
+                                                @if(finishedGame.getWinner().getName().equals(session.get("username"))){
+                                                    <div class="col-xs-10"><h4 class="text-success"><strong>@finishedGame.getUser2.getName</strong> (You Won)</h4></div>
+                                                    <div class="col-xs-2"><a href="@routes.Application.addGameMenu(finishedGame.getUser1.getName)" class="list-group-item btn btn-default">Revanche <span class="glyphicon glyphicon-repeat"></span></a></div>
+                                                } else{
+                                                    <div class="col-xs-10"><h4 class="text-success"><strong>@finishedGame.getUser2.getName</strong> (You Lost)</h4></div>
+                                                    <div class="col-xs-2"><a href="@routes.Application.addGameMenu(finishedGame.getUser1.getName)" class="list-group-item btn btn-default">Revanche <span class="glyphicon glyphicon-repeat"></span></a></div>
+                                                }
+                                            }else{
+                                                @if(finishedGame.getWinner().getName().equals(session.get("username"))){
+                                                    <div class="col-xs-10"><h4 class="text-success"><strong>@finishedGame.getUser1.getName</strong> (You Won)</h4></div>
+                                                    <div class="col-xs-2"><a href="@routes.Application.addGameMenu(finishedGame.getUser2.getName)" class="list-group-item btn btn-default">Revanche <span class="glyphicon glyphicon-repeat"></span></a></div>
+                                                } else{
+                                                    <div class="col-xs-10"><h4 class="text-success"><strong>@finishedGame.getUser1.getName</strong> (You Lost)</h4></div>
+                                                    <div class="col-xs-2"><a href="@routes.Application.addGameMenu(finishedGame.getUser2.getName)" class="list-group-item btn btn-default">Revanche <span class="glyphicon glyphicon-repeat"></span></a></div>
+                                                }
+                                            }
+                                        </div>
+                                    </div>
                                 }
-                                }else{
-                                    @if(finishedGame.getWinner().getName().equals(session.get("username"))){
-                                        <h4><p class="text-success"><strong>@finishedGame.getUser1.getName</strong> (You Won)</p><a href="@routes.Application.addGameMenu(finishedGame.getUser1.getName)" class="list-group-item btn btn-default"> <span class="glyphicon glyphicon-repeat"> Revanche</span></a><br><br></h4>
-                                    }else{
-                                        <h4><p class="text-danger"><strong>@finishedGame.getUser1.getName</strong> (You Lost)</p><a href="@routes.Application.addGameMenu(finishedGame.getUser1.getName)" class="list-group-item btn btn-default"> <span class="glyphicon glyphicon-repeat"> Revanche</span></a><br><br></h4>
-                                    }
-                                }
-                            }
-                    <div class="col-lg-4">
-                        <div class="bs-component">
-                            <ul class="pager">
-                                <li class="previous"><a href="@routes.Application.index()">&larr; back</a></li>
-                            </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
+    <a href="@routes.Application.index()" class="btn btn-default">&larr; back</a>
 }

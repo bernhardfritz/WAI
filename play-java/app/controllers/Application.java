@@ -149,7 +149,7 @@ public class Application extends Controller {
      * @return the blank template page for previewing reasons
      */
     public static Result blank() {
-        return ok(blank.render("Blank",null,null));
+        return ok(blank.render("Blank", null, null));
     }
 
     /**
@@ -234,7 +234,7 @@ public class Application extends Controller {
         else{
             changedOrNot=2;
         }
-        return ok(changePassword.render("",changedOrNot));
+        return ok(changePassword.render("", changedOrNot));
     }
 
     /**
@@ -301,7 +301,7 @@ public class Application extends Controller {
             System.out.println(token);
             System.out.println(dbManager.getTokenFromEmail(email).getTokenString());
         }
-        return ok(forgotPassword.render(i,email));
+        return ok(forgotPassword.render(i, email));
     }
 
     /**
@@ -523,7 +523,7 @@ public class Application extends Controller {
      */
     @Security.Authenticated(Secured.class)
     public static Result play_menu() {
-        return ok(play_menu.render(dbManager.getReadyUnfinishedGames(getCurrentUser()), dbManager.getUnreadyUnfinishedGames((getCurrentUser())), dbManager.getFinishedGames(getCurrentUser(),10)));
+        return ok(play_menu.render(dbManager.getReadyUnfinishedGames(getCurrentUser()), dbManager.getUnreadyUnfinishedGames((getCurrentUser())), dbManager.getFinishedGames(getCurrentUser(), 10)));
     }
 
     public static Result practise() {
