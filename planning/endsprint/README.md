@@ -16,6 +16,8 @@ Wenn ein Task abgeschlossen ist, einfach in WAI/planning/endsprint/README.md ein
   - [x] Nachdem man einen Freund bei search_user hinzufügt, sollte auf friends redirected werden
   - [x] Nachdem ein Spiel bei search_user begonnen wurde, sollte auf play_menu redirected werden
 - [x] Füge deine wichtigsten Funktionen in die Sidebar ein
+- [ ] Bei Account ein bisschen bei beide Seiten des grauen Kastens einrücken
+- [ ] Username und Email linksbündig machen
 
 ## Philipp
 - [x] Überarbeite/Vereinfache dein resultGame damit der richtige User rot bzw. grün dargestellt wird
