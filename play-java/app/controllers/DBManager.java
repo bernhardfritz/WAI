@@ -7,6 +7,7 @@ import play.libs.Yaml;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.beans.Expression;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -932,9 +933,9 @@ public class DBManager {
      * @param searchString
      * @return A list of all users with username like "%searchString%".
      */
-    public List<User> findUser(String searchString) {
+    public List<User> findUser(String searchString, User currentUser) {
         String name = searchString.toLowerCase() + "%";
-        return User.find.where().like("name", name).findList();
+        return User.find.where().like("name", name).not(Expr.ieq("name", currentUser.getName())).findList();
     }
 
     /**
