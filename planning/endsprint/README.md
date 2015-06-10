@@ -26,6 +26,7 @@ Wenn ein Task abgeschlossen ist, einfach in WAI/planning/endsprint/README.md ein
   - [ ] Bei Account ein bisschen bei beiden Seiten des grauen Kastens einrücken (probier container)
   - [ ] Username und Email linksbündig machen
   - [ ] Der Inhalt des Modal sollte auch linksbündig sein
+- [ ] Überarbeite send_email. Schaut im Moment ein wenig blank aus. Machs vielleicht so ähnlich wie Forgot Password. Von mir aus auch mit grauem Kasten.
 - [ ] Funktioniert das Rücksetzen des Passworts bereits?
 
 ## Philipp
