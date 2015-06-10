@@ -1,19 +1,13 @@
 @(sentornot: Boolean)(email: String)
-@template_with_navbar("email sent") {
+@template_with_navbar("Email sent") {
 
 } {
-@if(sentornot==true){
-<h3>Successfully sent to:  <em>@email</em></h3>
-}else {
-    <h3>An error occured, make sure you enter a real e-mail and fill all textboxes</h3>
-}
-    <div class="col-lg-4">
-        <div class="bs-component">
-            <ul class="pager">
-                <li class="previous"><a href="@routes.Application.send_email()">&larr; back</a></li>
-                <li class="next"><a href="@routes.Application.play_menu()">Main menu &rarr;</a></li>
-            </ul>
-        </div>
+    <div class="text-center">
+    @if(sentornot==true){
+        <h3>Successfully sent to:  <em>@email</em></h3>
+    }else {
+        <h3>An error occured, make sure you enter a real e-mail and fill all textboxes</h3>
+    }
     </div>
-
+    <a href="@routes.Application.send_email()" class="btn btn-default">&larr; back</a>
 }
