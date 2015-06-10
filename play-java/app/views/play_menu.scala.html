@@ -20,17 +20,41 @@
         <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
             <!— Indicators —>
 
-            <div class="btn-group btn-group-justified" role="group" aria-label="...">
+            <div class="btn-group btn-group-justified hidden" role="group" aria-label="...">
                 <div class="btn-group" role="group">
-                    <button data-target="#myCarousel" data-slide-to="0" type="button" class="btn btn-primary">Games</button>
+                    <button data-target="#myCarousel" data-slide-to="0" type="button" id="button1" class="btn btn-primary">Games</button>
                 </div>
                 <div class="btn-group" role="group">
-                    <button data-target="#myCarousel" data-slide-to="1" type="button" class="btn btn-primary">Pending</button>
+                    <button data-target="#myCarousel" data-slide-to="1" type="button" id="button2" class="btn btn-primary">Pending</button>
                 </div>
                 <div class="btn-group" role="group">
-                    <button data-target="#myCarousel" data-slide-to="2" type="button" class="btn btn-primary">Finished</button>
+                    <button data-target="#myCarousel" data-slide-to="2" type="button" id="button3" class="btn btn-primary">Finished</button>
                 </div>
             </div>
+
+                <div class="btn-group btn-group-justified" role="group" aria-label="..." data-toggle="buttons">
+                    <label class="btn btn-primary active" onclick="button1(); return false;">
+                        <input type="radio" autocomplete="off" checked> Games
+                    </label>
+                    <label class="btn btn-primary" onclick="button2(); return false;">
+                        <input type="radio" autocomplete="off"> Pending
+                    </label>
+                    <label class="btn btn-primary" onclick="button3(); return false;">
+                        <input type="radio" autocomplete="off"> Finished
+                    </label>
+                </div>
+
+                <script>
+                    function button1() {
+                        $("#button1" ).click();
+                    }
+                    function button2() {
+                        $("#button2" ).click();
+                    }
+                    function button3() {
+                        $("#button3" ).click();
+                    }
+                </script>
 
             <!— Wrapper for slides —>
             <div class="carousel-inner" role="listbox">
