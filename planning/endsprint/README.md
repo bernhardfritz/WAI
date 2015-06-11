@@ -12,6 +12,7 @@ Wenn ein Task abgeschlossen ist, einfach in WAI/planning/endsprint/README.md ein
   - [x] Überarbeite register
   - [ ] result sieht noch nicht fertig aus
   - [ ] result_map muss noch fertig implementiert werden (-> LatLng Objekte)
+- [x] Verwendung von Geolocation sollte beim Uploaden von Bildern möglich sein
 - [ ] Implementiere UnitTests
   - [ ] UnitTest für die Distanzberechnung (Innsbruck->Wien ca. 500km)
 
