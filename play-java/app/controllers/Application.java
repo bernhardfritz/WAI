@@ -494,11 +494,7 @@ public class Application extends Controller {
      * @return
      */
     public static Result map(long id) {
-        if (id == 0L) {
-            return ok(map.render(0L,0,0,getLatLng()));
-        }
-        Picture p = dbManager.getAcceptedPicture(id);
-        return ok(map.render(id, p.getWidth(), p.getHeight(), getLatLng()));
+        return ok(map.render(id, getLatLng()));
     }
 
     /**
