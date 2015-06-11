@@ -32,6 +32,7 @@ Wenn ein Task abgeschlossen ist, einfach in WAI/planning/endsprint/README.md ein
 
 ## Philipp
 - [x] Überarbeite/Vereinfache dein resultGame damit der richtige User rot bzw. grün dargestellt wird
+- [ ] Im Moment sind im Result beide User grün/rot. Es sollte aber der Gewinner grün und der Verlierer rot sein. Der Name des Spielers sollte nicht ausgeschrieben werden sondern einfach mit "You" ersetzt werden.
 - [ ] Implementiere UnitTests
   - [ ] UnitTest für deinen PictureManager. Schau ob das Bild nach der Skalierung wirklich die richtige Größe hat.
 
