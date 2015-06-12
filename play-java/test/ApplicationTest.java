@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import controllers.Application;
+import controllers.DBManager;
+import models.LatLng;
 import org.junit.*;
 
 import play.mvc.*;
@@ -40,6 +43,15 @@ public class ApplicationTest {
         assertThat(contentType(html)).isEqualTo("text/html");
         assertThat(contentAsString(html)).contains("Your new application is ready.");
     }*/
+
+    @Test
+    public void checkGetDistance() {
+        LatLng l1 = new LatLng(47.259659, 11.400375); // Innsbruck
+        LatLng l2 = new LatLng(48.210033, 16.363449); // Vienna
+        double distance = Application.getDistance(l1,l2) / 1000.0; //distance in km
+        assertThat(distance).isGreaterThan(380.0);
+        assertThat(distance).isLessThan(390.0);
+    }
 
 
 }

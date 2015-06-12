@@ -75,7 +75,7 @@ public class Application extends Controller {
      * @return
      */
     public static Result addFriend(String user){
-        dbManager.saveFriend(getCurrentUser(),dbManager.getUser(user));
+        dbManager.saveFriend(getCurrentUser(), dbManager.getUser(user));
         return redirect(routes.Application.friends());
     }
 
@@ -372,6 +372,22 @@ public class Application extends Controller {
         return resultGame(id,gameID);
     }
 
+    public static Double getDistance(LatLng l1, LatLng l2) {
+        double R = 6378137; // Earth’s mean radius in meter
+        double lat1 = Math.toRadians(l1.getLat());
+        double lng1 = Math.toRadians(l1.getLng());
+        double lat2 = Math.toRadians(l2.getLat());
+        double lng2 = Math.toRadians(l2.getLng());
+        double dLat = lat2 - lat1;
+        double dLong = lng2 - lng1;
+        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(lat1) * Math.cos(lat2) *
+                        Math.sin(dLong / 2) * Math.sin(dLong / 2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        double d = R * c;
+        return d; // returns the distance in m
+    }
+
     /**
      * The formula to calculate the distance between two points (point from picture and from session)
      * @param picture
@@ -379,19 +395,7 @@ public class Application extends Controller {
      */
     public static Double getDistance(Picture picture) {
         if (getLat() != null && getLng() != null) {
-            double R = 6378137; // Earth’s mean radius in meter
-            double lat1 = Math.toRadians(picture.getLat());
-            double lng1 = Math.toRadians(picture.getLng());
-            double lat2 = Math.toRadians(getLat());
-            double lng2 = Math.toRadians(getLng());
-            double dLat = lat2 - lat1;
-            double dLong = lng2 - lng1;
-            double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-                    Math.cos(lat1) * Math.cos(lat2) *
-                            Math.sin(dLong / 2) * Math.sin(dLong / 2);
-            double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-            double d = R * c;
-            return d; // returns the distance in m
+            return getDistance(new LatLng(picture.getLat(),picture.getLng()),new LatLng(getLat(),getLng()));
         }
         return null;
     }
