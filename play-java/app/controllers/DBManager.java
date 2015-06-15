@@ -464,6 +464,24 @@ public class DBManager {
     }
 
     /**
+     * Get all pictures of a user between start and end.
+     * @param user
+     * @param start
+     * @param end
+     * @return All pictures of a user between start and end.
+     */
+    public List<Picture> getPictureRange(User user, Long start, Long end) {
+        List<Picture> pictures = getPictures(user);
+        start--;
+
+        if (start >= 0 && end < pictures.size()) {
+            return pictures.subList(start.intValue(), end.intValue());
+        }
+
+        return pictures;
+    }
+
+    /**
      * Get the number of all accepted pictures in the DB.
      * @return The number of all accepted pictures in the DB.
      */
@@ -620,6 +638,15 @@ public class DBManager {
         }
 
         return picture;
+    }
+
+    /**
+     * Get the number of all pictures of a user.
+     * @param user
+     * @return The number of all pictures of a user.
+     */
+    public int getPictureCount(User user) {
+        return getPictures(user).size();
     }
 
     /**
