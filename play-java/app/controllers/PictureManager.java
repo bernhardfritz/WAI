@@ -8,6 +8,9 @@ import java.io.IOException;
 
 public class PictureManager {
 
+    private PictureManager(){
+    }
+
     private static class SingletonHelper {
         private static final PictureManager INSTANCE = new PictureManager();
     }

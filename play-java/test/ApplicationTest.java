@@ -1,3 +1,8 @@
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -6,6 +11,7 @@ import java.util.Map;
 import com.fasterxml.jackson.databind.JsonNode;
 import controllers.Application;
 import controllers.DBManager;
+import controllers.PictureManager;
 import models.LatLng;
 import org.junit.*;
 
@@ -18,6 +24,8 @@ import play.i18n.Lang;
 import play.libs.F;
 import play.libs.F.*;
 import play.twirl.api.Content;
+
+import javax.imageio.ImageIO;
 
 import static play.test.Helpers.*;
 import static org.fest.assertions.Assertions.*;
@@ -52,6 +60,26 @@ public class ApplicationTest {
         assertThat(distance).isGreaterThan(380.0);
         assertThat(distance).isLessThan(390.0);
     }
+
+
+    @Test
+    public void checkCreateThumbnail() {
+        BufferedImage img1=null;
+        BufferedImage img2=null;
+        try {
+            img1= ImageIO.read(new File("../../public/images/smiley1.jpg"));
+            img2= ImageIO.read(new File("../../public/images/foto2.jpg"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        assertThat(PictureManager.getInstance().createThumbnail(img1, 100).getHeight()).isEqualTo(100);
+        assertThat(PictureManager.getInstance().createThumbnail(img2,100).getHeight()).isEqualTo(100);
+
+        assertThat(PictureManager.getInstance().createThumbnail(img1, 10).getHeight()).isEqualTo(10);
+        assertThat(PictureManager.getInstance().createThumbnail(img2,10).getHeight()).isEqualTo(10);
+    }
+
 
 
 }
