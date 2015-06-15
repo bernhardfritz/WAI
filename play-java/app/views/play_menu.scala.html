@@ -146,14 +146,14 @@
                                                         <h4 class="text-success"><strong>@finishedGame.getUser2.getName</strong><br>(You won)</h4>
                                                     </div>
                                                     <div class="media-right media-middle">
-                                                        <a href="@routes.Application.addGameMenu(finishedGame.getUser1.getName)" class="list-group-item btn btn-success">Revanche <span class="glyphicon glyphicon-repeat"></span></a>
+                                                        <a href="@routes.Application.addGameMenu(finishedGame.getUser2.getName)" class="list-group-item btn btn-success">Revanche <span class="glyphicon glyphicon-repeat"></span></a>
                                                     </div>
                                                 } else{
                                                     <div class="media-body">
                                                         <h4 class="text-danger"><strong>@finishedGame.getUser2.getName</strong><br>(You lost)</h4>
                                                     </div>
                                                     <div class="media-right media-middle">
-                                                        <a href="@routes.Application.addGameMenu(finishedGame.getUser1.getName)" class="list-group-item btn btn-success">Revanche <span class="glyphicon glyphicon-repeat"></span></a>
+                                                        <a href="@routes.Application.addGameMenu(finishedGame.getUser2.getName)" class="list-group-item btn btn-success">Revanche <span class="glyphicon glyphicon-repeat"></span></a>
                                                     </div>
                                                 }
                                             }else{
@@ -162,14 +162,14 @@
                                                         <h4 class="text-success"><strong>@finishedGame.getUser1.getName</strong><br>(You won)</h4>
                                                     </div>
                                                     <div class="media-right media-middle">
-                                                        <a href="@routes.Application.addGameMenu(finishedGame.getUser2.getName)" class="list-group-item btn btn-success">Revanche <span class="glyphicon glyphicon-repeat"></span></a>
+                                                        <a href="@routes.Application.addGameMenu(finishedGame.getUser1.getName)" class="list-group-item btn btn-success">Revanche <span class="glyphicon glyphicon-repeat"></span></a>
                                                     </div>
                                                 } else{
                                                     <div class="media-body">
                                                         <h4 class="text-danger"><strong>@finishedGame.getUser1.getName</strong><br>(You lost)</h4>
                                                     </div>
                                                     <div class="media-right media-middle">
-                                                        <a href="@routes.Application.addGameMenu(finishedGame.getUser2.getName)" class="list-group-item btn btn-success">Revanche <span class="glyphicon glyphicon-repeat"></span></a>
+                                                        <a href="@routes.Application.addGameMenu(finishedGame.getUser1.getName)" class="list-group-item btn btn-success">Revanche <span class="glyphicon glyphicon-repeat"></span></a>
                                                     </div>
                                                 }
                                             }

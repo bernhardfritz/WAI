@@ -33,12 +33,12 @@
                 @if(round.getPrettyUser1Distance() != null || round.getPrettyUser2Distance() != null) {
                 <tr>
                     @if(round.getWinner==null){
-                        <td>@game.getUser1.getName : @if(round.getPrettyUser1Distance() == null) {Not played } else {
+                        <td>@if(game.getUser1.getName().equals(session.get("username"))){You}else{@game.getUser1.getName()} : @if(round.getPrettyUser1Distance() == null) {Not played } else {
                         @if(round.getUser1Distance() == (-1)) {Failed! } else {
                             @round.getPrettyUser1Distance()
                             km }
                     }</td>
-                    <td>@game.getUser2.getName : @if(round.getPrettyUser2Distance() == null) {Not played } else {
+                    <td>@if(game.getUser2.getName().equals(session.get("username"))){You}else{@game.getUser2.getName()} : @if(round.getPrettyUser2Distance() == null) {Not played } else {
                             @if(round.getUser2Distance() == (-1)) {Failed! } else {
                                 @round.getPrettyUser2Distance()
                                 km}</td>
@@ -47,23 +47,23 @@
 
                     }else{
                         @if(round.getWinner.getName.equals((session.get("username")))){
-                            <td class="text-success">@game.getUser1.getName : @if(round.getPrettyUser1Distance() == null) {Not played } else {
+                            <td class="text-success">@if(game.getUser1.getName().equals(session.get("username"))){You}else{@game.getUser1.getName()} : @if(round.getPrettyUser1Distance() == null) {Not played } else {
                                 @if(round.getUser1Distance() == (-1)) {Failed! } else {
                                     @round.getPrettyUser1Distance()
                                     km }
                             }</td>
-                            <td class="text-success">@game.getUser2.getName : @if(round.getPrettyUser2Distance() == null) {Not played } else {
+                            <td class="text-success">@if(game.getUser2.getName().equals(session.get("username"))){You}else{@game.getUser2.getName()} : @if(round.getPrettyUser2Distance() == null) {Not played } else {
                                 @if(round.getUser2Distance() == (-1)) {Failed! } else {
                                     @round.getPrettyUser2Distance()
                                     km}</td>
                         }
                         }else{
-                            <td class="text-danger">@game.getUser1.getName : @if(round.getPrettyUser1Distance() == null) {Not played } else {
+                            <td class="text-danger">@if(game.getUser1.getName().equals(session.get("username"))){You}else{@game.getUser1.getName()} : @if(round.getPrettyUser1Distance() == null) {Not played } else {
                                 @if(round.getUser1Distance() == (-1)) {Failed! } else {
                                     @round.getPrettyUser1Distance()
                                     km }
                             }</td>
-                            <td class="text-danger">@game.getUser2.getName : @if(round.getPrettyUser2Distance() == null) {Not played } else {
+                            <td class="text-danger">@if(game.getUser2.getName().equals(session.get("username"))){You}else{@game.getUser2.getName()} : @if(round.getPrettyUser2Distance() == null) {Not played } else {
                                 @if(round.getUser2Distance() == (-1)) {Failed! } else {
                                     @round.getPrettyUser2Distance()
                                     km}</td>
@@ -81,6 +81,22 @@
                 }else{
                     <h3><p class="text-danger text-center">You Lose!</p></h3>
                 }
+            }else{
+                @if(game.getUser1().getName().equals(session.get("username"))) {
+                    @if(DBManager.getInstance().getWonRounds(game, game.getUser1) > DBManager.getInstance().getWonRounds(game, game.getUser2)) {
+                        <h3><p class="text-success text-center">@(DBManager.getInstance().getWonRounds(game,game.getUser1)) : @(DBManager.getInstance().getWonRounds(game,game.getUser2))</p></h3>
+                    } else {
+                        <h3><p class="text-danger text-center">@(DBManager.getInstance().getWonRounds(game,game.getUser1)) : @(DBManager.getInstance().getWonRounds(game,game.getUser2))</p></h3>
+                    }
+                }else{
+                    @if(DBManager.getInstance().getWonRounds(game, game.getUser1) > DBManager.getInstance().getWonRounds(game, game.getUser2)) {
+                        <h3><p class="text-danger text-center">@(DBManager.getInstance().getWonRounds(game,game.getUser1)) : @(DBManager.getInstance().getWonRounds(game,game.getUser2))</p></h3>
+                    } else {
+                        <h3><p class="text-success text-center">@(DBManager.getInstance().getWonRounds(game,game.getUser1)) : @(DBManager.getInstance().getWonRounds(game,game.getUser2))</p></h3>
+                    }
+
+                }
+
             }
 
             <div class="row">
