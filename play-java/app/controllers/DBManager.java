@@ -609,7 +609,7 @@ public class DBManager {
      * @return The play counter for a given picture.
      */
     public int getPlayCount(Picture picture) {
-        int count = 1;
+        int count = 0;
 
         for (Round r : getRounds(picture)) {
             if (r.getUser1Distance() != null) {
@@ -619,8 +619,6 @@ public class DBManager {
                 count++;
             }
         }
-
-        count = Math.max(1, count-1);
 
         return count;
     }
