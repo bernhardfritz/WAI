@@ -1,31 +1,9 @@
 @template_with_navbar("Where Am I") {
     <style>
-    html, body, #wrapper, #container, .container-fluid, #page-content-wrapper {
-    height: 100%;
-    }
-
-    section {
-    height: 40%;
-    width: 100%;
-    }
-
-    .outer {
-    display: table;
-    position: absolute;
-    height: 40%;
-    width: 100%;
-        padding-right:30px;
-    }
-
-    .middle {
-    display: table-cell;
-    vertical-align: middle;
-    }
-
-    .inner {
-    margin-left: auto;
-    margin-right: auto;
-    }
+        #asdf {
+            position:relative;
+            margin-top:20%;
+        }
     </style>
 
     <script>
@@ -33,24 +11,17 @@
     displayPace:1140}); //minutes, before message is shown again (shows the annoying message only once a day)
     </script>
 } {
-    <section>
-        <div class="outer">
-            <a href="@routes.Application.play_menu()" class="btn btn-lg btn-success middle">
-                <div class="inner">
-                    Play <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
-                </div>
-            </a>
+    <div class="text-center">
+        <img src="@routes.Assets.at("images/logo.png")" width="256" height="256"/>
+    </div>
+    <div id="asdf">
+        <div class="row">
+            <div class="col-xs-6">
+                <a href="@routes.Application.play_menu()" class="btn btn-lg btn-block btn-success middle">Play</a>
+            </div>
+            <div class="col-xs-6">
+                <a href="@routes.Application.upload()" class="btn btn-lg btn-block btn-warning middle">Upload</a>
+            </div>
         </div>
-    </section>
-    <br>
-    <br>
-    <section>
-        <div class="outer">
-            <a href="@routes.Application.upload()" class="btn btn-lg btn-warning middle">
-                <div class="inner">
-                    Upload <span class="glyphicon glyphicon-open" aria-hidden="true"></span>
-                </div>
-            </a>
-        </div>
-    </section>
+    </div>
 }

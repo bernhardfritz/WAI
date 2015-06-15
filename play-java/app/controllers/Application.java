@@ -459,7 +459,7 @@ public class Application extends Controller {
      * Main page
      * @return
      */
-    //@Security.Authenticated(Secured.class)
+    @Security.Authenticated(Secured.class)
     public static Result index() {
         return ok(index.render());
     }
