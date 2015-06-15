@@ -233,7 +233,10 @@ public class DBManager {
     public void onGameStart(Game game, User user) {
         Round round = getRounds(game).get(game.getRound() - 1);
 
-        round.setEvaluateBegin(LocalDateTime.now().plusSeconds(60));
+        if ((game.getUser1().equals(user) && round.getUser1Distance() == null) ||
+                game.getUser2().equals(user) && round.getUser2Distance() == null) {
+            round.setEvaluateBegin(LocalDateTime.now().plusSeconds(60));
+        }
 
         if (round.getUser1Distance() == null && round.getUser2Distance() == null) {
             round.setSecondPlayerBegin(LocalDateTime.now().plusSeconds(60));
@@ -289,12 +292,13 @@ public class DBManager {
         }
 
         Round round = getRounds(game).get(game.getRound() - 1);
-
-        if (user.equals(game.getUser1())) {
-            round.setUser1Distance(distance);
-        }
-        else if (user.equals(game.getUser2())) {
-            round.setUser2Distance(distance);
+        if (round.getEvaluateBegin().isAfter(LocalDateTime.now())) {
+            if (user.equals(game.getUser1())) {
+                round.setUser1Distance(distance);
+            }
+            else if (user.equals(game.getUser2())) {
+                round.setUser2Distance(distance);
+            }
         }
 
         round = roundWinnerCalculation(round, game);
