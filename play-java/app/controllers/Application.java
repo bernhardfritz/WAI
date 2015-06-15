@@ -811,6 +811,10 @@ public class Application extends Controller {
         }
     }
 
+    public static Result user_gallery(Integer currentpage) {
+        Pagination p = new Pagination(dbManager.getPictureCount(getCurrentUser()),10,currentpage);
+        return ok(user_gallery.render(p.getCurrentPageIndex(), p.getMaxPageIndex(), dbManager.getPictureRange(getCurrentUser(), p.getStartPageIndex(), p.getEndPageIndex())));
+    }
     /**
      * Displays a paginated table including all users
      * @param currentpage the current page index

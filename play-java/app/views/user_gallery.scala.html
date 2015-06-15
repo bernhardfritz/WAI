@@ -1,0 +1,54 @@
+@(currentpage: Integer)(maxpage: Integer)(pictures: List[Picture])
+@blank("User gallery"){
+    <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/bootstrap.min.css")">
+} {
+    <table class="table table-striped" data-url="x" data-toggle="table">
+        <thead>
+            <tr>
+                <th data-field="picture" data-halign="center" data-align="center">picture</th>
+                <th data-field="title" data-halign="left" data-align="left" data-sortable="true">title</th>
+                <th data-field="gamecount" data-halign="left" data-align="left" data-sortable="true">gamecount</th>
+                <th data-field="email" data-halign="left" data-align="left" data-sortable="true">average distance</th>
+                <th data-field="active" data-halign="center" data-align="center">active</th>
+            </tr>
+        </thead>
+        @for(picture<-pictures) {
+            <tr>
+                <td><img src="@routes.Application.thumbnail(picture.getId())" width="50px" height="50px"/></td>
+                <td>@picture.getTitle</td>
+                <td>@DBManager.getInstance().getPlayCount(picture)</td>
+                <td>@DBManager.getInstance().getAverageDistance(picture)</td>
+                <td>
+                @if(picture.isAccepted()) {
+                    <p class="text-success">Yes</p>
+                } else {
+                    <p class="text-danger">No</p>
+                }
+                </td>
+            </tr>
+        }
+    </table>
+    <br>
+    <div class="text-center">
+        <ul class="pagination">
+            @if(currentpage==1) {
+                <li class="disabled"><a href="#">&laquo;</a></li>
+            } else {
+                <li><a href="@routes.Application.user_gallery(currentpage-1)">&laquo;</a></li>
+            }
+            @for(i <- 1 to maxpage) {
+                @if(i==currentpage) {
+                    <li class="active">
+                    } else {
+                    <li>
+                    }
+                <a href="@routes.Application.user_gallery(i)">@i</a></li>
+            }
+            @if(currentpage==maxpage) {
+                <li class="disabled"><a href="#">&raquo;</a></li>
+            } else {
+                <li><a href="@routes.Application.user_gallery(currentpage+1)">&raquo;</a></li>
+            }
+        </ul>
+    </div>
+}

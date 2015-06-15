@@ -52,6 +52,7 @@ GET         /thumbnail/:id                controllers.Application.thumbnail(id: 
 GET         /upload                       controllers.Application.upload()
 POST        /upload                       controllers.Application.uploadAction()
 GET         /toggle_user/:id              controllers.Application.toggleUser(id: Long)
+GET         /user_gallery                 controllers.Application.user_gallery(currentpage: Integer ?= 1)
 GET         /users                        controllers.Application.users(currentpage: Integer ?= 1)
 
 # Register
