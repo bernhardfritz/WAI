@@ -445,6 +445,21 @@ public class DBManager {
     }
 
     /**
+     * Get all updloaded pictures of a user.
+     * @param user
+     * @return All uploaded pictures of a user.
+     */
+    public List<Picture> getPictures(User user) {
+        List<Picture> pictures = Picture.find.where().ieq("create_user_id", user.getId().toString()).findList();
+
+        for (Picture p : pictures) {
+            p = addConnections(p);
+        }
+
+        return pictures;
+    }
+
+    /**
      * Get the number of all accepted pictures in the DB.
      * @return The number of all accepted pictures in the DB.
      */
@@ -542,18 +557,50 @@ public class DBManager {
     }
 
     /**
-     * Add missing object connections to a picture.
+     * Get the average saved distance for a given picture.
      * @param picture
-     * @return The picture with full object connectivity.
+     * @return The average saved distance for a given picture.
      */
-    private Picture addConnections(Picture picture) {
-        if (picture != null) {
-            if (picture.getCreateUserID() != null) {
-                picture.setCreateUser(getActiveUser(picture.getCreateUserID()));
+    public Double getAverageDistance(Picture picture) {
+        Double sum = 0.0;
+        int count = 1;
+
+        for (Round r : getRounds(picture)) {
+            if (r.getUser1Distance() != null && r.getUser1Distance() >= 0) {
+                sum += r.getUser1Distance();
+                count++;
+            }
+            if (r.getUser2Distance() != null && r.getUser2Distance() >= 0) {
+                sum += r.getUser2Distance();
+                count++;
             }
         }
 
-        return picture;
+        count = Math.max(1, count-1);
+
+        return sum / ((double) count);
+    }
+
+    /**
+     * Get the play counter for a given picture.
+     * @param picture
+     * @return The play counter for a given picture.
+     */
+    public int getPlayCount(Picture picture) {
+        int count = 1;
+
+        for (Round r : getRounds(picture)) {
+            if (r.getUser1Distance() != null) {
+                count++;
+            }
+            if (r.getUser2Distance() != null) {
+                count++;
+            }
+        }
+
+        count = Math.max(1, count-1);
+
+        return count;
     }
 
     /**
@@ -566,6 +613,21 @@ public class DBManager {
             long id = 1;
             id += Math.random() * getPictureCount();
             picture = getAcceptedPicture(id);
+        }
+
+        return picture;
+    }
+
+    /**
+     * Add missing object connections to a picture.
+     * @param picture
+     * @return The picture with full object connectivity.
+     */
+    private Picture addConnections(Picture picture) {
+        if (picture != null) {
+            if (picture.getCreateUserID() != null) {
+                picture.setCreateUser(getActiveUser(picture.getCreateUserID()));
+            }
         }
 
         return picture;
@@ -708,31 +770,6 @@ public class DBManager {
      */
     public List<Round> getAllRounds() {
         return Round.find.all();
-    }
-
-    /**
-     * Get the average saved distance for a given picture.
-     * @param picture
-     * @return The average saved distance for a given picture.
-     */
-    public Double getAverageDistance(Picture picture) {
-        Double sum = 0.0;
-        int count = 1;
-
-        for (Round r : getRounds(picture)) {
-            if (r.getUser1Distance() != null && r.getUser1Distance() >= 0) {
-                sum += r.getUser1Distance();
-                count++;
-            }
-            if (r.getUser2Distance() != null && r.getUser2Distance() >= 0) {
-                sum += r.getUser2Distance();
-                count++;
-            }
-        }
-
-        count = Math.max(1, count-1);
-
-        return sum / ((double) count);
     }
 
     /**

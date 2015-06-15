@@ -37,10 +37,10 @@ Wenn ein Task abgeschlossen ist, einfach in WAI/planning/endsprint/README.md ein
   - [ ] UnitTest für deinen PictureManager. Schau ob das Bild nach der Skalierung wirklich die richtige Größe hat.
 
 ## Mario
-- [ ] LatLng Objekte in Runde einbauen damit wir sie in der result_map verwenden können
+- [x] LatLng Objekte in Runde einbauen damit wir sie in der result_map verwenden können
 - [x] Es sollte nicht möglich sein mit sich selbst ein Spiel beginnen zu können. Bei search_user beispielsweise kann man sich selbst finden und mit sich selbst ein Spiel beginnen. Sich mit sich selbst zu befreunden geht zum Glück nicht :p
-- [ ] Verwende prettifyDistance damit Philipp seine Distanzen schön als km darstellen kann. Zur Berechnung sollte aber der exakte Wert verwendet werden.
-- [ ] Stelle sicher, dass admin-only Webseiten auch wirklich nur durch den Admin aufgerufen werden können
+- [x] Verwende prettifyDistance damit Philipp seine Distanzen schön als km darstellen kann. Zur Berechnung sollte aber der exakte Wert verwendet werden.
+- [x] Stelle sicher, dass admin-only Webseiten auch wirklich nur durch den Admin aufgerufen werden können
 - [ ] Implementiere UnitTests
   - [ ] Lass dir einige (min. 3) Testfälle für die Datenbank einfallen. Können auch Pseudo-Tests sein.
 - [ ] Habe Bug gefunden beim game. Probier aus dass du den counter bis auf 5 Sekunden runterlaufen lässt dann lädst du die Seite neu und gibst deinen Tipp bei z.B. 50 Sekunden ab. D.h. du hättest mehr als 60 Sekunden Zeit. Weiß nicht ob man das fixen kann, wenn es zu zeitaufwendig ist einfach weglassen.
