@@ -43,4 +43,4 @@ Wenn ein Task abgeschlossen ist, einfach in WAI/planning/endsprint/README.md ein
 - [x] Stelle sicher, dass admin-only Webseiten auch wirklich nur durch den Admin aufgerufen werden können
 - [ ] Implementiere UnitTests
   - [ ] Lass dir einige (min. 3) Testfälle für die Datenbank einfallen. Können auch Pseudo-Tests sein.
-- [ ] Habe Bug gefunden beim game. Probier aus dass du den counter bis auf 5 Sekunden runterlaufen lässt dann lädst du die Seite neu und gibst deinen Tipp bei z.B. 50 Sekunden ab. D.h. du hättest mehr als 60 Sekunden Zeit. Weiß nicht ob man das fixen kann, wenn es zu zeitaufwendig ist einfach weglassen.
+- [x] Habe Bug gefunden beim game. Probier aus dass du den counter bis auf 5 Sekunden runterlaufen lässt dann lädst du die Seite neu und gibst deinen Tipp bei z.B. 50 Sekunden ab. D.h. du hättest mehr als 60 Sekunden Zeit. Weiß nicht ob man das fixen kann, wenn es zu zeitaufwendig ist einfach weglassen.
