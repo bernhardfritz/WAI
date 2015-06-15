@@ -1,8 +1,13 @@
 @template_with_navbar("Where Am I") {
     <style>
+        html, body, #wrapper, #container, .container-fluid, #page-content-wrapper {
+            height: 100%;
+        }
         #asdf {
-            position:relative;
-            margin-top:20%;
+            position:absolute;
+            width:100%;
+            bottom:15px;
+            padding-right:30px;
         }
     </style>
 
@@ -12,15 +17,15 @@
     </script>
 } {
     <div class="text-center">
-        <img src="@routes.Assets.at("images/logo.png")" width="256" height="256"/>
+        <img src="@routes.Assets.at("images/logo.png")" width="232" height="232"/>
     </div>
     <div id="asdf">
         <div class="row">
             <div class="col-xs-6">
-                <a href="@routes.Application.play_menu()" class="btn btn-lg btn-block btn-success middle">Play</a>
+                <a href="@routes.Application.play_menu()" class="btn btn-lg btn-block btn-success middle">Play <span class="glyphicon glyphicon-play" aria-hidden="true"></span></a>
             </div>
             <div class="col-xs-6">
-                <a href="@routes.Application.upload()" class="btn btn-lg btn-block btn-warning middle">Upload</a>
+                <a href="@routes.Application.upload()" class="btn btn-lg btn-block btn-warning middle">Upload <span class="glyphicon glyphicon-open" aria-hidden="true"></span></a>
             </div>
         </div>
     </div>
