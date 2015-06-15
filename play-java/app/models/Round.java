@@ -31,6 +31,15 @@ public class Round extends Model {
 
     private LocalDateTime evaluateBegin;
 
+    private double user1Lat;
+    private double user1Lng;
+
+    private double user2Lat;
+    private double user2Lng;
+
+    private LatLng user1LatLng;
+    private LatLng user2LatLng;
+
     public Round(Game game, Picture picture) {
         this.gameID = game.getId();
         this.game = game;
@@ -43,6 +52,12 @@ public class Round extends Model {
         this.finished = false;
         this.secondPlayerBegin = null;
         this.evaluateBegin = null;
+        this.user1Lat = 0.0;
+        this.user1Lng = 0.0;
+        this.user2Lat = 0.0;
+        this.user2Lng = 0.0;
+        this.user1LatLng = null;
+        this.user2LatLng = null;
     }
 
     public static Finder<Long, Round> find = new Finder<Long, Round>(Long.class, Round.class);
@@ -156,5 +171,61 @@ public class Round extends Model {
         }
         
         return ((long) (distance / 100.0)) / 10.0;
+    }
+
+    public double getUser1Lat() {
+        return user1Lat;
+    }
+
+    public void setUser1Lat(double user1Lat) {
+        this.user1Lat = user1Lat;
+    }
+
+    public double getUser1Lng() {
+        return user1Lng;
+    }
+
+    public void setUser1Lng(double user1Lng) {
+        this.user1Lng = user1Lng;
+    }
+
+    public double getUser2Lat() {
+        return user2Lat;
+    }
+
+    public void setUser2Lat(double user2Lat) {
+        this.user2Lat = user2Lat;
+    }
+
+    public double getUser2Lng() {
+        return user2Lng;
+    }
+
+    public void setUser2Lng(double user2Lng) {
+        this.user2Lng = user2Lng;
+    }
+
+    public LatLng getUser1LatLng() {
+        return user1LatLng;
+    }
+
+    public void setUser1LatLng(LatLng user1LatLng) {
+        this.user1LatLng = user1LatLng;
+        if (user1LatLng != null) {
+            user1Lat = user1LatLng.getLat();
+            user1Lng = user1LatLng.getLng();
+        }
+    }
+
+    public LatLng getUser2LatLng() {
+        return user2LatLng;
+    }
+
+    public void setUser2LatLng(LatLng user2LatLng) {
+        this.user2LatLng = user2LatLng;
+        if (user2LatLng != null) {
+            user2Lat = user2LatLng.getLat();
+            user2Lng = user2LatLng.getLng();
+        }
     }
 }

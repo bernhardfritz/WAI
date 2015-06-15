@@ -682,11 +682,7 @@ public class DBManager {
     public List<Round> getRounds(Game game) {
         List<Round> rounds = Round.find.where().ieq("game_id", game.getId().toString()).orderBy("id").findList();
         for (Round r : rounds) {
-            r.setGame(game);
-            r.setPicture(getAcceptedPicture(r.getPictureID()));
-            if (r.getWinnerID() != null) {
-                r.setWinner(getActiveUser(r.getWinnerID()));
-            }
+            r = addConnections(r, game);
         }
 
         return rounds;
@@ -700,11 +696,7 @@ public class DBManager {
     public List<Round> getRounds(Picture picture) {
         List<Round> rounds = Round.find.where().ieq("picture_id", picture.getId().toString()).findList();
         for (Round r : rounds) {
-            r.setGame(getGame(r.getGameID()));
-            r.setPicture(picture);
-            if (r.getWinnerID() != null) {
-                r.setWinner(getActiveUser(r.getWinnerID()));
-            }
+            r = addConnections(r, getGame(r.getGameID()));
         }
 
         return rounds;
@@ -741,6 +733,28 @@ public class DBManager {
         count = Math.max(1, count-1);
 
         return sum / ((double) count);
+    }
+
+    /**
+     * Add missing object connections to a round.
+     * @param round
+     * @param game
+     * @return The round with full object connectivity.
+     */
+    private Round addConnections(Round round, Game game) {
+        round.setGame(game);
+        round.setPicture(getAcceptedPicture(round.getPictureID()));
+        if (round.getWinnerID() != null) {
+            round.setWinner(getActiveUser(round.getWinnerID()));
+        }
+        if (round.getUser1Lat() > 0 && round.getUser1Lng() > 0) {
+            round.setUser1LatLng(new LatLng(round.getUser1Lat(), round.getUser1Lng()));
+        }
+        if (round.getUser2Lat() > 0 && round.getUser2Lng() > 0) {
+            round.setUser2LatLng(new LatLng(round.getUser2Lat(), round.getUser2Lng()));
+        }
+
+        return round;
     }
 
 
