@@ -212,7 +212,7 @@ public class Application extends Controller {
      * @return the page to change the password
      */
     public static Result changePassword(String token){
-        return ok(changePassword.render(token,0));
+        return ok(changePassword.render(token, 0));
     }
 
     /**
@@ -294,7 +294,7 @@ public class Application extends Controller {
             Random rand = new Random();
             int length = rand.nextInt(15)+20;
             String token = randString.randomAlphanumeric(length);
-            String tosend = token + "<br><a href='localhost:9000/changePassword?token=' " + token + " style='color:#225A92; text-decoration:none;'>";
+            String tosend = "copy this link: whereamiplay.herokuapp.com/changePassword?token=" + token + "<br><br> or click this link: <br><a href='whereamiplay.herokuapp.com/changePassword?token=" + token + "' style='color:#225A92; text-decoration:none;'>";
             boolean sentornot = emailManager.send(1,email,"Where am I, Reset your password",text1+tosend+text2);
             i = (sentornot) ? 1 : 2;
             dbManager.saveToken(email, token);
@@ -365,9 +365,9 @@ public class Application extends Controller {
         User user= getCurrentUser();
         Double distance=getDistance(dbManager.getAcceptedPicture(id));
         if (distance==null){
-            distance=-1.0;
+            distance = -1.0;
         }
-        dbManager.gameAction(game,user,distance);
+        dbManager.gameAction(game, user, distance);
 
         return resultGame(id,gameID);
     }
