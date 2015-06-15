@@ -3,22 +3,36 @@ Wenn ein Task abgeschlossen ist, einfach in WAI/planning/endsprint/README.md ein
 
 ## Bernhard
 - [ ] Überarbeite alle GUI Elemente die noch nicht ausgereift sind
-  - [x] play_menu sieht noch nicht fertig aus
+  - [x] Überarbeite navbar
+  - [x] Überarbeite index
+  - [x] Überarbeite play_menu
+  - [x] Überarbeite practise
+  - [x] Überarbeite game
+  - [x] Überarbeite login
+  - [x] Überarbeite register
   - [ ] result sieht noch nicht fertig aus
   - [ ] result_map muss noch fertig implementiert werden (-> LatLng Objekte)
+- [x] Verwendung von Geolocation sollte beim Uploaden von Bildern möglich sein
 - [ ] Implementiere UnitTests
   - [ ] UnitTest für die Distanzberechnung (Innsbruck->Wien ca. 500km)
 
 ## Thibault
-- [ ] Überarbeite send_email. Lass den grauen Kasten sowie die Überschrift im grauen Kasten weg. Ändere die Überschriften in der Navbar dementsprechend. Bleib konsistent.
-- [ ] Überarbeite friends. Die Überschrift in der Navbar stimmt nicht. Das Design kann noch verbessert werden. Es ist noch nicht intuitiv dass mit dem blauen Button ein neues Spiel begonnen werden kann. Das "Play" schwebt in der Luft. Mach vielleicht so ähnlich wie bei search_user einen Kasten in dem der Name des Freundes und der Button zum Spielen drin ist. Schreib in den Button einfach "Play" hinein statt dem Bild.
-- [ ] Achte auf richtige Verlinkung
-  - [ ] Nachdem man einen Freund bei search_user hinzufügt, sollte auf friends redirected werden
-  - [ ] Nachdem ein Spiel bei search_user begonnen wurde, sollte auf play_menu redirected werden
-- [ ] Füge deine wichtigsten Funktionen in die Sidebar ein
+- [x] Überarbeite send_email. Lass den grauen Kasten sowie die Überschrift im grauen Kasten weg. Ändere die Überschriften in der Navbar dementsprechend. Bleib konsistent.
+- [x] Überarbeite friends. Die Überschrift in der Navbar stimmt nicht. Das Design kann noch verbessert werden. Es ist noch nicht intuitiv dass mit dem blauen Button ein neues Spiel begonnen werden kann. Das "Play" schwebt in der Luft. Mach vielleicht so ähnlich wie bei search_user einen Kasten in dem der Name des Freundes und der Button zum Spielen drin ist. Schreib in den Button einfach "Play" hinein statt dem Bild.
+- [x] Achte auf richtige Verlinkung
+  - [x] Nachdem man einen Freund bei search_user hinzufügt, sollte auf friends redirected werden
+  - [x] Nachdem ein Spiel bei search_user begonnen wurde, sollte auf play_menu redirected werden
+- [x] Füge deine wichtigsten Funktionen in die Sidebar ein
+- [ ] Überarbeite Account
+  - [ ] Bei Account ein bisschen bei beiden Seiten des grauen Kastens einrücken (probier container)
+  - [ ] Username und Email linksbündig machen
+  - [ ] Der Inhalt des Modal sollte auch linksbündig sein
+- [ ] Überarbeite send_email. Schaut im Moment ein wenig blank aus. Machs vielleicht so ähnlich wie Forgot Password. Von mir aus auch mit grauem Kasten.
+- [ ] Funktioniert das Rücksetzen des Passworts bereits?
 
 ## Philipp
-- [ ] Überarbeite/Vereinfache dein resultGame damit der richtige User rot bzw. grün dargestellt wird
+- [x] Überarbeite/Vereinfache dein resultGame damit der richtige User rot bzw. grün dargestellt wird
+- [ ] Im Moment sind im Result beide User grün/rot. Es sollte aber der Gewinner grün und der Verlierer rot sein. Der Name des Spielers sollte nicht ausgeschrieben werden sondern einfach mit "You" ersetzt werden.
 - [ ] Implementiere UnitTests
   - [ ] UnitTest für deinen PictureManager. Schau ob das Bild nach der Skalierung wirklich die richtige Größe hat.
 
@@ -29,3 +43,4 @@ Wenn ein Task abgeschlossen ist, einfach in WAI/planning/endsprint/README.md ein
 - [ ] Stelle sicher, dass admin-only Webseiten auch wirklich nur durch den Admin aufgerufen werden können
 - [ ] Implementiere UnitTests
   - [ ] Lass dir einige (min. 3) Testfälle für die Datenbank einfallen. Können auch Pseudo-Tests sein.
+- [ ] Habe Bug gefunden beim game. Probier aus dass du den counter bis auf 5 Sekunden runterlaufen lässt dann lädst du die Seite neu und gibst deinen Tipp bei z.B. 50 Sekunden ab. D.h. du hättest mehr als 60 Sekunden Zeit. Weiß nicht ob man das fixen kann, wenn es zu zeitaufwendig ist einfach weglassen.

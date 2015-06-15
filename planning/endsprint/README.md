@@ -23,12 +23,12 @@ Wenn ein Task abgeschlossen ist, einfach in WAI/planning/endsprint/README.md ein
   - [x] Nachdem man einen Freund bei search_user hinzufügt, sollte auf friends redirected werden
   - [x] Nachdem ein Spiel bei search_user begonnen wurde, sollte auf play_menu redirected werden
 - [x] Füge deine wichtigsten Funktionen in die Sidebar ein
-- [ ] Überarbeite Account
-  - [ ] Bei Account ein bisschen bei beiden Seiten des grauen Kastens einrücken (probier container)
-  - [ ] Username und Email linksbündig machen
-  - [ ] Der Inhalt des Modal sollte auch linksbündig sein
-- [ ] Überarbeite send_email. Schaut im Moment ein wenig blank aus. Machs vielleicht so ähnlich wie Forgot Password. Von mir aus auch mit grauem Kasten.
-- [ ] Funktioniert das Rücksetzen des Passworts bereits?
+- [x] Überarbeite Account
+  - [x] Bei Account ein bisschen bei beiden Seiten des grauen Kastens einrücken (probier container)
+  - [x] Username und Email linksbündig machen
+  - [x] Der Inhalt des Modal sollte auch linksbündig sein
+- [x] Überarbeite send_email. Schaut im Moment ein wenig blank aus. Machs vielleicht so ähnlich wie Forgot Password. Von mir aus auch mit grauem Kasten.
+- [x] Funktioniert das Rücksetzen des Passworts bereits?
 
 ## Philipp
 - [x] Überarbeite/Vereinfache dein resultGame damit der richtige User rot bzw. grün dargestellt wird

@@ -1,22 +1,26 @@
 @template_with_navbar("Send an Invitation") {
 } {
     <div class="bs-docs-section">
+        <div class="text-center">
+            <h2 id="forms">Send email</h2>
+        </div>
+        <br>
         <div class="row">
           <div class="col-lg-12">
-            <div class="bs-component">
+            <div class="well bs-component">
               <form class="form-horizontal"  method="post" action="@routes.Application.send_email_action()">
                 <fieldset>
                   <div class="form-group">
-                      <br><br>
                     <label for="email" class="col-lg-2 control-label">Send to (email adress)</label>
                     <div class="col-lg-10">
                       <input type="text" class="form-control" id="email" placeholder="Email" name="email">
                     </div>
                   </div>
+                    <br>
                   <div class="form-group">
                     <div class="col-lg-10 col-lg-offset-2">
                         <form action="javascript:alert( 'success!' );">
-                            <button type="submit" id="submit_id" class="btn btn-primary">Send</button>
+                            <button type="submit" id="submit_id" class="btn btn-primary btn-block">Send</button>
                             <p><font id="error_id1" color="red"></font></p>
                         </form>
                     </div>
