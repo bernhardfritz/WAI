@@ -30,7 +30,8 @@ public class User extends Model {
         this.name = name;
         this.email = email;
         this.password = HashManager.getInstance().codeString(password);
-        active = true;
+        this.active = true;
+        this.registerDate = LocalDateTime.now();
     }
 
     public static Finder<Long, User> find = new Finder<Long, User>(Long.class, User.class);
