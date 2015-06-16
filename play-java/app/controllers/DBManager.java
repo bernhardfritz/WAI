@@ -474,11 +474,14 @@ public class DBManager {
         List<Picture> pictures = getPictures(user);
         start--;
 
-        if (start >= 0 && end < pictures.size()) {
-            return pictures.subList(start.intValue(), end.intValue());
+        if (start > pictures.size()) {
+            return new ArrayList<Picture>();
+        }
+        else if (end > pictures.size()) {
+            return pictures.subList(start.intValue(), pictures.size());
         }
 
-        return pictures;
+        return pictures.subList(start.intValue(), end.intValue());
     }
 
     /**
