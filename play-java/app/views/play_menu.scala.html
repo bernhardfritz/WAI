@@ -15,7 +15,6 @@
             </ul>
         </div><br/>
 
-
     <div class="text-center">
         <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
             <!— Indicators —>
@@ -61,6 +60,7 @@
                 <div class="item active">
                     <br/>
                     <div class="list-group">
+                        <h4><A HREF="@routes.Application.play_menu()" class="text-info"><span class="glyphicon glyphicon-refresh"></span></A></h4>
                         @if(readyToPlay.length==0) {
                             <h4> <p class="text-danger"><strong>No Games</strong></p></h4>
                         }
@@ -179,8 +179,8 @@
                                         </div>
                                     </div>
                                 }
+                                <a href="@routes.Application.index()" class="btn btn-default pull-left">&larr; back</a>
                             </div>
-                            <a href="@routes.Application.index()" class="btn btn-default pull-left">&larr; back</a>
                         </div>
                     </div>
                 </div>
