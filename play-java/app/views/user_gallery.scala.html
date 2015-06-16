@@ -1,30 +1,30 @@
 @(currentpage: Integer)(maxpage: Integer)(pictures: List[Picture])
 @blank("User gallery"){
     <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/bootstrap.min.css")">
+    <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/flatly.min.css")">
+
 } {
     <table class="table table-striped" data-url="x" data-toggle="table">
         <thead>
             <tr>
-                <th data-field="picture" data-halign="center" data-align="center">picture</th>
+                <th data-field="picture" data-halign="center" data-align="center">photo</th>
                 <th data-field="title" data-halign="left" data-align="left" data-sortable="true">title</th>
                 <th data-field="games" data-halign="left" data-align="left" data-sortable="true">games</th>
-                <th data-field="email" data-halign="left" data-align="left" data-sortable="true">average distance</th>
-                <th data-field="accepted" data-halign="center" data-align="center">accepted</th>
+                <th data-field="average distance" data-halign="left" data-align="left" data-sortable="true">average distance</th>
             </tr>
         </thead>
         @for(picture<-pictures) {
             <tr>
-                <td><img src="@routes.Application.thumbnail(picture.getId())" width="50px" height="50px"/></td>
+                @if(picture.isAccepted()) {
+                    <td><img src="@routes.Application.thumbnail(picture.getId())" width="50px" height="50px"/></td>
+                } else {
+                    <td>
+                        <img src="@routes.Assets.at("images/lock.png")" style="width:50px; height:50px; position:relative; background:url('@routes.Application.thumbnail(picture.getId())'); background-size: 50px 50px;">
+                    </td>
+                }
                 <td>@picture.getTitle</td>
                 <td>@DBManager.getInstance().getPlayCount(picture)</td>
                 <td>@DBManager.getInstance().getAverageDistance(picture)</td>
-                <td>
-                @if(picture.isAccepted()) {
-                    <p class="text-success">Yes</p>
-                } else {
-                    <p class="text-danger">No</p>
-                }
-                </td>
             </tr>
         }
     </table>
@@ -51,4 +51,6 @@
             }
         </ul>
     </div>
+
+    <div> <a href="@routes.Application.play_menu()" class="btn btn-default" style="margin-left:10px; margin-bottom:20px">&larr; back</a><br></div>
 }
