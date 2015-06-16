@@ -814,7 +814,7 @@ public class DBManager {
      */
     private Round addConnections(Round round, Game game) {
         round.setGame(game);
-        round.setPicture(getAcceptedPicture(round.getPictureID()));
+        round.setPicture(getPicture(round.getPictureID()));
         if (round.getWinnerID() != null) {
             round.setWinner(getActiveUser(round.getWinnerID()));
         }
