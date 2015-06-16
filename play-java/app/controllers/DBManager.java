@@ -600,7 +600,9 @@ public class DBManager {
 
         count = Math.max(1, count-1);
 
-        return sum / ((double) count);
+        Double avg = sum / ((double) count);
+
+        return ((long) (avg / 100.0)) / 10.0;
     }
 
     /**
