@@ -16,7 +16,6 @@
 
             <br>
 
-            <h5><text class="pull-left">Average: @DBManager.getInstance().getAverageDistance(picture) km</text></h5>
             <script type="text/javascript">
             var height= window.innerHeight || document.body.clientHeight;
             var pixel=height-350;
@@ -27,7 +26,10 @@
             document.write ('<iframe src="@routes.Application.result_map(picture.getId)" width="100%" height="'+pixel+'px" frameborder="0"></iframe>');
             </script>
 
-            @distance
+            <div class="row">
+                <div class="col-xs-6">@distance</div>
+                <div class="col-xs-6"><div class="pull-right">&Oslash; @DBManager.getInstance().getAverageDistance(picture) km</div></div>
+            </div>
             <br><br>
 
             <table style="width:100%" class="table table-striped">
