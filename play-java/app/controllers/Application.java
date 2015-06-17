@@ -119,6 +119,7 @@ public class Application extends Controller {
      * Display the admin webinterface
      * @return the admin page
      */
+    @Security.Authenticated(AdminSecured.class)
     public static Result admin() {
         return ok(admin.render());
     }
@@ -263,6 +264,7 @@ public class Application extends Controller {
      * Displays the friendlist
      * @return the page with the freindlist
      */
+    @Security.Authenticated(Secured.class)
     public static Result friends() {
         return ok(friends.render(dbManager.getFriends(getCurrentUser())));
     }
@@ -772,6 +774,7 @@ public class Application extends Controller {
      * Display the upload page
      * @return
      */
+    @Security.Authenticated(Secured.class)
     public static Result upload() {
         return ok(upload.render());
     }
@@ -810,7 +813,7 @@ public class Application extends Controller {
             return upload();
         }
     }
-
+    @Security.Authenticated(Secured.class)
     public static Result user_gallery(Integer currentpage) {
         Pagination p = new Pagination(dbManager.getPictureCount(getCurrentUser()),10,currentpage);
         return ok(user_gallery.render(p.getCurrentPageIndex(), p.getMaxPageIndex(), dbManager.getPictureRange(getCurrentUser(), p.getStartPageIndex(), p.getEndPageIndex())));
