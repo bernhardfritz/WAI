@@ -52,5 +52,11 @@
         </ul>
     </div>
 
-    <div> <a href="@routes.Application.play_menu()" class="btn btn-default" style="margin-left:10px; margin-bottom:20px">&larr; back</a><br></div>
+    <div> <a href="@routes.Application.index()" class="btn btn-primary" style="margin-left:10px; margin-bottom:20px">&larr; back</a><br></div>
+    <script>
+    $("a").click(function (event) {
+    event.preventDefault();
+    window.location = $(this).attr("href");
+    });
+    </script>
 }
