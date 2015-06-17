@@ -10,11 +10,11 @@ Wenn ein Task abgeschlossen ist, einfach in WAI/planning/endsprint/README.md ein
   - [x] Überarbeite game
   - [x] Überarbeite login
   - [x] Überarbeite register
-  - [ ] result sieht noch nicht fertig aus
-  - [ ] result_map muss noch fertig implementiert werden (-> LatLng Objekte)
+  - [x] Verfeinere result
+  - [ ] Stelle result_map fertig (-> LatLng Objekte)
 - [x] Verwendung von Geolocation sollte beim Uploaden von Bildern möglich sein
-- [ ] Implementiere UnitTests
-  - [ ] UnitTest für die Distanzberechnung (Innsbruck->Wien ca. 500km)
+- [x] Implementiere UnitTests
+  - [x] UnitTest für die Distanzberechnung (Innsbruck->Wien ca. 500km)
 
 ## Thibault
 - [x] Überarbeite send_email. Lass den grauen Kasten sowie die Überschrift im grauen Kasten weg. Ändere die Überschriften in der Navbar dementsprechend. Bleib konsistent.

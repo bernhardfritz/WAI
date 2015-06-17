@@ -7,12 +7,11 @@ Wenn ein Task abgeschlossen ist, einfach in WAI/planning/README.md ein [x] setze
   - [x] Der Admin soll visuellen Zugriff auf die gesamte Datenbank haben
   - [x] Der Admin soll die Möglichkeit haben böse User zu bannen.
   - [x] Der Admin soll auch auf offene Reports zugreifen und reagieren können.
-- [ ] Erstellen einer Oberfläche zur Übersicht offener Spiele.
-- [ ] Verbinden der Game Oberfläche mit der aktuellen aus der Datenbank abgefragten Spielrunde des jeweiligen Users.
-- [ ] Einbauen eines Benachrichtigungssystems, das es ermöglicht dem Spieler mitzuteilen, dass ein anderer Spieler ihn zu einem Spiel herausgefordert hat, oder dass ein Spiel abgeschlossen wurde oder eine neue Runde beginnt.
+- [ ] ~~Einbauen eines Benachrichtigungssystems, das es ermöglicht dem Spieler mitzuteilen, dass ein anderer Spieler ihn zu einem Spiel herausgefordert hat, oder dass ein Spiel abgeschlossen wurde oder eine neue Runde beginnt.~~
 - [x] Nach einer abgeschlossenen Runde soll ersichtlich sein wo der Gegner seine Markierung gesetzt hat. Die Marker sollen unterschiedliche Farben aufweisen um einfacher feststellen zu können wer was getippt hat und wo das Ziel gewesen wäre.
-- [ ] Erstellen einer Oberfläche zur Übersicht aller upgeloadeten Bilder eines Users. Hier soll auch ersichtlich sein ob das Bild bereits durch einen Admin akzeptiert worden ist oder nicht.
-- [ ] Erstellen einer Oberfläche zur Übersicht von Statistiken/Achivements.
+- [x] Erstellen einer Oberfläche zur Übersicht aller upgeloadeten Bilder eines Users. Hier soll auch ersichtlich sein ob das Bild bereits durch einen Admin akzeptiert worden ist oder nicht.
+- [ ] ~~Erstellen einer Oberfläche zur Übersicht von Statistiken/Achivements.~~
+- [x] Überarbeiten/Verfeinern der Oberfläche
 
 
 ## Thibault
@@ -34,6 +33,8 @@ Wenn ein Task abgeschlossen ist, einfach in WAI/planning/README.md ein [x] setze
 - [x] Report Seite
   - [x] Hinzufügen eines Report Buttons der auf eine report Seite verweist. Dabei solltest du die PictureID als Parameter verwenden. PictureID ist auf result bereits verfügbar und somit  kann bereits beim Laden der Seite der report Button mit dem richtigen Link belegt werden.
   - [x] Von der Report Seite aus kann man falsch gesetzte Locations von bereits freigegebenen Sehenswürdigkeiten direkt dem Administrator melden. Dabei soll es auch möglich sein eine Begründung anzugeben. Die Daten dieses Formulars sollen dann mithilfe einer Post-Request in Java griffbereit sein. Test mit System.out.println
+- [x] Erstellen einer Oberfläche zur Übersicht offener Spiele.
+- [x] Verbinden der Game Oberfläche mit der aktuellen aus der Datenbank abgefragten Spielrunde des jeweiligen Users.
 
 ## Mario
 - [ ] Erstellen der Datenbanklogik für das Erstellen eines Spiels (Game.java). Dabei sollen 3 Runden (Round.java) beim Erstellen des Spiels mit einem zufälligen Bild angelegt werden. Das Spiel beinhaltet die konkurierenden Spieler (User.java), sowie die jeweiligen Runden (Round.java). Es soll zu jeder Zeit ersichtlich sein welche Runde schon gespielt bzw. ob das Spiel bereits fertig ist.
