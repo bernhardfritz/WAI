@@ -106,6 +106,9 @@
                 navigator.geolocation.getCurrentPosition(function (position) {
                     var geolocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
                     addMarker(geolocation);
+                    lat = markers[0].getPosition().lat();
+                    lng = markers[0].getPosition().lng();
+                    $.get("/setLocation/"+lat+"/"+lng);
                     map.setCenter(geolocation);
                     map.setZoom(18);
                 });
@@ -172,7 +175,7 @@
 
         // Add a marker to the map and push to the array.
         function addMarker(location) {
-            setPinColor("FE7569")
+            setPinColor("FE7569");
             var marker = new google.maps.Marker({
                 position:location,
                 map:map,
@@ -185,7 +188,7 @@
         }
 
         function fixMarker(location) {
-            setPinColor("337AB7")
+            setPinColor("337AB7");
             var marker = new google.maps.Marker({
                 position:location,
                 map:map,
