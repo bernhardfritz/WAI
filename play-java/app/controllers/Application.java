@@ -311,6 +311,7 @@ public class Application extends Controller {
      * @param currentpage the current page index
      * @return
      */
+    @Security.Authenticated(AdminSecured.class)
     public static Result gallery(Integer currentpage) {
         Pagination p = new Pagination(dbManager.getPictureCount(),10,currentpage);
         return ok(gallery.render(p.getCurrentPageIndex(), p.getMaxPageIndex(), dbManager.getPictureRange(p.getStartPageIndex(), p.getEndPageIndex())));
@@ -607,6 +608,7 @@ public class Application extends Controller {
      * @param currentpage the current page index
      * @return
      */
+    @Security.Authenticated(AdminSecured.class)
     public static Result reports(Integer currentpage) {
         Pagination p = new Pagination(dbManager.getUnhandledReportCount(),10,currentpage);
         return ok(reports.render(p.getCurrentPageIndex(), p.getMaxPageIndex(), dbManager.getUnhandledReportRange(p.getStartPageIndex(), p.getEndPageIndex())));
@@ -823,6 +825,7 @@ public class Application extends Controller {
      * @param currentpage the current page index
      * @return
      */
+    @Security.Authenticated(AdminSecured.class)
     public static Result users(Integer currentpage) {
         Pagination p = new Pagination(dbManager.getUserCount(),10,currentpage);
         return ok(users.render(p.getCurrentPageIndex(), p.getMaxPageIndex(), dbManager.getUserRange(p.getStartPageIndex(), p.getEndPageIndex())));
