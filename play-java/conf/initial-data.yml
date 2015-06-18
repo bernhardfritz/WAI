@@ -41,7 +41,7 @@ pictures:
         lng:              2.2944045066833496
         title:            Eiffel tower
         description:      The Eiffel tower is a 324m high iron tower located in Paris/France.
-        createUserID:     1
+        createUserID:     4
         accepted:         true
 
     - !!models.Picture
@@ -49,7 +49,7 @@ pictures:
         lng:              16.312079429626465
         title:            Schönbrunn Palace
         description:      The palace is located in Vienna/Austria and is one of the most important architectural and historical monuments in the country.
-        createUserID:     1
+        createUserID:     4
         accepted:         true
 
     - !!models.Picture
@@ -57,7 +57,7 @@ pictures:
         lng:              138.72779242694378
         title:            Mount Fuji
         description:      Mount Fuji is a volcano and also the highest mountain of Japan, located in Honshu Island.
-        createUserID:     1
+        createUserID:     4
         accepted:         true
 
     - !!models.Picture
@@ -65,7 +65,7 @@ pictures:
         lng:              12.492313385009766
         title:            Colosseum
         description:      The Colosseum is the largest amphitheatre in the world and is located in the centre of the city of Rome/Italy.
-        createUserID:     1
+        createUserID:     4
         accepted:         true
 
     - !!models.Picture
@@ -73,7 +73,7 @@ pictures:
         lng:              -43.210596442222595
         title:            Cristo Redentor
         description:      Cristo Redentor is a 30m high statue of Jesus Christ in Reo de Janiero/Brazil.
-        createUserID:     1
+        createUserID:     4
         accepted:         true
 
     - !!models.Picture
@@ -81,7 +81,7 @@ pictures:
         lng:              37.62309908866882
         title:            St. Basil's Cathedral
         description:      The Cathedral is a church in Red Square in Moscow/Russia and now used as a museum.
-        createUserID:     1
+        createUserID:     4
         accepted:         true
 
     - !!models.Picture
@@ -89,7 +89,7 @@ pictures:
         lng:              -79.0739893913269
         title:            Niagara Falls
         description:      The Niagara Falls,  the collective name for three waterfalls, form the highest flow rate of any waterfall in the world and straddle the international border between Canada and the USA.
-        createUserID:     1
+        createUserID:     4
         accepted:         true
 
     - !!models.Picture
@@ -97,7 +97,7 @@ pictures:
         lng:              31.130383014678955
         title:            Pyramid of Khafre
         description:      The Pyramid of Khafre is the second-largest of the Egyptian Pyramids of Gizah.
-        createUserID:     1
+        createUserID:     5
         accepted:         true
 
     - !!models.Picture
@@ -105,7 +105,7 @@ pictures:
         lng:              2.3375773429870605
         title:            Louvre Museum
         description:      The Louvre Museum, located in Paris/France, is one of the world's largest museums and is famous for Leonardo da Vinci's Mona Lisa.
-        createUserID:     1
+        createUserID:     5
         accepted:         true
 
     - !!models.Picture
@@ -113,7 +113,7 @@ pictures:
         lng:              55.2742338180542
         title:            Burj Khalifa
         description:      The Burj Khalifa is with 829.8m the tallest building in the world, located in Dubai/United Arab Emirates.
-        createUserID:     1
+        createUserID:     5
         accepted:         true
 
     - !!models.Picture
@@ -121,7 +121,7 @@ pictures:
         lng:              -74.04452562332153
         title:            Statue of Liberty
         description:      The Statue of Liberty, located on Liberty Island in New York City/USA, was a gift to the United States from the people of France.
-        createUserID:     1
+        createUserID:     5
         accepted:         true
 
     - !!models.Picture
@@ -129,7 +129,7 @@ pictures:
         lng:              -77.03654050827026
         title:            White House
         description:      The White House, located in Washington/D.C, is the official residence and principal workplace of the President of the United States.
-        createUserID:     1
+        createUserID:     5
         accepted:         true
 
     - !!models.Picture
@@ -137,7 +137,7 @@ pictures:
         lng:              -122.47840762138367
         title:            Golden Gate Bridge
         description:      The Golden Gate Bridge is with 1280m the longest suspension brige of the world. The bridge is located between the San Francisco Bay and Marin County (both California/USA).
-        createUserID:     1
+        createUserID:     5
         accepted:         true
 
 # Games
