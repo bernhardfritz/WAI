@@ -1,0 +1,56 @@
+Zusätzliche Infos:
+Was ist WAI?
+Bilder von Sehenswürdigkeiten weltweit
+Google Maps wird verwendet
+Es gibt verschiedene Spielmodi (Einzelspieler/Übungsmodus, Mehrspieler Modus)
+Responsive Design (Kann auf Smartphone/Tablet/Computer gespielt werden)
+
+Mehrspieler Modus:
+Es ist möglich mit einem ganz bestimmten Spieler ein Spiel zu erstellen, oder mit einem zufälligen Spieler
+Es ist möglich Freunde einzuladen (email oder über app) und zu seiner Freundesliste hinzuzufügen.
+Das Spiel ist asynchron (d.h. es müssen nicht beide Spieler gleichzeitig online sein, sondern sie können zeitverzögert spielen)
+Die Tabs erklären (Games,Pending,Finished)
+
+Lerneffekt:
+Geographisches Wissen kann erweitert werden.
+Man lernt auch möglicherweise einem selbst nicht bekannte Sehenswürdigkeiten kennen.
+Man bekommt ein allgemeines Verständnis wo auf der Welt sich was befindet.
+
+Upload:
+Thumbnail Konvertierung erläutern.
+Upload Beschränkungen (Datei-Größe, Bild-Größe) erläutern.
+Der User kann seine eigenen upgeloadeten Bilder in einer Tabelle anzeigen lassen und schauen ob sie bereits durch den Admin freigeschalten wurden, wie oft sie gespielt wurden und wie weit die Spieler durchschnittlich daneben lagen.
+
+Admin Modus:
+Admin hat Möglichkeit über graphische Oberflächen direkten eingriff in die Datenbank vorzunehmen.
+Oberfläche um upgeloadete Bilder von Usern zu begutachten, wenn nötig zu bearbeiten und freizuschalten.
+Böse User zu bannen.
+Oberfläche um Reports zu lesen mit Vorher/Nachher Vorschau und kann nach Begutachtung vorgeschlagene Veränderungen zu akzeptieren oder abzulehnen.
+
+Demo:
+Ein Spiel gegeneinander
+
+Softwarearchitektur:
+Play Framework forciert ModelViewControl Pattern.
+Model und Control besteht hauptsächlich aus Java Code
+View aus einer Mischung aus HTML/JS/CSS/Scala.
+Scala Code baut Verbindung zu Controller auf und ist für dynamische Inhalte zuständig.
+Controller stellt Verbindung zu Funktionalität und Model sicher.
+Als Datenbank haben wir uns für SQLite entschieden.
+SQLite ist ein leichtgewicht da keine weitere Serveranwendung benötigt wird.
+Play Framework stellt Funktionalität bereit die es ermöglicht SQL Anweisungen zu generieren und eliminiert damit eine potentielle Fehlerquelle.
+Auf unserer Datenbank befinden sich Userdaten sowie zur Abwicklung der Spiellogik nötige Spieldaten. Außerdem wird in der Datenbank auf Bilddateien im System verlinkt.
+Heroku bietet an Java Apps, unter anderem Play Framework basierte Java Apps kostenfrei zu hosten.
+
+Readme Driven Development:
+Mario weiß glaub ich bescheid
+
+Screenshots zu RDD:
+…
+
+Markdown Syntax:
+Markdown Syntax wird von Github bestens unterstützt. Markdown wird in HTML code verwandelt. Schöne Darstellung von Inhalt mit minimalem Aufwand. Einfache Konventionen ermöglichen schnellen Einstieg.
+
+Vielen Dank!
+Wenn Sie wollen können Sie unser App nun ausprobieren. Es steht ihnen auf
+whereamiplay.herokuapp.com frei zur Verfügung.
