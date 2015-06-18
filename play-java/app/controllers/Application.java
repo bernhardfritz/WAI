@@ -54,7 +54,7 @@ public class Application extends Controller {
                 return "Invalid name, email address or password!";
             }
             for (User u : dbManager.getAllActiveUsers()) {
-                if (u.getName().equals(name) || u.getEmail().equals(email)) {
+                if (u.getName().toLowerCase().equals(name.toLowerCase()) || u.getEmail().equals(email)) {
                     return "Invalid name, email address or password!";
                 }
             }
