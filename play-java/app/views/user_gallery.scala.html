@@ -24,7 +24,7 @@
                 }
                 <td>@picture.getTitle</td>
                 <td>@DBManager.getInstance().getPlayCount(picture)</td>
-                <td>@DBManager.getInstance().getAverageDistance(picture)</td>
+                <td>@DBManager.getInstance().getAverageDistance(picture) km</td>
             </tr>
         }
     </table>
@@ -51,7 +51,6 @@
             }
         </ul>
     </div>
-
     <div> <a href="@routes.Application.index()" class="btn btn-primary" style="margin-left:10px; margin-bottom:20px">&larr; back</a><br></div>
     <script>
     $("a").click(function (event) {
